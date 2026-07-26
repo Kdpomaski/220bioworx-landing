@@ -747,8 +747,8 @@
         <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">☰</button>
         <nav class="nav-links" id="navLinks">
           <a href="products.html" class="active">Products</a>
+          <a href="cart.html">Cart</a>
           <a href="#payment-details">Payments</a>
-          <a href="index.html#intended-use">Intended use</a>
           <a href="index.html#disclosures">Disclosures</a>
           <a href="index.html#contact" class="btn btn-primary btn-nav">Research inquiry</a>
         </nav>
@@ -757,24 +757,26 @@
 
     <main class="storefront">
       <div class="container">
-        <div class="status-pill">Payments · Zelle &amp; ACH only</div>
+        <div class="status-pill">Payments · selected at checkout</div>
         <h1>
           How to pay
           <span class="accent">for research orders.</span>
         </h1>
         <p class="lead">
-          Catalog checkout is coming soon. Payment policy is active now for quoted research orders:
-          <strong>Zelle</strong> and <strong>ACH / bank transfer</strong> only.
+          We accept <strong>Zelle</strong> and <strong>ACH</strong> only.
+          Banking and Zelle send-to details are <strong>not published here</strong> — you choose a method in the
+          <a href="cart.html">shopping cart</a>; instructions appear on your confirmation and in the order email
+          (with full cart / invoice details on top).
         </p>
 
         <div class="panel-grid">
           <article class="panel">
             <h2>Order flow</h2>
             <ul>
-              <li>Submit a research inquiry or request a quote</li>
-              <li>Confirm RUO intended use (not for human use)</li>
-              <li>Receive written quote / invoice with reference #</li>
-              <li>Pay by Zelle or ACH using that reference</li>
+              <li>Add research items to cart (catalog launching soon)</li>
+              <li>In cart, select <strong>Zelle</strong> or <strong>ACH</strong></li>
+              <li>Request invoice — get a cart reference number</li>
+              <li>Pay using the instructions for your selected method</li>
             </ul>
           </article>
           <article class="panel">
@@ -783,111 +785,52 @@
               <li>Credit or debit cards</li>
               <li>PayPal, Venmo, Cash App, crypto</li>
               <li>Cash or checks by mail (unless arranged in writing)</li>
-              <li>Payment without a quote / invoice</li>
+              <li>Payment without cart reference / invoice</li>
             </ul>
           </article>
         </div>
 
-        <!--
-          ═══════════════════════════════════════════════════════════
-          PAYMENT CONFIG — edit the PAYMENT object in the <script>
-          at the bottom of this file to publish Zelle / ACH details.
-          Leave a field as "" to show “Issued with invoice”.
-          ═══════════════════════════════════════════════════════════
-        -->
         <div class="payment-banner" id="payment-details">
           <p class="pay-kicker">Accepted methods</p>
           <h2>Zelle &amp; ACH only</h2>
           <p class="pay-intro">
-            We currently accept <strong>Zelle</strong> and <strong>ACH (bank transfer)</strong> for confirmed
-            Research Use Only orders. Exact send-to / bank details appear below when published, or are printed
-            on your invoice.
+            Exact payment credentials are delivered <strong>only after you select a method at checkout</strong>
+            (on-screen confirmation + email to our team with instructions and cart/invoice details).
           </p>
 
           <div class="pay-badges" aria-label="Payment methods">
-            <span class="pay-badge">Zelle · accepted</span>
-            <span class="pay-badge">ACH · accepted</span>
+            <span class="pay-badge">Zelle · at checkout</span>
+            <span class="pay-badge">ACH · at checkout</span>
             <span class="pay-badge muted">Cards</span>
             <span class="pay-badge muted">PayPal</span>
             <span class="pay-badge muted">Crypto</span>
           </div>
 
-          <div class="payment-methods">
-            <div class="pay-card" id="payment-zelle">
-              <h3>Zelle <span class="tag">Preferred</span></h3>
-              <p class="desc">Best for U.S. domestic research orders after you receive a quote or invoice.</p>
-              <div class="pay-rows">
-                <div class="pay-row">
-                  <span class="lbl">Recipient</span>
-                  <span class="val" id="zelle-recipient-name">—</span>
-                </div>
-                <div class="pay-row">
-                  <span class="lbl">Send to</span>
-                  <span class="val" id="zelle-send-to">—</span>
-                </div>
-                <div class="pay-row">
-                  <span class="lbl">Memo</span>
-                  <span class="val" id="zelle-memo">—</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="pay-card" id="payment-ach">
-              <h3>ACH / bank transfer <span class="tag">Institutions</span></h3>
-              <p class="desc">
-                For institutional and larger research purchases.
-                <strong>Full bank routing and account numbers are provided only on your written invoice</strong> — not published on this site.
-              </p>
-              <div class="pay-rows">
-                <div class="pay-row">
-                  <span class="lbl">Account name</span>
-                  <span class="val" id="ach-account-name">—</span>
-                </div>
-                <div class="pay-row">
-                  <span class="lbl">Bank</span>
-                  <span class="val" id="ach-bank-name">—</span>
-                </div>
-                <div class="pay-row">
-                  <span class="lbl">Routing #</span>
-                  <span class="val" id="ach-routing">—</span>
-                </div>
-                <div class="pay-row">
-                  <span class="lbl">Account #</span>
-                  <span class="val" id="ach-account">—</span>
-                </div>
-                <div class="pay-row">
-                  <span class="lbl">Type</span>
-                  <span class="val" id="ach-type">—</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <div class="pay-steps">
             <h3>How payment works</h3>
             <ol>
-              <li>Request a quote via Research inquiry (home page).</li>
-              <li>We confirm RUO eligibility and send a written invoice with a reference number.</li>
-              <li>Pay by <strong>Zelle</strong> or <strong>ACH</strong> using the details on the invoice (and shown above when published).</li>
-              <li>Put the <strong>invoice / reference number</strong> in the Zelle memo or ACH description.</li>
-              <li>Email payment confirmation to customer service so we can release the research order.</li>
+              <li>Build your cart (or request research items via inquiry while catalog is in progress).</li>
+              <li>Open <a href="cart.html">Cart &amp; checkout</a> and select <strong>Zelle</strong> or <strong>ACH</strong>.</li>
+              <li>Submit “Request invoice” — you receive a <strong>cart / invoice reference</strong>.</li>
+              <li>Confirmation shows payment instructions for the method you chose (also at the top of the order email).</li>
+              <li>Pay using that reference in the Zelle memo or ACH description. Do not pay without a reference.</li>
             </ol>
           </div>
 
           <p class="pay-warn">
-            <strong>Do not send payment</strong> without a written quote or invoice from 220 BioWorX.
-            Unmatched payments may be delayed or returned. Research Use Only — not for human use.
+            <strong>Zelle send-to and bank routing/account numbers are not listed on this page.</strong>
+            They appear only after payment method selection in the cart confirmation flow.
+            Research Use Only — not for human use.
           </p>
 
           <p class="not-accepted">
-            We do not accept credit/debit cards, PayPal, Venmo, Cash App, cryptocurrency, or other methods at this time.
-            Payment terms may be stated on each invoice.
+            Volume discounts (when catalog is live): 3+ vials 10% off · 5+ 15% · 10+ 20% (applied to unit price × quantity).
           </p>
         </div>
 
         <div class="actions">
-          <a href="index.html#contact" class="btn btn-primary">Research inquiry</a>
-          <a href="index.html" class="btn btn-secondary">Back to home</a>
+          <a href="cart.html" class="btn btn-primary">Go to cart / choose payment →</a>
+          <a href="index.html#contact" class="btn btn-secondary">Research inquiry</a>
         </div>
 
         <p class="ruo-note">
@@ -903,7 +846,7 @@
         <div class="footer-links">
           <a href="index.html">Home</a>
           <a href="products.html">Products</a>
-          <a href="index.html#disclosures">Disclosures</a>
+          <a href="cart.html">Cart</a>
           <a href="index.html#contact">Contact</a>
           <a href="#" id="reset-gate">Reset age gate</a>
         </div>
@@ -913,51 +856,7 @@
 
   <script>
     (function () {
-      /*
-       * ═══════════════════════════════════════════════════════════
-       * PAYMENT DETAILS — edit these strings, then git push.
-       * Leave any field as "" to show: “Issued with invoice”
-       * Prefer business checking / business Zelle (not personal).
-       * ═══════════════════════════════════════════════════════════
-       */
-      const PAYMENT = {
-        zelle: {
-          recipientName: "220 BioWorX",
-          sendTo: "Customerservice@220bioworx.com",
-          memo: "Include invoice / reference number in the Zelle memo",
-        },
-        // Banking (ACH) details stay empty on the public site — sent only with invoice
-        ach: {
-          accountName: "220 Tech",
-          bankName: "",
-          routing: "",
-          account: "",
-          accountType: "Business checking",
-        },
-        pendingLabel: "Issued with invoice / order confirmation",
-      };
-
-      function fillPay(id, value) {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const v = (value || "").trim();
-        if (v) {
-          el.textContent = v;
-          el.classList.remove("is-pending");
-        } else {
-          el.textContent = PAYMENT.pendingLabel;
-          el.classList.add("is-pending");
-        }
-      }
-
-      fillPay("zelle-recipient-name", PAYMENT.zelle.recipientName);
-      fillPay("zelle-send-to", PAYMENT.zelle.sendTo);
-      fillPay("zelle-memo", PAYMENT.zelle.memo);
-      fillPay("ach-account-name", PAYMENT.ach.accountName);
-      fillPay("ach-bank-name", PAYMENT.ach.bankName);
-      fillPay("ach-routing", PAYMENT.ach.routing);
-      fillPay("ach-account", PAYMENT.ach.account);
-      fillPay("ach-type", PAYMENT.ach.accountType);
+      /* Payment credentials live in payment-config.js — shown only after cart checkout selection. */
 
       const GATE_KEY = "bw220_age_gate_v2";
       const gate = document.getElementById("age-gate");

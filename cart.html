@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shopping Cart &amp; Checkout | 220 BioWorX</title>
+  <meta name="description" content="220 BioWorX research cart. Select Zelle or ACH at checkout. Payment instructions included on order confirmation. Research Use Only." />
+  <meta name="theme-color" content="#080B0D" />
+  <meta name="referrer" content="origin" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="payment-config.js"></script>
+  <script src="cart.js"></script>
+  <style>
+    :root {
+      --carbon: #080B0D;
+      --graphite: #1C1F22;
+      --steel: #70777D;
+      --od-green: #4C5A3A;
+      --orange: #FF5A00;
+      --orange-hover: #ff6f1f;
+      --orange-soft: rgba(255, 90, 0, 0.12);
+      --orange-glow: rgba(255, 90, 0, 0.28);
+      --white: #ffffff;
+      --text: #e8eaec;
+      --muted: #9aa1a6;
+      --border: rgba(112, 119, 125, 0.28);
+      --max: 960px;
+      --font-head: "Poppins", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      background: var(--carbon);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    body.gate-locked { overflow: hidden; }
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { color: var(--orange-hover); text-decoration: underline; }
+    .container { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
+
+    #age-gate {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.25rem;
+      background: rgba(8, 11, 13, 0.97);
+    }
+    #age-gate[hidden] { display: none !important; }
+    .gate-card {
+      width: min(100%, 520px);
+      background: var(--graphite);
+      border: 1px solid rgba(255, 90, 0, 0.4);
+      border-radius: 16px;
+      padding: 1.75rem;
+    }
+    .gate-logo { text-align: center; margin-bottom: 1rem; line-height: 0; }
+    .gate-logo img { width: min(100%, 280px); max-height: 80px; object-fit: contain; }
+    .gate-badge {
+      display: inline-block; margin: 0 auto 0.85rem;
+      padding: 0.3rem 0.7rem; border-radius: 999px;
+      background: var(--orange-soft); border: 1px solid rgba(255, 90, 0, 0.4);
+      color: var(--orange); font-family: var(--font-head); font-size: 0.68rem;
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .gate-card h1 {
+      font-family: var(--font-head); font-size: 1.25rem; color: var(--white);
+      text-align: center; margin-bottom: 0.5rem;
+    }
+    .gate-card .lead { color: var(--muted); font-size: 0.9rem; text-align: center; margin-bottom: 1rem; }
+    .gate-ruo {
+      background: rgba(255, 90, 0, 0.08); border: 1px solid rgba(255, 90, 0, 0.35);
+      border-radius: 10px; padding: 0.75rem; font-size: 0.85rem; color: #ffd4bf;
+      text-align: center; margin-bottom: 1rem;
+    }
+    .gate-check { display: flex; gap: 0.65rem; margin-bottom: 0.75rem; font-size: 0.88rem; }
+    .gate-check input { accent-color: var(--orange); margin-top: 0.2rem; }
+    .gate-actions { display: grid; grid-template-columns: 1fr 1.2fr; gap: 0.65rem; margin-top: 1rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+      padding: 0.8rem 1.2rem; border-radius: 8px; font-family: var(--font-head);
+      font-weight: 600; font-size: 0.9rem; border: none; cursor: pointer;
+      text-decoration: none !important;
+    }
+    .btn-primary { background: var(--orange); color: var(--white); box-shadow: 0 8px 24px var(--orange-glow); }
+    .btn-primary:hover { background: var(--orange-hover); color: var(--white); }
+    .btn-secondary { background: transparent; color: var(--steel); border: 1px solid var(--border); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .gate-error { display: none; color: #ff8a5c; font-size: 0.84rem; text-align: center; margin-top: 0.75rem; }
+    .gate-error.show { display: block; }
+    .gate-legal { font-size: 0.72rem; color: var(--steel); text-align: center; margin-top: 0.85rem; }
+
+    .site-wrap[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
+    .ruo-banner {
+      background: #140c08; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
+      text-align: center; padding: 0.5rem 1rem; font-family: var(--font-head);
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      color: #ffc9a8;
+    }
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(8, 11, 13, 0.94);
+    }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; padding: 0.85rem 0;
+    }
+    .brand-link { line-height: 0; }
+    .brand-link img { height: 44px; width: auto; max-width: min(260px, 50vw); object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 1.2rem; font-size: 0.88rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    .btn-nav { padding: 0.5rem 1rem; font-size: 0.8rem; color: var(--white) !important; }
+    .menu-toggle {
+      display: none; background: transparent; border: 1px solid var(--border);
+      color: var(--white); border-radius: 8px; padding: 0.35rem 0.55rem; cursor: pointer;
+    }
+
+    main { padding: 2.5rem 0 4rem; }
+    h1 {
+      font-family: var(--font-head); font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.1rem);
+      text-transform: uppercase; color: var(--white); margin-bottom: 0.5rem;
+    }
+    h1 .accent { color: var(--orange); }
+    .lead { color: var(--muted); margin-bottom: 1.75rem; max-width: 36rem; }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--graphite);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem;
+    }
+    .card h2 {
+      font-family: var(--font-head); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange);
+      margin-bottom: 1rem;
+    }
+
+    .cart-empty {
+      color: var(--muted); font-size: 0.95rem; padding: 1rem 0;
+    }
+    .cart-empty a { font-weight: 600; }
+
+    .line {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 0.75rem;
+      align-items: center;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(112, 119, 125, 0.2);
+    }
+    .line:last-child { border-bottom: none; }
+    .line-name { font-weight: 600; color: var(--white); font-size: 0.95rem; }
+    .line-meta { font-size: 0.8rem; color: var(--steel); }
+    .qty {
+      width: 4rem; padding: 0.4rem 0.45rem; border-radius: 6px;
+      border: 1px solid var(--border); background: rgba(8, 11, 13, 0.6);
+      color: var(--white); font-family: inherit; text-align: center;
+    }
+    .line-price { font-weight: 600; color: var(--text); min-width: 4.5rem; text-align: right; }
+    .line-remove {
+      background: none; border: none; color: var(--steel); cursor: pointer;
+      font-size: 0.75rem; text-decoration: underline; grid-column: 1 / -1;
+      justify-self: start; margin-top: -0.35rem;
+    }
+    .line-remove:hover { color: var(--orange); }
+
+    .totals { margin-top: 1rem; font-size: 0.9rem; }
+    .totals-row {
+      display: flex; justify-content: space-between; gap: 1rem;
+      padding: 0.35rem 0; color: var(--muted);
+    }
+    .totals-row.grand {
+      margin-top: 0.5rem; padding-top: 0.65rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-head); font-weight: 700; font-size: 1.05rem;
+      color: var(--white);
+    }
+    .totals-row .disc { color: #86efac; }
+
+    .ref-box {
+      margin-top: 0.85rem; padding: 0.75rem 0.9rem;
+      border-radius: 8px; background: rgba(8, 11, 13, 0.55);
+      border: 1px solid var(--border); font-size: 0.85rem;
+    }
+    .ref-box strong { color: var(--orange); font-family: var(--font-head); }
+
+    /* Payment method selection (dialog-style options) */
+    .pay-options {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .pay-option {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.95rem 1rem 0.95rem 2.75rem;
+      cursor: pointer;
+      background: rgba(8, 11, 13, 0.45);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .pay-option:hover { border-color: rgba(255, 90, 0, 0.45); }
+    .pay-option:has(input:checked) {
+      border-color: var(--orange);
+      background: var(--orange-soft);
+    }
+    .pay-option input {
+      position: absolute;
+      left: 1rem;
+      top: 1.15rem;
+      accent-color: var(--orange);
+      width: 1.05rem;
+      height: 1.05rem;
+    }
+    .pay-option .po-title {
+      font-family: var(--font-head); font-weight: 700; color: var(--white);
+      font-size: 0.95rem; margin-bottom: 0.2rem;
+    }
+    .pay-option .po-desc { font-size: 0.82rem; color: var(--muted); }
+    .pay-hint {
+      margin-top: 0.85rem; font-size: 0.8rem; color: var(--steel);
+    }
+
+    .form-group { margin-bottom: 0.85rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    label {
+      display: block; font-size: 0.8rem; color: var(--steel); margin-bottom: 0.3rem;
+    }
+    input[type="text"], input[type="email"], textarea {
+      width: 100%; padding: 0.65rem 0.8rem; border-radius: 8px;
+      border: 1px solid var(--border); background: rgba(8, 11, 13, 0.6);
+      color: var(--white); font-family: inherit; font-size: 0.92rem;
+    }
+    input:focus, textarea:focus {
+      outline: none; border-color: var(--orange);
+      box-shadow: 0 0 0 3px var(--orange-soft);
+    }
+    textarea { min-height: 80px; resize: vertical; }
+    .attestation {
+      display: flex; gap: 0.6rem; align-items: flex-start;
+      font-size: 0.8rem; color: var(--muted); margin: 0.85rem 0;
+    }
+    .attestation input { margin-top: 0.2rem; accent-color: var(--orange); }
+
+    .form-error {
+      display: none; padding: 0.75rem; border-radius: 8px; margin-bottom: 0.75rem;
+      background: rgba(255, 90, 0, 0.1); border: 1px solid rgba(255, 90, 0, 0.4);
+      color: #ffd4bf; font-size: 0.88rem;
+    }
+    .form-error.show { display: block; }
+
+    /* Confirmation with payment instructions */
+    #confirmPanel {
+      display: none;
+      margin-top: 1.25rem;
+      border: 1px solid rgba(255, 90, 0, 0.45);
+      border-radius: 14px;
+      background: linear-gradient(160deg, rgba(28, 31, 34, 0.98), rgba(8, 11, 13, 0.98));
+      padding: 1.35rem;
+    }
+    #confirmPanel.show { display: block; }
+    #confirmPanel h2 {
+      font-family: var(--font-head); color: var(--orange);
+      font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 0.65rem;
+    }
+    #confirmPanel .confirm-lead {
+      color: var(--text); margin-bottom: 1rem; font-size: 0.95rem;
+    }
+    .pay-instructions {
+      white-space: pre-wrap;
+      font-family: ui-monospace, "Cascadia Code", monospace;
+      font-size: 0.78rem;
+      line-height: 1.5;
+      background: rgba(8, 11, 13, 0.75);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+      color: #e2e8f0;
+      margin-bottom: 1rem;
+    }
+    .cart-snapshot {
+      white-space: pre-wrap;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: rgba(8, 11, 13, 0.5);
+      border-radius: 10px;
+      padding: 0.85rem;
+      border: 1px solid var(--border);
+    }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 1.25rem 0 2rem;
+      font-size: 0.76rem; color: var(--steel);
+    }
+    .footer-inner {
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem;
+    }
+    .footer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--steel); text-decoration: none; }
+    .footer-links a:hover { color: var(--orange); }
+
+    .hp-field {
+      position: absolute !important; left: -9999px !important;
+      width: 1px !important; height: 1px !important; opacity: 0 !important;
+    }
+
+    @media (max-width: 800px) {
+      .layout { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .nav-links {
+        display: none; position: absolute; left: 0; right: 0; top: 100%;
+        flex-direction: column; background: var(--graphite);
+        padding: 1rem; border-bottom: 1px solid var(--border); gap: 0.6rem;
+      }
+      .nav-links.open { display: flex; }
+      .menu-toggle { display: block; }
+      header { position: relative; }
+      .gate-actions { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body class="gate-locked">
+  <div id="age-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <div class="gate-card">
+      <div class="gate-logo">
+        <img src="logo-header.png" alt="220 BioWorX" width="280" height="80" />
+      </div>
+      <div style="text-align:center"><span class="gate-badge">Restricted · 21+</span></div>
+      <h1 id="gate-title">Age &amp; research-use verification</h1>
+      <p class="lead">Cart and checkout are for qualified research purchasers only.</p>
+      <div class="gate-ruo"><strong>RESEARCH USE ONLY.</strong> Not for human use.</div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-age" />
+        <label for="cert-age">I am <strong>21+</strong>.</label>
+      </div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-ruo" />
+        <label for="cert-ruo">Products are <strong>RUO / not for human use</strong>.</label>
+      </div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-lawful" />
+        <label for="cert-lawful">Lawful research use only.</label>
+      </div>
+      <div class="gate-actions">
+        <button type="button" class="btn btn-secondary" id="gate-exit">Exit</button>
+        <button type="button" class="btn btn-primary" id="gate-enter" disabled>Enter cart</button>
+      </div>
+      <p class="gate-error" id="gate-error">Please complete all certifications.</p>
+      <p class="gate-legal">By entering you accept RUO terms on this site.</p>
+    </div>
+  </div>
+
+  <div class="site-wrap" id="site-wrap" aria-hidden="true">
+    <div class="ruo-banner">Research Use Only · Zelle or ACH at checkout · Banking details only after payment method selected</div>
+    <header>
+      <div class="container nav">
+        <a href="index.html" class="brand-link">
+          <img src="logo-header.png" alt="220 BioWorX" width="260" height="72" />
+        </a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menu">☰</button>
+        <nav class="nav-links" id="navLinks">
+          <a href="products.html">Products</a>
+          <a href="cart.html" class="active">Cart</a>
+          <a href="products.html#payment-details">Payments</a>
+          <a href="index.html#contact" class="btn btn-primary btn-nav">Inquiry</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <h1>Cart <span class="accent">&amp; checkout</span></h1>
+        <p class="lead">
+          Select <strong>Zelle</strong> or <strong>ACH</strong> below. After you request an invoice,
+          payment instructions for your choice appear on screen and are included at the top of the
+          order email (with full cart / invoice details).
+        </p>
+
+        <div class="layout">
+          <!-- Cart lines -->
+          <section class="card">
+            <h2>Shopping cart / invoice lines</h2>
+            <div id="cartLines"></div>
+            <div class="totals" id="cartTotals"></div>
+            <div class="ref-box">
+              Invoice / cart reference: <strong id="cartRef">—</strong>
+              <div style="margin-top:0.35rem;color:var(--steel);font-size:0.8rem;">
+                Include this reference in your Zelle memo or ACH description.
+              </div>
+            </div>
+          </section>
+
+          <!-- Checkout -->
+          <section class="card">
+            <h2>Payment method</h2>
+            <p class="pay-hint" style="margin-top:0;margin-bottom:0.85rem;">
+              Choose how you will pay. Instructions are revealed only after you submit this order request.
+            </p>
+
+            <div class="pay-options" role="radiogroup" aria-label="Payment method">
+              <label class="pay-option">
+                <input type="radio" name="payMethod" value="zelle" required />
+                <div class="po-title">Zelle</div>
+                <div class="po-desc">U.S. domestic · instructions emailed + shown after submit</div>
+              </label>
+              <label class="pay-option">
+                <input type="radio" name="payMethod" value="ach" />
+                <div class="po-title">ACH / bank transfer</div>
+                <div class="po-desc">Institutions · routing &amp; account on confirmation only</div>
+              </label>
+            </div>
+            <p class="pay-hint">
+              Not accepted: cards, PayPal, Venmo, Cash App, crypto.
+              Do not send payment without this cart reference / invoice.
+            </p>
+
+            <form id="checkoutForm" style="margin-top:1.25rem;">
+              <div class="form-error" id="formError" role="alert"></div>
+              <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="buyerName">Full name</label>
+                  <input id="buyerName" name="buyerName" type="text" required autocomplete="name" />
+                </div>
+                <div class="form-group">
+                  <label for="buyerOrg">Institution / organization</label>
+                  <input id="buyerOrg" name="buyerOrg" type="text" required autocomplete="organization" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="buyerEmail">Work email</label>
+                <input id="buyerEmail" name="buyerEmail" type="email" required autocomplete="email" />
+              </div>
+              <div class="form-group">
+                <label for="buyerNote">Notes (optional)</label>
+                <textarea id="buyerNote" name="buyerNote" placeholder="PO number, shipping notes, research context…"></textarea>
+              </div>
+              <div class="attestation">
+                <input type="checkbox" id="buyerRuo" required />
+                <label for="buyerRuo" style="margin:0;">
+                  I am 21+, this order is for Research Use Only, and not for human or veterinary use.
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary" id="submitBtn" style="width:100%;">
+                Request invoice &amp; get payment instructions
+              </button>
+              <p class="pay-hint">
+                Submits cart + payment choice to customer service. You will see Zelle or ACH instructions
+                on this page immediately after a successful request.
+              </p>
+            </form>
+
+            <div id="confirmPanel" role="status">
+              <h2>Order request sent — payment instructions</h2>
+              <p class="confirm-lead" id="confirmLead"></p>
+              <div class="pay-instructions" id="payInstructions"></div>
+              <div class="cart-snapshot" id="cartSnapshot"></div>
+              <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.65rem;">
+                <a href="index.html" class="btn btn-secondary">Home</a>
+                <a href="products.html" class="btn btn-secondary">Products</a>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <p>© <span id="year"></span> 220 BioWorX. Research Use Only. Not for Human Use.</p>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="cart.html">Cart</a>
+          <a href="#" id="reset-gate">Reset age gate</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const GATE_KEY = "bw220_age_gate_v2";
+      const gate = document.getElementById("age-gate");
+      const site = document.getElementById("site-wrap");
+      const btnEnter = document.getElementById("gate-enter");
+      const btnExit = document.getElementById("gate-exit");
+      const err = document.getElementById("gate-error");
+      const checks = [
+        document.getElementById("cert-age"),
+        document.getElementById("cert-ruo"),
+        document.getElementById("cert-lawful"),
+      ];
+
+      function allChecked() {
+        return checks.every((c) => c.checked);
+      }
+      function syncEnter() {
+        btnEnter.disabled = !allChecked();
+        if (allChecked()) err.classList.remove("show");
+      }
+      function unlockSite() {
+        gate.hidden = true;
+        site.removeAttribute("aria-hidden");
+        document.body.classList.remove("gate-locked");
+      }
+      function lockSite() {
+        gate.hidden = false;
+        site.setAttribute("aria-hidden", "true");
+        document.body.classList.add("gate-locked");
+        checks.forEach((c) => (c.checked = false));
+        syncEnter();
+      }
+      checks.forEach((c) => c.addEventListener("change", syncEnter));
+      btnEnter.addEventListener("click", () => {
+        if (!allChecked()) {
+          err.classList.add("show");
+          return;
+        }
+        try {
+          sessionStorage.setItem(
+            GATE_KEY,
+            JSON.stringify({ ts: Date.now(), age21: true, ruo: true, lawful: true })
+          );
+        } catch (_) {}
+        unlockSite();
+      });
+      btnExit.addEventListener("click", () => {
+        window.location.href = "https://www.google.com";
+      });
+      document.getElementById("reset-gate").addEventListener("click", (e) => {
+        e.preventDefault();
+        try { sessionStorage.removeItem(GATE_KEY); } catch (_) {}
+        lockSite();
+      });
+      let admitted = false;
+      try {
+        const raw = sessionStorage.getItem(GATE_KEY);
+        if (raw) {
+          const d = JSON.parse(raw);
+          if (d && d.age21 && d.ruo && d.lawful) admitted = true;
+        }
+      } catch (_) {}
+      if (admitted) unlockSite();
+      else lockSite();
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+      const toggle = document.getElementById("menuToggle");
+      const links = document.getElementById("navLinks");
+      toggle.addEventListener("click", () => {
+        const open = links.classList.toggle("open");
+        toggle.textContent = open ? "✕" : "☰";
+      });
+
+      // —— Cart UI ——
+      const cartLines = document.getElementById("cartLines");
+      const cartTotals = document.getElementById("cartTotals");
+      const cartRefEl = document.getElementById("cartRef");
+      let cartRef = sessionStorage.getItem("bw220_cart_ref") || "";
+      if (!cartRef) {
+        cartRef = BWCart.newReference();
+        sessionStorage.setItem("bw220_cart_ref", cartRef);
+      }
+      cartRefEl.textContent = cartRef;
+
+      function renderCart() {
+        const items = BWCart.getItems();
+        if (!items.length) {
+          cartLines.innerHTML =
+            '<div class="cart-empty">Your cart is empty. When the catalog launches, add vials here. ' +
+            'For now you may still request an invoice with notes, or ' +
+            '<a href="products.html">view products / payment policy</a>.</div>';
+        } else {
+          cartLines.innerHTML = items
+            .map((i) => {
+              const line = (Number(i.unitPrice) || 0) * (Number(i.qty) || 0);
+              return (
+                '<div class="line" data-id="' +
+                i.id +
+                '">' +
+                '<div><div class="line-name"></div><div class="line-meta"></div></div>' +
+                '<input class="qty" type="number" min="1" step="1" value="' +
+                i.qty +
+                '" aria-label="Quantity" />' +
+                '<div class="line-price">' +
+                BWCart.money(line) +
+                "</div>" +
+                '<button type="button" class="line-remove">Remove</button>' +
+                "</div>"
+              );
+            })
+            .join("");
+
+          Array.from(cartLines.querySelectorAll(".line")).forEach((row, idx) => {
+            const item = items[idx];
+            row.querySelector(".line-name").textContent = item.name;
+            row.querySelector(".line-meta").textContent =
+              (item.sku ? item.sku + " · " : "") +
+              BWCart.money(item.unitPrice) +
+              " / " +
+              (item.unit || "vial");
+            row.querySelector(".qty").addEventListener("change", (e) => {
+              BWCart.updateQty(item.id, e.target.value);
+              renderCart();
+            });
+            row.querySelector(".line-remove").addEventListener("click", () => {
+              BWCart.remove(item.id);
+              renderCart();
+            });
+          });
+        }
+
+        const t = BWCart.totals();
+        cartTotals.innerHTML =
+          '<div class="totals-row"><span>Subtotal</span><span>' +
+          BWCart.money(t.subtotal) +
+          "</span></div>" +
+          '<div class="totals-row"><span>Vials</span><span>' +
+          t.vials +
+          "</span></div>" +
+          (t.pct > 0
+            ? '<div class="totals-row disc"><span>Volume discount (' +
+              t.pct +
+              "%)</span><span>−" +
+              BWCart.money(t.discountAmount) +
+              "</span></div>"
+            : '<div class="totals-row"><span>Volume discount</span><span>None yet (3+ = 10%)</span></div>') +
+          '<div class="totals-row grand"><span>Total</span><span>' +
+          BWCart.money(t.total) +
+          "</span></div>";
+      }
+
+      renderCart();
+      window.addEventListener("bw-cart-updated", renderCart);
+
+      // —— Checkout submit ——
+      const form = document.getElementById("checkoutForm");
+      const formError = document.getElementById("formError");
+      const submitBtn = document.getElementById("submitBtn");
+      const confirmPanel = document.getElementById("confirmPanel");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        formError.classList.remove("show");
+        formError.textContent = "";
+
+        const methodEl = form.closest(".card").querySelector('input[name="payMethod"]:checked');
+        const method = methodEl ? methodEl.value : "";
+        if (!method) {
+          formError.textContent = "Select Zelle or ACH as your payment method.";
+          formError.classList.add("show");
+          return;
+        }
+        if (!document.getElementById("buyerRuo").checked) {
+          formError.textContent = "Please confirm the Research Use Only attestation.";
+          formError.classList.add("show");
+          return;
+        }
+        if (window.location.protocol === "file:") {
+          formError.innerHTML =
+            'Open the live site at <a href="https://www.220bioworx.com/cart.html">www.220bioworx.com/cart.html</a>.';
+          formError.classList.add("show");
+          return;
+        }
+
+        const name = document.getElementById("buyerName").value.trim();
+        const org = document.getElementById("buyerOrg").value.trim();
+        const email = document.getElementById("buyerEmail").value.trim();
+        const note = document.getElementById("buyerNote").value.trim();
+        const items = BWCart.getItems();
+        const cartText = BWCart.formatCartText(items, cartRef);
+        const payText = window.BW_formatPaymentInstructions(method, cartRef);
+        const methodLabel = method === "zelle" ? "Zelle" : "ACH / bank transfer";
+
+        const emailBody = [
+          payText,
+          "",
+          cartText,
+          "",
+          "BUYER",
+          "--------------------------------",
+          "Name: " + name,
+          "Organization: " + org,
+          "Email: " + email,
+          "Payment method selected: " + methodLabel,
+          "RUO attestation: Yes",
+          note ? "Notes: " + note : "Notes: —",
+          "Source: www.220bioworx.com/cart.html",
+        ].join("\n");
+
+        const endpoint =
+          (window.BW_PAYMENT && window.BW_PAYMENT.formSubmitEndpoint) ||
+          "https://formsubmit.co/6732b0b86bff8989d370457024b960ee";
+        const cc = (window.BW_PAYMENT && window.BW_PAYMENT.ownerCc) || "Owner@220bioworx.com";
+
+        // Classic form POST via temporary form (most reliable with FormSubmit hash)
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending…";
+
+        try {
+          // Prefer fetch AJAX if available, fall back to form POST navigation
+          const payload = {
+            _subject: "220 BioWorX — Cart invoice request [" + cartRef + "] — " + methodLabel,
+            _cc: cc,
+            _template: "box",
+            _captcha: "false",
+            _next: "https://www.220bioworx.com/cart.html?ordered=1&ref=" + encodeURIComponent(cartRef) + "&pay=" + method,
+            name: name,
+            email: email,
+            organization: org,
+            payment_method: methodLabel,
+            cart_reference: cartRef,
+            message: emailBody,
+          };
+
+          const res = await fetch(endpoint.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify(payload),
+          });
+
+          // If ajax fails or needs activation, use classic POST
+          let ok = res.ok;
+          let data = {};
+          try {
+            data = await res.json();
+          } catch (_) {}
+          if (data.success === "false" || data.success === false) ok = false;
+
+          if (!ok) {
+            // Classic multi-part form submit as fallback
+            const f = document.createElement("form");
+            f.method = "POST";
+            f.action = endpoint;
+            f.style.display = "none";
+            Object.keys(payload).forEach((k) => {
+              const inp = document.createElement("input");
+              inp.type = "hidden";
+              inp.name = k;
+              inp.value = payload[k];
+              f.appendChild(inp);
+            });
+            document.body.appendChild(f);
+            // Show local confirmation before navigate in case they come back
+            sessionStorage.setItem(
+              "bw220_last_order",
+              JSON.stringify({ ref: cartRef, method, payText, cartText, name, email })
+            );
+            f.submit();
+            return;
+          }
+
+          showConfirmation(method, payText, cartText, name, email);
+          sessionStorage.setItem(
+            "bw220_last_order",
+            JSON.stringify({ ref: cartRef, method, payText, cartText, name, email })
+          );
+        } catch (err) {
+          console.error(err);
+          formError.textContent =
+            "Could not send automatically. Your payment instructions are still shown below — email them if needed.";
+          formError.classList.add("show");
+          showConfirmation(method, payText, cartText, name, email);
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Request invoice & get payment instructions";
+        }
+      });
+
+      function showConfirmation(method, payText, cartText, name, email) {
+        const methodLabel = method === "zelle" ? "Zelle" : "ACH / bank transfer";
+        document.getElementById("confirmLead").textContent =
+          "Thanks, " +
+          name +
+          ". You selected " +
+          methodLabel +
+          ". Use reference " +
+          cartRef +
+          ". A copy was sent to customer service" +
+          (email ? " (we have your email: " + email + ")" : "") +
+          ". Pay only with the instructions below.";
+        document.getElementById("payInstructions").textContent = payText;
+        document.getElementById("cartSnapshot").textContent = cartText;
+        confirmPanel.classList.add("show");
+        confirmPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      // Restore confirmation after FormSubmit redirect
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("ordered") === "1") {
+          const raw = sessionStorage.getItem("bw220_last_order");
+          if (raw) {
+            const o = JSON.parse(raw);
+            showConfirmation(o.method, o.payText, o.cartText, o.name, o.email);
+          }
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState({}, "", "https://www.220bioworx.com/cart.html");
+          }
+        }
+      } catch (_) {}
+    })();
+  </script>
+</body>
+</html>

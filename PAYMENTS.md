@@ -1,81 +1,51 @@
-# 220 BioWorX — Payments setup
+# 220 BioWorX — Payments
 
-Public policy: **Zelle** and **ACH only**. Edit live details in `products.html` → `PAYMENT` object near the top of the `<script>` block.
+## Public policy
+- **Zelle** and **ACH only**
+- **No banking / Zelle credentials on marketing pages**
+- Buyer selects method in **cart checkout** (`cart.html`)
+- Instructions appear:
+  1. On-screen after “Request invoice”
+  2. At the **top** of the order email to CS (CC Owner), followed by cart / invoice details
 
-## How to publish Zelle / ACH on the site
-
-1. Open `products.html`
-2. Find `const PAYMENT = { ... }`
-3. Fill fields (examples below)
-4. Commit and push:
-
-```powershell
-cd "$env:USERPROFILE\Desktop\220bioworx-landing"
-git add products.html
-git commit -m "Publish payment details"
-git push
-```
-
-Empty strings (`""`) show: **Issued with invoice / order confirmation**.
-
-### Example filled config
+## Where secrets live
+Edit: **`payment-config.js`**
 
 ```js
-const PAYMENT = {
-  zelle: {
-    recipientName: "220 BioWorX",
-    sendTo: "payments@220bioworx.com", // or business mobile enrolled in Zelle
-    memo: "Include invoice / reference number in the Zelle memo",
-  },
-  ach: {
-    accountName: "220 Tech LLC", // exact name on business checking
-    bankName: "Your Bank Name",
-    routing: "XXXXXXXXX",
-    account: "XXXXXXXXXXXX",
-    accountType: "Business checking",
-  },
-  pendingLabel: "Issued with invoice / order confirmation",
+window.BW_PAYMENT = {
+  zelle: { recipientName, sendTo, memo },
+  ach: { accountName, bankName, routing, account, accountType },
+  formSubmitEndpoint: "https://formsubmit.co/<hash>",
+  ownerCc: "Owner@220bioworx.com",
+  discounts: [ { minQty: 10, pct: 20 }, ... ],
 };
 ```
 
-## Recommended: business Zelle (not personal)
+Do **not** put routing/account/Zelle send-to on `products.html` or `index.html`.
 
-| Approach | Recommendation |
-|----------|----------------|
-| Personal checking Zelle | Avoid for business — taxes, liability, customer confusion |
-| **220 Tech business checking + Zelle** | Preferred |
-| Publish full routing/account on website | Optional; many keep ACH **on invoice only** for fraud safety |
+## Cart flow
+1. Items in `sessionStorage` via `cart.js` (`BWCart`)
+2. Cart reference e.g. `BW-250726-AB12`
+3. Select **Zelle** or **ACH**
+4. Submit → FormSubmit email:
+   - Payment instructions for selected method (top)
+   - Shopping cart / invoice lines, discounts, total, reference
+   - Buyer info + RUO attestation
+5. Buyer also sees the same payment block on the confirmation panel
 
-### Typical bank steps
+## Volume discounts (cart totals)
+| Total vials | Discount |
+|-------------|----------|
+| 3+ | 10% |
+| 5+ | 15% |
+| 10+ | 20% |
 
-1. Log into **business** online banking for 220 Tech (business checking).
-2. Find **Zelle** → Enroll / Manage recipients / Receive.
-3. Enroll a **business email** (e.g. payments@ or Customerservice@) if the bank allows business profiles.
-4. Confirm the **display name** customers see matches invoices (220 BioWorX / 220 Tech as bank allows).
-5. Test a small transfer to yourself.
+Applied as: `unit price × qty`, then volume % off subtotal.
 
-If your bank does **not** support business Zelle:
-
-- Use **ACH** from business checking as primary.
-- Or temporary personal Zelle only until business enrollment works — keep it off the public site if possible; put send-to on invoices only.
-
-## Security tip
-
-Publishing full **routing + account** on a public page increases fraud risk. Safer pattern:
-
-- Site: “Zelle & ACH accepted · details on invoice”
-- Invoice email: full Zelle handle + ACH instructions + reference #
-
-You can leave ACH fields empty on the site and only fill `zelle.sendTo` when ready.
-
-## Order / payment process (customer-facing)
-
-1. Research inquiry  
-2. Quote / invoice with reference #  
-3. Customer pays Zelle or ACH with reference in memo  
-4. Customer emails payment confirmation  
-5. Order released  
-
-## Not accepted
-
-Cards, PayPal, Venmo, Cash App, crypto (unless you later change policy and update the page).
+## Deploy
+```powershell
+cd "$env:USERPROFILE\Desktop\220bioworx-landing"
+git add .
+git commit -m "Update payments"
+git push
+```
