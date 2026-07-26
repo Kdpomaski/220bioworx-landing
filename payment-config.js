@@ -1,9 +1,10 @@
 /**
  * 220 BioWorX — payment instructions (not shown on public marketing pages).
  * Included in checkout email + on-screen confirmation ONLY after the buyer
- * selects Zelle or ACH in the shopping cart.
+ * selects a method in the shopping cart.
  *
- * Do not paste these details onto products.html or the home page.
+ * Crypto: use NOWPayments (hosted invoice). Do NOT put API keys here.
+ * Coinbase wallet is configured as a payout wallet inside NOWPayments — not on this site.
  */
 window.BW_PAYMENT = {
   zelle: {
@@ -20,9 +21,25 @@ window.BW_PAYMENT = {
     account: "2215689676",
     accountType: "Business checking",
   },
+  crypto: {
+    label: "Cryptocurrency (NOWPayments)",
+    /**
+     * Optional: paste a fixed NOWPayments invoice URL for manual / flat-rate use.
+     * Leave "" for auto flow: email CS to create invoice, or use createInvoiceUrl worker.
+     */
+    staticInvoiceUrl: "",
+    /**
+     * Optional Cloudflare Worker (or other backend) that holds the NOWPayments API key
+     * and returns { invoice_url }. See nowpayments-worker.js
+     * Example: "https://bw-nowpayments.YOUR_SUBDOMAIN.workers.dev/create-invoice"
+     */
+    createInvoiceUrl: "",
+    priceCurrency: "usd",
+    successPath: "https://www.220bioworx.com/cart.html?crypto=paid",
+    cancelPath: "https://www.220bioworx.com/cart.html?crypto=cancel",
+  },
   formSubmitEndpoint: "https://formsubmit.co/6732b0b86bff8989d370457024b960ee",
   ownerCc: "Owner@220bioworx.com",
-  /** Volume discounts on total vial units in cart */
   discounts: [
     { minQty: 10, pct: 20 },
     { minQty: 5, pct: 15 },
@@ -30,14 +47,23 @@ window.BW_PAYMENT = {
   ],
 };
 
+window.BW_methodLabel = function (method) {
+  if (method === "zelle") return "Zelle";
+  if (method === "ach") return "ACH / bank transfer";
+  if (method === "crypto") return "Cryptocurrency (NOWPayments)";
+  return method || "Unknown";
+};
+
 /**
- * Build plain-text payment block for email / confirmation.
- * @param {"zelle"|"ach"} method
- * @param {string} reference  invoice / cart reference id
+ * @param {"zelle"|"ach"|"crypto"} method
+ * @param {string} reference
+ * @param {{ amount?: number, invoiceUrl?: string }} extra
  */
-window.BW_formatPaymentInstructions = function (method, reference) {
+window.BW_formatPaymentInstructions = function (method, reference, extra) {
   const ref = reference || "(see cart / invoice reference below)";
   const P = window.BW_PAYMENT;
+  extra = extra || {};
+
   if (method === "zelle") {
     const z = P.zelle;
     return [
@@ -52,6 +78,7 @@ window.BW_formatPaymentInstructions = function (method, reference) {
       "══════════════════════════════════════",
     ].join("\n");
   }
+
   if (method === "ach") {
     const a = P.ach;
     return [
@@ -68,5 +95,36 @@ window.BW_formatPaymentInstructions = function (method, reference) {
       "══════════════════════════════════════",
     ].join("\n");
   }
+
+  if (method === "crypto") {
+    const c = P.crypto || {};
+    const lines = [
+      "══════════════════════════════════════",
+      "PAYMENT INSTRUCTIONS — CRYPTOCURRENCY",
+      "══════════════════════════════════════",
+      "Pay with crypto via NOWPayments (hosted invoice).",
+      "Do not send crypto to random addresses from chat or email.",
+      "Order / cart reference: " + ref,
+    ];
+    if (extra.amount != null) {
+      lines.push("Amount (USD): $" + Number(extra.amount).toFixed(2));
+    }
+    if (extra.invoiceUrl) {
+      lines.push("Pay here (NOWPayments): " + extra.invoiceUrl);
+    } else if (c.staticInvoiceUrl) {
+      lines.push("Pay here (NOWPayments): " + c.staticInvoiceUrl);
+    } else {
+      lines.push(
+        "A NOWPayments invoice link will be created for this order amount."
+      );
+      lines.push(
+        "If a link is not shown below, customer service will email your crypto payment link shortly."
+      );
+    }
+    lines.push("After payment, keep the NOWPayments receipt and reference " + ref + ".");
+    lines.push("══════════════════════════════════════");
+    return lines.join("\n");
+  }
+
   return "Payment method not selected.";
 };

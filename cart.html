@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Shopping Cart &amp; Checkout | 220 BioWorX</title>
-  <meta name="description" content="220 BioWorX research cart. Select Zelle or ACH at checkout. Payment instructions included on order confirmation. Research Use Only." />
+  <meta name="description" content="220 BioWorX research cart. Select Zelle, ACH, or crypto (NOWPayments) at checkout. Payment instructions on confirmation. Research Use Only." />
   <meta name="theme-color" content="#080B0D" />
   <meta name="referrer" content="origin" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -363,7 +363,7 @@
   </div>
 
   <div class="site-wrap" id="site-wrap" aria-hidden="true">
-    <div class="ruo-banner">Research Use Only · Zelle or ACH at checkout · Banking details only after payment method selected</div>
+    <div class="ruo-banner">Research Use Only · Zelle · ACH · Crypto (NOWPayments) · Details only after method selected</div>
     <header>
       <div class="container nav">
         <a href="index.html" class="brand-link">
@@ -383,9 +383,9 @@
       <div class="container">
         <h1>Cart <span class="accent">&amp; checkout</span></h1>
         <p class="lead">
-          Select <strong>Zelle</strong> or <strong>ACH</strong> below. After you request an invoice,
-          payment instructions for your choice appear on screen and are included at the top of the
-          order email (with full cart / invoice details).
+          Select <strong>Zelle</strong>, <strong>ACH</strong>, or <strong>Cryptocurrency</strong> (NOWPayments).
+          After you request an invoice, instructions for your choice appear on screen and at the top of the
+          order email (with full cart / invoice details). Crypto opens a hosted NOWPayments invoice when configured.
         </p>
 
         <div class="layout">
@@ -413,17 +413,23 @@
               <label class="pay-option">
                 <input type="radio" name="payMethod" value="zelle" required />
                 <div class="po-title">Zelle</div>
-                <div class="po-desc">U.S. domestic · instructions emailed + shown after submit</div>
+                <div class="po-desc">U.S. domestic · instructions shown after submit</div>
               </label>
               <label class="pay-option">
                 <input type="radio" name="payMethod" value="ach" />
                 <div class="po-title">ACH / bank transfer</div>
                 <div class="po-desc">Institutions · routing &amp; account on confirmation only</div>
               </label>
+              <label class="pay-option">
+                <input type="radio" name="payMethod" value="crypto" />
+                <div class="po-title">Cryptocurrency</div>
+                <div class="po-desc">NOWPayments hosted invoice · BTC, ETH, USDT &amp; more (no cards/PayPal)</div>
+              </label>
             </div>
             <p class="pay-hint">
-              Not accepted: cards, PayPal, Venmo, Cash App, crypto.
+              Not accepted: credit/debit cards, PayPal, Venmo, Cash App.
               Do not send payment without this cart reference / invoice.
+              Crypto: only pay through the official NOWPayments link we provide — never to addresses from unverified messages.
             </p>
 
             <form id="checkoutForm" style="margin-top:1.25rem;">
@@ -458,8 +464,8 @@
                 Request invoice &amp; get payment instructions
               </button>
               <p class="pay-hint">
-                Submits cart + payment choice to customer service. You will see Zelle or ACH instructions
-                on this page immediately after a successful request.
+                Submits cart + payment choice to customer service. You will see method-specific instructions
+                on this page after a successful request (crypto may open NOWPayments).
               </p>
             </form>
 
@@ -660,7 +666,7 @@
         const methodEl = form.closest(".card").querySelector('input[name="payMethod"]:checked');
         const method = methodEl ? methodEl.value : "";
         if (!method) {
-          formError.textContent = "Select Zelle or ACH as your payment method.";
+          formError.textContent = "Select Zelle, ACH, or Cryptocurrency as your payment method.";
           formError.classList.add("show");
           return;
         }
@@ -681,43 +687,81 @@
         const email = document.getElementById("buyerEmail").value.trim();
         const note = document.getElementById("buyerNote").value.trim();
         const items = BWCart.getItems();
+        const t = BWCart.totals();
         const cartText = BWCart.formatCartText(items, cartRef);
-        const payText = window.BW_formatPaymentInstructions(method, cartRef);
-        const methodLabel = method === "zelle" ? "Zelle" : "ACH / bank transfer";
+        const methodLabel = window.BW_methodLabel(method);
+        const cryptoCfg = (window.BW_PAYMENT && window.BW_PAYMENT.crypto) || {};
 
-        const emailBody = [
-          payText,
-          "",
-          cartText,
-          "",
-          "BUYER",
-          "--------------------------------",
-          "Name: " + name,
-          "Organization: " + org,
-          "Email: " + email,
-          "Payment method selected: " + methodLabel,
-          "RUO attestation: Yes",
-          note ? "Notes: " + note : "Notes: —",
-          "Source: www.220bioworx.com/cart.html",
-        ].join("\n");
-
-        const endpoint =
-          (window.BW_PAYMENT && window.BW_PAYMENT.formSubmitEndpoint) ||
-          "https://formsubmit.co/6732b0b86bff8989d370457024b960ee";
-        const cc = (window.BW_PAYMENT && window.BW_PAYMENT.ownerCc) || "Owner@220bioworx.com";
-
-        // Classic form POST via temporary form (most reliable with FormSubmit hash)
         submitBtn.disabled = true;
         submitBtn.textContent = "Sending…";
 
+        let invoiceUrl = "";
+        let cryptoExtra = { amount: t.total };
+
         try {
-          // Prefer fetch AJAX if available, fall back to form POST navigation
+          // Crypto: create NOWPayments invoice via secure Worker (if configured)
+          if (method === "crypto" && cryptoCfg.createInvoiceUrl) {
+            submitBtn.textContent = "Creating crypto invoice…";
+            const invRes = await fetch(cryptoCfg.createInvoiceUrl, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                price_amount: t.total > 0 ? t.total : 1,
+                price_currency: cryptoCfg.priceCurrency || "usd",
+                order_id: cartRef,
+                order_description: "220 BioWorX research cart " + cartRef,
+                success_url: cryptoCfg.successPath,
+                cancel_url: cryptoCfg.cancelPath,
+              }),
+            });
+            const invData = await invRes.json().catch(() => ({}));
+            if (invRes.ok && invData.invoice_url) {
+              invoiceUrl = invData.invoice_url;
+              cryptoExtra.invoiceUrl = invoiceUrl;
+            } else {
+              console.warn("NOWPayments invoice failed", invData);
+            }
+          } else if (method === "crypto" && cryptoCfg.staticInvoiceUrl) {
+            invoiceUrl = cryptoCfg.staticInvoiceUrl;
+            cryptoExtra.invoiceUrl = invoiceUrl;
+          }
+
+          const payText = window.BW_formatPaymentInstructions(method, cartRef, cryptoExtra);
+
+          const emailBody = [
+            payText,
+            "",
+            cartText,
+            "",
+            "BUYER",
+            "--------------------------------",
+            "Name: " + name,
+            "Organization: " + org,
+            "Email: " + email,
+            "Payment method selected: " + methodLabel,
+            "RUO attestation: Yes",
+            note ? "Notes: " + note : "Notes: —",
+            invoiceUrl ? "NOWPayments invoice URL: " + invoiceUrl : "",
+            "Source: www.220bioworx.com/cart.html",
+          ]
+            .filter(Boolean)
+            .join("\n");
+
+          const endpoint =
+            (window.BW_PAYMENT && window.BW_PAYMENT.formSubmitEndpoint) ||
+            "https://formsubmit.co/6732b0b86bff8989d370457024b960ee";
+          const cc = (window.BW_PAYMENT && window.BW_PAYMENT.ownerCc) || "Owner@220bioworx.com";
+
           const payload = {
-            _subject: "220 BioWorX — Cart invoice request [" + cartRef + "] — " + methodLabel,
+            _subject: "220 BioWorX — Cart invoice [" + cartRef + "] — " + methodLabel,
             _cc: cc,
             _template: "box",
             _captcha: "false",
-            _next: "https://www.220bioworx.com/cart.html?ordered=1&ref=" + encodeURIComponent(cartRef) + "&pay=" + method,
+            _next:
+              "https://www.220bioworx.com/cart.html?ordered=1&ref=" +
+              encodeURIComponent(cartRef) +
+              "&pay=" +
+              method,
             name: name,
             email: email,
             organization: org,
@@ -732,7 +776,6 @@
             body: JSON.stringify(payload),
           });
 
-          // If ajax fails or needs activation, use classic POST
           let ok = res.ok;
           let data = {};
           try {
@@ -740,8 +783,20 @@
           } catch (_) {}
           if (data.success === "false" || data.success === false) ok = false;
 
+          sessionStorage.setItem(
+            "bw220_last_order",
+            JSON.stringify({
+              ref: cartRef,
+              method,
+              payText,
+              cartText,
+              name,
+              email,
+              invoiceUrl,
+            })
+          );
+
           if (!ok) {
-            // Classic multi-part form submit as fallback
             const f = document.createElement("form");
             f.method = "POST";
             f.action = endpoint;
@@ -754,35 +809,32 @@
               f.appendChild(inp);
             });
             document.body.appendChild(f);
-            // Show local confirmation before navigate in case they come back
-            sessionStorage.setItem(
-              "bw220_last_order",
-              JSON.stringify({ ref: cartRef, method, payText, cartText, name, email })
-            );
             f.submit();
             return;
           }
 
-          showConfirmation(method, payText, cartText, name, email);
-          sessionStorage.setItem(
-            "bw220_last_order",
-            JSON.stringify({ ref: cartRef, method, payText, cartText, name, email })
-          );
+          showConfirmation(method, payText, cartText, name, email, invoiceUrl);
+
+          // Auto-open NOWPayments hosted invoice when available
+          if (method === "crypto" && invoiceUrl) {
+            window.open(invoiceUrl, "_blank", "noopener,noreferrer");
+          }
         } catch (err) {
           console.error(err);
+          const payText = window.BW_formatPaymentInstructions(method, cartRef, cryptoExtra);
           formError.textContent =
-            "Could not send automatically. Your payment instructions are still shown below — email them if needed.";
+            "Could not complete automatically. Instructions are shown below if available.";
           formError.classList.add("show");
-          showConfirmation(method, payText, cartText, name, email);
+          showConfirmation(method, payText, cartText, name, email, invoiceUrl);
         } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = "Request invoice & get payment instructions";
         }
       });
 
-      function showConfirmation(method, payText, cartText, name, email) {
-        const methodLabel = method === "zelle" ? "Zelle" : "ACH / bank transfer";
-        document.getElementById("confirmLead").textContent =
+      function showConfirmation(method, payText, cartText, name, email, invoiceUrl) {
+        const methodLabel = window.BW_methodLabel(method);
+        let lead =
           "Thanks, " +
           name +
           ". You selected " +
@@ -790,8 +842,17 @@
           ". Use reference " +
           cartRef +
           ". A copy was sent to customer service" +
-          (email ? " (we have your email: " + email + ")" : "") +
-          ". Pay only with the instructions below.";
+          (email ? " (" + email + ")" : "") +
+          ".";
+        if (method === "crypto" && invoiceUrl) {
+          lead += " A NOWPayments window should open — complete crypto payment there only.";
+        } else if (method === "crypto") {
+          lead +=
+            " Crypto invoice link will be emailed by customer service if not shown below (Worker not configured yet).";
+        } else {
+          lead += " Pay only with the instructions below.";
+        }
+        document.getElementById("confirmLead").textContent = lead;
         document.getElementById("payInstructions").textContent = payText;
         document.getElementById("cartSnapshot").textContent = cartText;
         confirmPanel.classList.add("show");
@@ -805,11 +866,22 @@
           const raw = sessionStorage.getItem("bw220_last_order");
           if (raw) {
             const o = JSON.parse(raw);
-            showConfirmation(o.method, o.payText, o.cartText, o.name, o.email);
+            showConfirmation(o.method, o.payText, o.cartText, o.name, o.email, o.invoiceUrl);
           }
           if (window.history && window.history.replaceState) {
             window.history.replaceState({}, "", "https://www.220bioworx.com/cart.html");
           }
+        }
+        if (params.get("crypto") === "paid") {
+          formError.classList.remove("show");
+          const note = document.createElement("div");
+          note.className = "form-error show";
+          note.style.background = "rgba(76,90,58,0.2)";
+          note.style.borderColor = "rgba(76,90,58,0.5)";
+          note.style.color = "#c5d0b0";
+          note.textContent =
+            "Crypto payment return detected. Keep your NOWPayments receipt and cart reference. Customer service will confirm when funds clear.";
+          form.parentNode.insertBefore(note, form);
         }
       } catch (_) {}
     })();
