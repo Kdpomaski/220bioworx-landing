@@ -929,6 +929,26 @@
 
     .form-success.show { display: block; }
 
+    .form-error {
+      display: none;
+      padding: 0.85rem;
+      border-radius: 8px;
+      background: rgba(255, 90, 0, 0.1);
+      border: 1px solid rgba(255, 90, 0, 0.4);
+      color: #ffd4bf;
+      font-size: 0.9rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .form-error.show { display: block; }
+
+    .form-error a { color: var(--orange); }
+
+    #formSubmitBtn.is-loading {
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
     .form-note {
       font-size: 0.74rem;
       color: var(--steel);
@@ -1369,10 +1389,31 @@
             </div>
           </div>
 
-          <form class="form" id="contactForm" novalidate>
+          <form
+            class="form"
+            id="contactForm"
+            action="https://formsubmit.co/Customerservice@220bioworx.com"
+            method="POST"
+          >
             <div class="form-success" id="formSuccess" role="status">
-              Thank you. Your research inquiry has been recorded for follow-up. Connect this form to your inbox or Wix form before production use.
+              Thank you. Your research inquiry was sent. We will follow up at the email you provided.
             </div>
+            <div class="form-error" id="formError" role="alert" hidden>
+              We could not send your inquiry. Please email
+              <a href="mailto:Customerservice@220bioworx.com">Customerservice@220bioworx.com</a>
+              directly, or try again in a moment.
+            </div>
+
+            <!-- FormSubmit routing: To CS, CC owner -->
+            <input type="hidden" name="_subject" value="220 BioWorX — Research inquiry" />
+            <input type="hidden" name="_cc" value="Owner@220bioworx.com" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_honey" value="" style="display:none" tabindex="-1" autocomplete="off" />
+            <input type="text" name="_gotcha" value="" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <input type="hidden" name="_next" value="https://www.220bioworx.com/?inquiry=sent#contact" />
+            <input type="hidden" name="form_source" value="www.220bioworx.com contact form" />
+
             <div class="form-row">
               <div class="form-group">
                 <label for="name">Full name</label>
@@ -1404,16 +1445,16 @@
               <textarea id="message" name="message" placeholder="Describe your laboratory research context or institutional needs…" required></textarea>
             </div>
             <div class="form-attestation">
-              <input type="checkbox" id="form-ruo" name="form-ruo" required />
+              <input type="checkbox" id="form-ruo" name="ruo_attestation" value="Yes — 21+, RUO only, not for human/veterinary use" required />
               <label for="form-ruo" style="margin: 0; color: var(--muted);">
                 I reaffirm I am 21+, that this inquiry is for lawful Research Use Only, and that I am not seeking
                 products for human or veterinary use.
               </label>
             </div>
-            <button type="submit" class="btn btn-primary" style="width: 100%;">Submit inquiry</button>
+            <button type="submit" class="btn btn-primary" id="formSubmitBtn" style="width: 100%;">Submit inquiry</button>
             <p class="form-note">
-              Submitting does not create a sale, prescription, or clinical relationship. Orders, if any, remain
-              subject to verification, availability, and our terms.
+              Submissions are emailed to Customerservice@220bioworx.com (CC: Owner@220bioworx.com).
+              Submitting does not create a sale, prescription, or clinical relationship.
             </p>
           </form>
         </div>
@@ -1731,15 +1772,73 @@
         })
       );
 
-      document.getElementById("contactForm").addEventListener("submit", (e) => {
+      // Inquiry form → FormSubmit → Customerservice@ + CC Owner@
+      const contactForm = document.getElementById("contactForm");
+      const formSuccess = document.getElementById("formSuccess");
+      const formError = document.getElementById("formError");
+      const formSubmitBtn = document.getElementById("formSubmitBtn");
+      const FORM_ENDPOINT = "https://formsubmit.co/ajax/Customerservice@220bioworx.com";
+
+      // Show success if redirected back after non-AJAX submit
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("inquiry") === "sent") {
+          formSuccess.classList.add("show");
+          formSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      } catch (_) {}
+
+      contactForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+        formSuccess.classList.remove("show");
+        formError.classList.remove("show");
+        formError.hidden = true;
+
         const formRuo = document.getElementById("form-ruo");
         if (!formRuo.checked) {
           formRuo.focus();
           return;
         }
-        document.getElementById("formSuccess").classList.add("show");
-        e.target.reset();
+
+        const fd = new FormData(contactForm);
+        // Drop empty honeypot-style fields FormSubmit uses for spam
+        const payload = {};
+        fd.forEach((value, key) => {
+          if (key === "_gotcha" || key === "_honey") return;
+          payload[key] = value;
+        });
+
+        formSubmitBtn.classList.add("is-loading");
+        formSubmitBtn.textContent = "Sending…";
+
+        try {
+          const res = await fetch(FORM_ENDPOINT, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (!res.ok) throw new Error("Form service error " + res.status);
+
+          const data = await res.json().catch(() => ({}));
+          if (data.success === "false" || data.success === false) {
+            throw new Error(data.message || "Send failed");
+          }
+
+          formSuccess.classList.add("show");
+          contactForm.reset();
+          formSuccess.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } catch (err) {
+          console.error(err);
+          formError.hidden = false;
+          formError.classList.add("show");
+        } finally {
+          formSubmitBtn.classList.remove("is-loading");
+          formSubmitBtn.textContent = "Submit inquiry";
+        }
       });
 
       document.addEventListener("keydown", (e) => {
