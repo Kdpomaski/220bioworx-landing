@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Storefront · Coming Soon | 220 BioWorX</title>
+  <meta name="description" content="220 BioWorX research storefront — coming soon. Research Use Only. Payments accepted via Zelle and ACH only. Not for human use." />
+  <meta name="theme-color" content="#080B0D" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --carbon: #080B0D;
+      --graphite: #1C1F22;
+      --steel: #70777D;
+      --od-green: #4C5A3A;
+      --orange: #FF5A00;
+      --orange-hover: #ff6f1f;
+      --orange-soft: rgba(255, 90, 0, 0.12);
+      --orange-glow: rgba(255, 90, 0, 0.28);
+      --white: #ffffff;
+      --text: #e8eaec;
+      --muted: #9aa1a6;
+      --border: rgba(112, 119, 125, 0.28);
+      --border-strong: rgba(255, 90, 0, 0.4);
+      --max: 1120px;
+      --font-head: "Poppins", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--carbon);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body.gate-locked { overflow: hidden; }
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { color: var(--orange-hover); text-decoration: underline; }
+
+    .container {
+      width: min(100% - 2rem, var(--max));
+      margin-inline: auto;
+    }
+
+    /* ── Age gate (same policy as home) ── */
+    #age-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      background:
+        radial-gradient(ellipse 70% 45% at 50% -10%, rgba(255, 90, 0, 0.14), transparent 55%),
+        rgba(8, 11, 13, 0.97);
+      backdrop-filter: blur(10px);
+    }
+
+    #age-gate[hidden] { display: none !important; }
+
+    .gate-card {
+      width: min(100%, 540px);
+      background: var(--graphite);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 2rem 1.75rem 1.65rem;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.65);
+    }
+
+    .gate-logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      line-height: 0;
+    }
+
+    .gate-logo img {
+      width: min(100%, 320px);
+      max-height: 92px;
+      object-fit: contain;
+    }
+
+    .gate-badge {
+      display: inline-flex;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      background: var(--orange-soft);
+      border: 1px solid rgba(255, 90, 0, 0.4);
+      color: var(--orange);
+      font-family: var(--font-head);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 auto 1rem;
+    }
+
+    .gate-card h1 {
+      font-family: var(--font-head);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 0.65rem;
+    }
+
+    .gate-card .lead {
+      font-family: var(--font-body);
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+      margin-bottom: 1.15rem;
+    }
+
+    .gate-ruo {
+      background: rgba(255, 90, 0, 0.08);
+      border: 1px solid rgba(255, 90, 0, 0.35);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-size: 0.86rem;
+      color: #ffd4bf;
+      margin-bottom: 1.15rem;
+      text-align: center;
+    }
+
+    .gate-ruo strong { color: var(--orange); font-family: var(--font-head); }
+
+    .gate-check {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin-bottom: 0.85rem;
+      font-size: 0.88rem;
+    }
+
+    .gate-check input {
+      margin-top: 0.2rem;
+      width: 1.05rem;
+      height: 1.05rem;
+      accent-color: var(--orange);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .gate-check label { cursor: pointer; }
+
+    .gate-actions {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 0.75rem;
+      margin-top: 1.15rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.35rem;
+      border-radius: 8px;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s, opacity 0.15s;
+      text-decoration: none !important;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      box-shadow: 0 8px 28px var(--orange-glow);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--orange-hover);
+      color: var(--white);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--steel);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--steel);
+      color: var(--text);
+    }
+
+    .gate-error {
+      display: none;
+      margin-top: 0.85rem;
+      font-size: 0.84rem;
+      color: #ff8a5c;
+      text-align: center;
+    }
+
+    .gate-error.show { display: block; }
+
+    .gate-legal {
+      margin-top: 1.1rem;
+      font-size: 0.72rem;
+      color: var(--steel);
+      text-align: center;
+    }
+
+    .site-wrap[aria-hidden="true"] {
+      visibility: hidden;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .ruo-banner {
+      background: #140c08;
+      border-bottom: 1px solid rgba(255, 90, 0, 0.45);
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0.55rem 1rem;
+    }
+
+    .ruo-banner span { color: #ffc9a8; }
+    .ruo-banner strong { color: var(--orange); }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(8, 11, 13, 0.94);
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 0;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none !important;
+      line-height: 0;
+    }
+
+    .brand-link img.logo-full {
+      height: 48px;
+      width: auto;
+      max-width: min(280px, 52vw);
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--white); }
+
+    .btn-nav {
+      padding: 0.55rem 1.1rem;
+      font-size: 0.8rem;
+      color: var(--white) !important;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--white);
+      border-radius: 8px;
+      padding: 0.35rem 0.55rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    /* ── Storefront coming soon ── */
+    .storefront {
+      position: relative;
+      padding: 5rem 0 4.5rem;
+      overflow: hidden;
+      min-height: calc(100vh - 180px);
+      display: flex;
+      align-items: center;
+    }
+
+    .storefront::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 50% at 80% 20%, rgba(255, 90, 0, 0.12), transparent 55%),
+        radial-gradient(ellipse 40% 45% at 15% 80%, rgba(76, 90, 58, 0.18), transparent 50%),
+        var(--carbon);
+      z-index: 0;
+    }
+
+    .storefront .container {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      text-align: center;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(76, 90, 58, 0.2);
+      border: 1px solid rgba(76, 90, 58, 0.5);
+      color: #c5d0b0;
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .status-pill::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--od-green);
+      box-shadow: 0 0 10px var(--od-green);
+    }
+
+    h1 {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: clamp(2rem, 4.5vw, 2.85rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+
+    h1 .accent { color: var(--orange); }
+
+    .lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      max-width: 36rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .panel-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+
+    .panel {
+      background: var(--graphite);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem 1.25rem;
+    }
+
+    .panel h2 {
+      font-family: var(--font-head);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.65rem;
+    }
+
+    .panel p,
+    .panel li {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .panel ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .panel li {
+      padding-left: 1.1rem;
+      position: relative;
+    }
+
+    .panel li::before {
+      content: "·";
+      position: absolute;
+      left: 0;
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    /* Payment notice — insert account details later inside #payment-details */
+    .payment-banner {
+      background: linear-gradient(160deg, rgba(28, 31, 34, 0.98), rgba(8, 11, 13, 0.98));
+      border: 1px solid rgba(255, 90, 0, 0.4);
+      border-radius: 14px;
+      padding: 1.5rem 1.35rem;
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+
+    .payment-banner h2 {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.5rem;
+    }
+
+    .payment-banner > p {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .payment-methods {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+
+    .pay-card {
+      background: rgba(8, 11, 13, 0.65);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+
+    .pay-card h3 {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 0.35rem;
+    }
+
+    .pay-card p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 0.65rem;
+    }
+
+    /*
+      FUTURE: Insert Zelle / ACH account details below.
+      See comments inside #payment-details in the HTML.
+    */
+    .payment-detail-slot {
+      font-size: 0.8rem;
+      color: var(--steel);
+      font-style: italic;
+      border-top: 1px dashed var(--border);
+      padding-top: 0.55rem;
+      margin-top: 0.35rem;
+      min-height: 1.4em;
+    }
+
+    .payment-detail-slot:empty::before {
+      content: attr(data-placeholder);
+      color: var(--steel);
+    }
+
+    .payment-detail-slot:not(:empty) {
+      font-style: normal;
+      color: var(--text);
+    }
+
+    .not-accepted {
+      margin-top: 0.85rem;
+      font-size: 0.8rem;
+      color: var(--steel);
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    .ruo-note {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+      color: var(--steel);
+      max-width: 34rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 0 2rem;
+      background: #030405;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    footer p {
+      font-size: 0.76rem;
+      color: var(--steel);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .footer-links a {
+      color: var(--steel);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: var(--orange); }
+
+    @media (max-width: 700px) {
+      .panel-grid,
+      .payment-methods { grid-template-columns: 1fr; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        background: var(--graphite);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 1.25rem 1.25rem;
+        gap: 0.65rem;
+      }
+
+      .nav-links.open { display: flex; }
+      .menu-toggle { display: block; }
+      header { position: relative; }
+      .gate-actions { grid-template-columns: 1fr; }
+      .brand-link img.logo-full { height: 40px; }
+    }
+  </style>
+</head>
+<body class="gate-locked">
+  <!-- Age gate -->
+  <div id="age-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <div class="gate-card">
+      <div class="gate-logo">
+        <img src="logo-header.png" alt="220 BioWorX — Biomolecular Research" width="320" height="92" />
+      </div>
+      <div style="text-align:center;">
+        <span class="gate-badge">Restricted access · 21+</span>
+      </div>
+      <h1 id="gate-title">Age &amp; research-use verification</h1>
+      <p class="lead">
+        This storefront is for qualified adults engaged in legitimate laboratory or scientific research.
+      </p>
+      <div class="gate-ruo">
+        <strong>RESEARCH USE ONLY (RUO).</strong><br />
+        Materials are not for human or veterinary use, consumption, injection, or clinical application.
+      </div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-age" />
+        <label for="cert-age">I certify that I am <strong>21 years of age or older</strong>.</label>
+      </div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-ruo" />
+        <label for="cert-ruo">
+          I understand products are <strong>Research Use Only</strong> and <strong>not for human use</strong>.
+        </label>
+      </div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-lawful" />
+        <label for="cert-lawful">
+          I will use materials only for lawful research under applicable law.
+        </label>
+      </div>
+      <div class="gate-actions">
+        <button type="button" class="btn btn-secondary" id="gate-exit">Exit</button>
+        <button type="button" class="btn btn-primary" id="gate-enter" disabled>Enter storefront</button>
+      </div>
+      <p class="gate-error" id="gate-error" role="alert">Please complete all certifications to continue.</p>
+      <p class="gate-legal">
+        By entering, you acknowledge these certifications and our Research Use Only terms.
+      </p>
+    </div>
+  </div>
+
+  <div class="site-wrap" id="site-wrap" aria-hidden="true">
+    <div class="ruo-banner" role="note">
+      <span>
+        <strong>Research Use Only (RUO)</strong> — Not for human use · Storefront coming soon · Zelle &amp; ACH only
+      </span>
+    </div>
+
+    <header>
+      <div class="container nav">
+        <a href="index.html" class="brand-link" aria-label="220 BioWorX home">
+          <img class="logo-full" src="logo-header.png" alt="220 BioWorX — Biomolecular Research" width="280" height="80" />
+        </a>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">☰</button>
+        <nav class="nav-links" id="navLinks">
+          <a href="products.html" class="active">Products</a>
+          <a href="index.html#intended-use">Intended use</a>
+          <a href="index.html#compliance">Compliance</a>
+          <a href="index.html#disclosures">Disclosures</a>
+          <a href="index.html#contact" class="btn btn-primary btn-nav">Research inquiry</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="storefront">
+      <div class="container">
+        <div class="status-pill">Storefront · Coming soon</div>
+        <h1>
+          Research catalog
+          <span class="accent">launching soon.</span>
+        </h1>
+        <p class="lead">
+          Our online storefront for research peptides, biomolecular compounds, and lab supplies is being prepared.
+          Qualified researchers can still submit an inquiry on our main site.
+        </p>
+
+        <div class="panel-grid">
+          <article class="panel">
+            <h2>What to expect</h2>
+            <ul>
+              <li>Research Use Only catalog browsing</li>
+              <li>Institutional &amp; research inquiries</li>
+              <li>Documentation requests (where available)</li>
+              <li>Order workflow for qualified purchasers</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <h2>Until then</h2>
+            <ul>
+              <li>Use Research inquiry on the home page</li>
+              <li>Email Customerservice@220bioworx.com</li>
+              <li>Confirm RUO intended use on every order</li>
+              <li>Payment: Zelle or ACH only (below)</li>
+            </ul>
+          </article>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             PAYMENT POLICY + DETAIL SLOTS
+             Currently we only accept Zelle and ACH.
+             When ready to publish account details, fill the empty
+             <div class="payment-detail-slot" id="..."> elements below.
+             Leave empty to show the placeholder text automatically.
+             ═══════════════════════════════════════════════════════════ -->
+        <div class="payment-banner" id="payment-details">
+          <h2>Accepted payment methods</h2>
+          <p>
+            <strong>We currently accept Zelle and ACH payments only.</strong>
+            We do not accept credit cards, debit cards, PayPal, cash apps (other than Zelle), or cryptocurrency at this time.
+          </p>
+
+          <div class="payment-methods">
+            <div class="pay-card" id="payment-zelle">
+              <h3>Zelle</h3>
+              <p>Preferred for domestic research orders after quote / confirmation.</p>
+              <!-- INSERT ZELLE DETAILS HERE (email or U.S. mobile on file) -->
+              <div
+                class="payment-detail-slot"
+                id="zelle-recipient"
+                data-placeholder="Recipient details provided with order confirmation"
+              ></div>
+              <div
+                class="payment-detail-slot"
+                id="zelle-handle"
+                data-placeholder="Zelle send-to: (to be published)"
+              ></div>
+            </div>
+
+            <div class="pay-card" id="payment-ach">
+              <h3>ACH / bank transfer</h3>
+              <p>For institutional and larger research purchases after invoice.</p>
+              <!-- INSERT ACH / BANK DETAILS HERE -->
+              <div
+                class="payment-detail-slot"
+                id="ach-bank-name"
+                data-placeholder="Bank name: (to be published)"
+              ></div>
+              <div
+                class="payment-detail-slot"
+                id="ach-routing"
+                data-placeholder="Routing number: (to be published)"
+              ></div>
+              <div
+                class="payment-detail-slot"
+                id="ach-account"
+                data-placeholder="Account number: (to be published)"
+              ></div>
+              <div
+                class="payment-detail-slot"
+                id="ach-account-name"
+                data-placeholder="Account name: (to be published)"
+              ></div>
+            </div>
+          </div>
+
+          <p class="not-accepted">
+            Payment instructions and reference numbers are issued with each confirmed research order.
+            Do not send payment without a written quote or invoice from 220 BioWorX.
+          </p>
+        </div>
+
+        <div class="actions">
+          <a href="index.html#contact" class="btn btn-primary">Research inquiry</a>
+          <a href="index.html" class="btn btn-secondary">Back to home</a>
+        </div>
+
+        <p class="ruo-note">
+          Research Use Only. Not for human or veterinary use. Not a 503A or 503B compounding pharmacy.
+          Products are not intended to diagnose, treat, cure, or prevent any disease.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container footer-inner">
+        <p>© <span id="year"></span> 220 BioWorX. All rights reserved. Research Use Only. Not for Human Use.</p>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Products</a>
+          <a href="index.html#disclosures">Disclosures</a>
+          <a href="index.html#contact">Contact</a>
+          <a href="#" id="reset-gate">Reset age gate</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const GATE_KEY = "bw220_age_gate_v2";
+      const gate = document.getElementById("age-gate");
+      const site = document.getElementById("site-wrap");
+      const btnEnter = document.getElementById("gate-enter");
+      const btnExit = document.getElementById("gate-exit");
+      const err = document.getElementById("gate-error");
+      const checks = [
+        document.getElementById("cert-age"),
+        document.getElementById("cert-ruo"),
+        document.getElementById("cert-lawful"),
+      ];
+
+      function allChecked() {
+        return checks.every((c) => c.checked);
+      }
+
+      function syncEnter() {
+        btnEnter.disabled = !allChecked();
+        if (allChecked()) err.classList.remove("show");
+      }
+
+      function unlockSite() {
+        gate.hidden = true;
+        site.removeAttribute("aria-hidden");
+        document.body.classList.remove("gate-locked");
+      }
+
+      function lockSite() {
+        gate.hidden = false;
+        site.setAttribute("aria-hidden", "true");
+        document.body.classList.add("gate-locked");
+        checks.forEach((c) => (c.checked = false));
+        syncEnter();
+      }
+
+      checks.forEach((c) => c.addEventListener("change", syncEnter));
+
+      btnEnter.addEventListener("click", () => {
+        if (!allChecked()) {
+          err.classList.add("show");
+          return;
+        }
+        try {
+          sessionStorage.setItem(
+            GATE_KEY,
+            JSON.stringify({ ts: Date.now(), age21: true, ruo: true, lawful: true })
+          );
+        } catch (_) {}
+        unlockSite();
+      });
+
+      btnExit.addEventListener("click", () => {
+        window.location.href = "https://www.google.com";
+      });
+
+      document.getElementById("reset-gate").addEventListener("click", (e) => {
+        e.preventDefault();
+        try { sessionStorage.removeItem(GATE_KEY); } catch (_) {}
+        lockSite();
+        window.scrollTo(0, 0);
+      });
+
+      let admitted = false;
+      try {
+        const raw = sessionStorage.getItem(GATE_KEY);
+        if (raw) {
+          const data = JSON.parse(raw);
+          if (data && data.age21 && data.ruo && data.lawful) admitted = true;
+        }
+      } catch (_) {}
+
+      if (admitted) unlockSite();
+      else lockSite();
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      const toggle = document.getElementById("menuToggle");
+      const links = document.getElementById("navLinks");
+      toggle.addEventListener("click", () => {
+        const open = links.classList.toggle("open");
+        toggle.textContent = open ? "✕" : "☰";
+      });
+      links.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+          links.classList.remove("open");
+          toggle.textContent = "☰";
+        })
+      );
+    })();
+  </script>
+</body>
+</html>
