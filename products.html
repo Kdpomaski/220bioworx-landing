@@ -834,7 +834,10 @@
 
             <div class="pay-card" id="payment-ach">
               <h3>ACH / bank transfer <span class="tag">Institutions</span></h3>
-              <p class="desc">For institutional PO-style and larger research purchases after invoice.</p>
+              <p class="desc">
+                For institutional and larger research purchases.
+                <strong>Full bank routing and account numbers are provided only on your written invoice</strong> — not published on this site.
+              </p>
               <div class="pay-rows">
                 <div class="pay-row">
                   <span class="lbl">Account name</span>
@@ -923,11 +926,12 @@
           sendTo: "Customerservice@220bioworx.com",
           memo: "Include invoice / reference number in the Zelle memo",
         },
+        // Banking (ACH) details stay empty on the public site — sent only with invoice
         ach: {
           accountName: "220 Tech",
-          bankName: "Wells Fargo",
-          routing: "063107513",
-          account: "2215689676",
+          bankName: "",
+          routing: "",
+          account: "",
           accountType: "Business checking",
         },
         pendingLabel: "Issued with invoice / order confirmation",
