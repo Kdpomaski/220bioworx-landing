@@ -1410,12 +1410,26 @@
             </div>
           </div>
 
-          <form class="form" id="contactForm" novalidate>
+          <form
+            class="form"
+            id="contactForm"
+            action="https://formsubmit.co/6732b0b86bff8989d370457024b960ee"
+            method="POST"
+            referrerpolicy="origin"
+          >
             <div class="form-success" id="formSuccess" role="status">
-              Thank you. Your email app should open with the inquiry ready — press <strong>Send</strong> to deliver
-              to Customerservice@220bioworx.com (CC: Owner@220bioworx.com).
+              Thank you. Your research inquiry was sent. We will follow up if appropriate.
             </div>
             <div class="form-error" id="formError" role="alert" hidden></div>
+
+            <!-- FormSubmit random endpoint (hides inbox address in page source) -->
+            <input type="hidden" name="_subject" value="220 BioWorX — Research inquiry" />
+            <input type="hidden" name="_cc" value="Owner@220bioworx.com" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="https://www.220bioworx.com/?inquiry=sent#contact" />
+            <input type="hidden" name="form_source" value="www.220bioworx.com" />
+            <input type="text" name="_gotcha" value="" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
             <div class="form-row">
               <div class="form-group">
@@ -1448,7 +1462,7 @@
               <textarea id="message" name="message" placeholder="Describe your laboratory research context or institutional needs…" required></textarea>
             </div>
             <div class="form-attestation">
-              <input type="checkbox" id="form-ruo" name="ruo_attestation" value="yes" required />
+              <input type="checkbox" id="form-ruo" name="ruo_attestation" value="Yes — 21+, RUO only, not for human/veterinary use" required />
               <label for="form-ruo" style="margin: 0; color: var(--muted);">
                 I reaffirm I am 21+, that this inquiry is for lawful Research Use Only, and that I am not seeking
                 products for human or veterinary use.
@@ -1457,20 +1471,9 @@
             <button type="submit" class="btn btn-primary" id="formSubmitBtn" style="width: 100%;">
               Submit inquiry
             </button>
-            <button type="button" class="btn btn-secondary" id="formCopyBtn" style="width: 100%; margin-top: 0.65rem;">
-              Copy inquiry text instead
-            </button>
             <p class="form-note">
-              Inquiries are addressed to
-              <strong>Customerservice@220bioworx.com</strong>
-              and CC
-              <strong>Owner@220bioworx.com</strong>.
-              Submit opens your email app with the message filled in — press Send to deliver.
+              Inquiries are delivered to our customer service inbox (CC: Owner).
               Submitting does not create a sale, prescription, or clinical relationship.
-            </p>
-            <p class="form-note" style="margin-top: 0.35rem;">
-              Direct:
-              <a href="mailto:Customerservice@220bioworx.com?cc=Owner@220bioworx.com&amp;subject=220%20BioWorX%20Research%20Inquiry">Customerservice@220bioworx.com</a>
             </p>
           </form>
         </div>
@@ -1788,150 +1791,52 @@
         })
       );
 
-      // Inquiry form — reliable path without FormSubmit (blocked on many browsers / local files).
-      // Builds a mailto to Customerservice@ with CC Owner@ so the visitor's email app sends it.
-      const INQUIRY_TO = "Customerservice@220bioworx.com";
-      const INQUIRY_CC = "Owner@220bioworx.com";
-
+      // Inquiry form → FormSubmit random endpoint (email hidden from page source)
+      // action: https://formsubmit.co/6732b0b86bff8989d370457024b960ee
       const contactForm = document.getElementById("contactForm");
       const formSuccess = document.getElementById("formSuccess");
       const formError = document.getElementById("formError");
       const formSubmitBtn = document.getElementById("formSubmitBtn");
-      const formCopyBtn = document.getElementById("formCopyBtn");
 
-      function showFormError(msg) {
-        formError.hidden = false;
-        formError.classList.add("show");
-        formError.innerHTML = msg;
-      }
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get("inquiry") === "sent") {
+          formSuccess.classList.add("show");
+          formSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+          if (window.history && window.history.replaceState) {
+            window.history.replaceState({}, "", "https://www.220bioworx.com/#contact");
+          }
+        }
+      } catch (_) {}
 
-      function hideFormMessages() {
+      contactForm.addEventListener("submit", (e) => {
         formSuccess.classList.remove("show");
         formError.classList.remove("show");
         formError.hidden = true;
-      }
 
-      function collectInquiry() {
-        const name = document.getElementById("name").value.trim();
-        const org = document.getElementById("org").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const role = document.getElementById("role").value;
-        const message = document.getElementById("message").value.trim();
-        const ruo = document.getElementById("form-ruo").checked;
-
-        if (!name || !org || !email || !message) {
-          return { error: "Please complete all required fields." };
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          return { error: "Please enter a valid work email." };
-        }
-        if (!ruo) {
-          return { error: "Please confirm the Research Use Only attestation." };
-        }
-
-        const subject = "220 BioWorX — Research inquiry";
-        const body = [
-          "220 BioWorX research inquiry",
-          "--------------------------------",
-          "Name: " + name,
-          "Organization: " + org,
-          "Email: " + email,
-          "Role: " + role,
-          "RUO attestation: Yes (21+, research use only, not for human/veterinary use)",
-          "Source: www.220bioworx.com",
-          "",
-          "Message:",
-          message,
-          "",
-          "--------------------------------",
-          "Research Use Only. Not for human use.",
-        ].join("\r\n");
-
-        return { name, org, email, role, message, subject, body };
-      }
-
-      function buildMailto(data) {
-        // Keep under common mailto length limits
-        let body = data.body;
-        if (body.length > 1800) {
-          body = body.slice(0, 1800) + "\r\n\r\n[Message truncated — full text was longer]";
-        }
-        return (
-          "mailto:" +
-          encodeURIComponent(INQUIRY_TO).replace(/%40/g, "@") +
-          "?cc=" +
-          encodeURIComponent(INQUIRY_CC) +
-          "&subject=" +
-          encodeURIComponent(data.subject) +
-          "&body=" +
-          encodeURIComponent(body)
-        );
-      }
-
-      contactForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        hideFormMessages();
-
-        const data = collectInquiry();
-        if (data.error) {
-          showFormError(data.error);
+        const formRuo = document.getElementById("form-ruo");
+        if (!formRuo.checked) {
+          e.preventDefault();
+          formError.hidden = false;
+          formError.classList.add("show");
+          formError.textContent = "Please confirm the Research Use Only attestation.";
+          formRuo.focus();
           return;
         }
 
+        // Must use live site (not file://) for FormSubmit
+        if (window.location.protocol === "file:") {
+          e.preventDefault();
+          formError.hidden = false;
+          formError.classList.add("show");
+          formError.innerHTML =
+            "Open the live site at <a href=\"https://www.220bioworx.com/#contact\">www.220bioworx.com</a> to submit.";
+          return;
+        }
+
+        // Native POST to FormSubmit hash endpoint (do not preventDefault)
         formSubmitBtn.classList.add("is-loading");
-        formSubmitBtn.textContent = "Opening email…";
-
-        try {
-          const href = buildMailto(data);
-          // Prefer window.location for widest client support
-          window.location.href = href;
-          formSuccess.classList.add("show");
-          formSuccess.scrollIntoView({ behavior: "smooth", block: "nearest" });
-        } catch (err) {
-          console.error(err);
-          showFormError(
-            "Could not open your email app. Use <strong>Copy inquiry text</strong>, then paste into an email to " +
-              INQUIRY_TO +
-              " (CC " +
-              INQUIRY_CC +
-              ")."
-          );
-        } finally {
-          formSubmitBtn.classList.remove("is-loading");
-          formSubmitBtn.textContent = "Submit inquiry";
-        }
-      });
-
-      formCopyBtn.addEventListener("click", async () => {
-        hideFormMessages();
-        const data = collectInquiry();
-        if (data.error) {
-          showFormError(data.error);
-          return;
-        }
-        const full =
-          "To: " +
-          INQUIRY_TO +
-          "\r\nCC: " +
-          INQUIRY_CC +
-          "\r\nSubject: " +
-          data.subject +
-          "\r\n\r\n" +
-          data.body;
-
-        try {
-          await navigator.clipboard.writeText(full);
-          formSuccess.textContent =
-            "Inquiry copied. Paste into a new email to " +
-            INQUIRY_TO +
-            " (CC " +
-            INQUIRY_CC +
-            ") and send.";
-          formSuccess.classList.add("show");
-        } catch (_) {
-          // Fallback prompt
-          window.prompt("Copy this inquiry text:", full);
-        }
+        formSubmitBtn.textContent = "Sending…";
       });
 
       document.addEventListener("keydown", (e) => {
