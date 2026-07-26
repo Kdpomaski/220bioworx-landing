@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>220 BioWorX | Biomolecular Research — Research Use Only</title>
+  <meta name="description" content="220 BioWorX — high purity research peptides, biomolecular compounds, and lab supplies for scientific exploration. Research Use Only. Not for human use." />
+  <meta name="theme-color" content="#080B0D" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── 220 BioWorX Brand Palette ─── */
+    :root {
+      --carbon: #080B0D;
+      --graphite: #1C1F22;
+      --steel: #70777D;
+      --od-green: #4C5A3A;
+      --od-green-soft: rgba(76, 90, 58, 0.35);
+      --orange: #FF5A00;
+      --orange-hover: #ff6f1f;
+      --orange-soft: rgba(255, 90, 0, 0.12);
+      --orange-glow: rgba(255, 90, 0, 0.28);
+      --white: #ffffff;
+      --off-white: #f2f3f4;
+      --text: #e8eaec;
+      --muted: #9aa1a6;
+      --border: rgba(112, 119, 125, 0.28);
+      --border-strong: rgba(255, 90, 0, 0.4);
+      --max: 1120px;
+      --radius: 12px;
+      --font-head: "Poppins", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--carbon);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    body.gate-locked { overflow: hidden; }
+
+    a { color: var(--orange); text-decoration: none; }
+    a:hover { color: var(--orange-hover); text-decoration: underline; }
+    ul { list-style: none; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(100% - 2rem, var(--max));
+      margin-inline: auto;
+    }
+
+    /* ═══════════ AGE GATE ═══════════ */
+    #age-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.25rem;
+      background:
+        radial-gradient(ellipse 70% 45% at 50% -10%, rgba(255, 90, 0, 0.14), transparent 55%),
+        radial-gradient(ellipse 50% 40% at 100% 100%, rgba(76, 90, 58, 0.2), transparent 50%),
+        rgba(8, 11, 13, 0.97);
+      backdrop-filter: blur(10px);
+    }
+
+    #age-gate[hidden] { display: none !important; }
+
+    .gate-card {
+      width: min(100%, 540px);
+      background: var(--graphite);
+      border: 1px solid var(--border-strong);
+      border-radius: 16px;
+      padding: 2rem 1.75rem 1.65rem;
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 90, 0, 0.08);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gate-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255, 90, 0, 0.04) 0, transparent 40%),
+        linear-gradient(rgba(112, 119, 125, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(112, 119, 125, 0.06) 1px, transparent 1px);
+      background-size: auto, 40px 40px, 40px 40px;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .gate-card > * { position: relative; z-index: 1; }
+
+    .gate-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 1.25rem;
+      line-height: 0;
+    }
+
+    .gate-logo img {
+      height: auto;
+      width: min(100%, 320px);
+      max-height: 92px;
+      margin: 0 auto;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      object-fit: contain;
+    }
+
+    .wordmark {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.55rem;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+
+    .wordmark .worx { color: var(--orange); }
+
+    .tagline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      margin-top: 0.45rem;
+      font-family: var(--font-head);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--od-green);
+    }
+
+    .tagline::before,
+    .tagline::after {
+      content: "";
+      width: 28px;
+      height: 1px;
+      background: var(--od-green);
+      opacity: 0.85;
+    }
+
+    .gate-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      background: var(--orange-soft);
+      border: 1px solid rgba(255, 90, 0, 0.4);
+      color: var(--orange);
+      font-family: var(--font-head);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 0 auto 1rem;
+    }
+
+    .gate-card h1 {
+      font-family: var(--font-head); /* Poppins */
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.25;
+      margin-bottom: 0.65rem;
+      color: var(--white);
+      text-align: center;
+      text-transform: none;
+    }
+
+    .gate-card .lead {
+      font-family: var(--font-body); /* Inter */
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 400;
+      margin-bottom: 1.15rem;
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .gate-check,
+    .gate-check label,
+    .gate-ruo,
+    .gate-legal,
+    .gate-error {
+      font-family: var(--font-body); /* Inter */
+    }
+
+    .gate-ruo {
+      background: rgba(255, 90, 0, 0.08);
+      border: 1px solid rgba(255, 90, 0, 0.35);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      font-size: 0.86rem;
+      color: #ffd4bf;
+      margin-bottom: 1.15rem;
+      text-align: center;
+    }
+
+    .gate-ruo strong {
+      color: var(--orange);
+      font-family: var(--font-head);
+      letter-spacing: 0.04em;
+    }
+
+    .gate-check {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      margin-bottom: 0.85rem;
+      font-size: 0.88rem;
+      color: var(--text);
+    }
+
+    .gate-check input {
+      margin-top: 0.2rem;
+      width: 1.05rem;
+      height: 1.05rem;
+      accent-color: var(--orange);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .gate-check label { cursor: pointer; }
+
+    .gate-actions {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+      gap: 0.75rem;
+      margin-top: 1.15rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.85rem 1.35rem;
+      border-radius: 8px;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s, box-shadow 0.15s, border-color 0.15s, opacity 0.15s;
+      text-decoration: none !important;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: var(--white);
+      box-shadow: 0 8px 28px var(--orange-glow);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--orange-hover);
+      color: var(--white);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--steel);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--steel);
+      color: var(--text);
+    }
+
+    .gate-error {
+      display: none;
+      margin-top: 0.85rem;
+      font-size: 0.84rem;
+      color: #ff8a5c;
+      text-align: center;
+    }
+
+    .gate-error.show { display: block; }
+
+    .gate-legal {
+      margin-top: 1.1rem;
+      font-size: 0.72rem;
+      color: var(--steel);
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    /* ═══════════ SITE ═══════════ */
+    .site-wrap[aria-hidden="true"] {
+      visibility: hidden;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .ruo-banner {
+      background: #140c08;
+      border-bottom: 1px solid rgba(255, 90, 0, 0.45);
+      color: var(--orange);
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: center;
+      padding: 0.55rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .ruo-banner span {
+      display: inline-block;
+      max-width: 58rem;
+      color: #ffc9a8;
+    }
+
+    .ruo-banner strong { color: var(--orange); }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(8, 11, 13, 0.94);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 2rem;
+      z-index: 80;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 0;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      text-decoration: none !important;
+      color: inherit;
+      line-height: 0;
+    }
+
+    .brand-link:hover { color: inherit; opacity: 0.92; }
+
+    .brand-link img.logo-full {
+      height: 48px;
+      width: auto;
+      max-width: min(280px, 52vw);
+      display: block;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      object-fit: contain;
+    }
+
+    .brand-link img.logo-mark {
+      height: 32px;
+      width: auto;
+      flex-shrink: 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+      object-fit: contain;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--font-body);
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .btn-nav {
+      padding: 0.55rem 1.1rem;
+      font-size: 0.8rem;
+      color: var(--white) !important;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--white);
+      border-radius: 8px;
+      padding: 0.35rem 0.55rem;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+
+    /* ─── Hero ─── */
+    .hero {
+      position: relative;
+      padding: 5rem 0 4rem;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 50% at 85% 20%, rgba(255, 90, 0, 0.12), transparent 55%),
+        radial-gradient(ellipse 40% 45% at 10% 80%, rgba(76, 90, 58, 0.18), transparent 50%),
+        linear-gradient(180deg, var(--carbon) 0%, #0d1013 100%);
+      z-index: 0;
+    }
+
+    /* Molecular / circuit motif */
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 15% 30%, rgba(112, 119, 125, 0.15) 1px, transparent 1.5px),
+        radial-gradient(circle at 75% 60%, rgba(255, 90, 0, 0.12) 1px, transparent 1.5px),
+        radial-gradient(circle at 45% 80%, rgba(112, 119, 125, 0.12) 1px, transparent 1.5px),
+        linear-gradient(rgba(112, 119, 125, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(112, 119, 125, 0.04) 1px, transparent 1px);
+      background-size: auto, auto, auto, 48px 48px, 48px 48px;
+      mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, black, transparent);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero .container {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 2.75rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--steel);
+      margin-bottom: 1.15rem;
+    }
+
+    .eyebrow .dot {
+      color: var(--orange);
+      font-size: 0.55rem;
+    }
+
+    h1.hero-title {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: clamp(2.15rem, 4.5vw, 3.15rem);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1.15rem;
+    }
+
+    h1.hero-title .accent {
+      color: var(--orange);
+      display: block;
+    }
+
+    .hero-lead {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 34rem;
+      margin-bottom: 1.65rem;
+      line-height: 1.7;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .trust-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: 6px;
+      background: rgba(28, 31, 34, 0.9);
+      border: 1px solid var(--border);
+      font-family: var(--font-head);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .trust-pill .ico {
+      color: var(--orange);
+      font-size: 0.75rem;
+    }
+
+    .hero-panel {
+      background: linear-gradient(160deg, rgba(28, 31, 34, 0.95), rgba(8, 11, 13, 0.98));
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 1.65rem;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--orange), var(--od-green));
+    }
+
+    .hero-panel h2 {
+      font-family: var(--font-head);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1rem;
+    }
+
+    .hero-panel ul {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .hero-panel li {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      align-items: start;
+    }
+
+    .hero-panel .mark {
+      width: 26px;
+      height: 26px;
+      border-radius: 6px;
+      background: var(--orange-soft);
+      border: 1px solid rgba(255, 90, 0, 0.35);
+      color: var(--orange);
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    /* ─── Sections ─── */
+    section { padding: 4.25rem 0; }
+
+    .section-label {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.55rem;
+    }
+
+    h2.section-title {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: clamp(1.55rem, 3vw, 2.05rem);
+      letter-spacing: -0.015em;
+      color: var(--white);
+      margin-bottom: 0.75rem;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 40rem;
+      margin-bottom: 2rem;
+      font-size: 1rem;
+    }
+
+    #categories {
+      background: var(--graphite);
+      border-block: 1px solid var(--border);
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .cat-card {
+      background: var(--carbon);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.35rem;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cat-card:hover {
+      border-color: rgba(255, 90, 0, 0.45);
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
+    }
+
+    .cat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 1rem;
+      background: var(--orange-soft);
+      border: 1px solid rgba(255, 90, 0, 0.3);
+      color: var(--orange);
+      font-size: 1.2rem;
+    }
+
+    .cat-card h3 {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.45rem;
+    }
+
+    .cat-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* Values strip */
+    .values {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .value-item {
+      text-align: center;
+      padding: 1rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: rgba(8, 11, 13, 0.5);
+    }
+
+    .value-item .vi {
+      color: var(--orange);
+      font-size: 1.15rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .value-item span {
+      font-family: var(--font-head);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--steel);
+    }
+
+    #intended-use { background: var(--carbon); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .card {
+      background: var(--graphite);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.35rem;
+    }
+
+    .card h3 {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.45rem;
+    }
+
+    .card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .prohibited {
+      margin-top: 1.5rem;
+      background: rgba(255, 90, 0, 0.05);
+      border: 1px solid rgba(255, 90, 0, 0.28);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.35rem;
+    }
+
+    .prohibited h3 {
+      font-family: var(--font-head);
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.7rem;
+    }
+
+    .prohibited ul {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.4rem 1.5rem;
+    }
+
+    .prohibited li {
+      font-size: 0.88rem;
+      color: var(--muted);
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .prohibited li::before {
+      content: "×";
+      position: absolute;
+      left: 0;
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    #compliance {
+      background: var(--graphite);
+      border-block: 1px solid var(--border);
+    }
+
+    .compliance-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .compliance-item {
+      background: var(--carbon);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.35rem;
+      border-left: 3px solid var(--od-green);
+    }
+
+    .compliance-item h3 {
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .compliance-item p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    /* CTA band */
+    .cta-band {
+      padding: 0 0 4rem;
+      background: var(--graphite);
+    }
+
+    .cta-inner {
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 0%, rgba(255, 90, 0, 0.12), transparent),
+        var(--carbon);
+      border: 1px solid rgba(255, 90, 0, 0.35);
+      border-radius: 16px;
+      padding: 2.75rem 2rem;
+      text-align: center;
+    }
+
+    .cta-inner h2 {
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: clamp(1.4rem, 3vw, 1.85rem);
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.65rem;
+      letter-spacing: -0.01em;
+    }
+
+    .cta-inner h2 span { color: var(--orange); }
+
+    .cta-inner p {
+      color: var(--muted);
+      max-width: 32rem;
+      margin: 0 auto 1.5rem;
+    }
+
+    .cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+
+    /* Contact */
+    #contact {
+      background: var(--carbon);
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .contact-meta h3 {
+      font-family: var(--font-head);
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--orange);
+      margin-bottom: 0.3rem;
+      margin-top: 1.25rem;
+    }
+
+    .contact-meta h3:first-of-type { margin-top: 0.25rem; }
+
+    .contact-meta p,
+    .contact-meta a {
+      color: var(--text);
+      font-size: 0.98rem;
+    }
+
+    .contact-meta a { text-decoration: none; }
+    .contact-meta a:hover { color: var(--orange); text-decoration: underline; }
+
+    .form {
+      background: var(--graphite);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.5rem;
+    }
+
+    .form-group { margin-bottom: 0.95rem; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.85rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--steel);
+      margin-bottom: 0.35rem;
+      font-family: var(--font-body);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.7rem 0.85rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(8, 11, 13, 0.6);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px var(--orange-soft);
+    }
+
+    select option { background: var(--graphite); }
+    textarea { min-height: 100px; resize: vertical; }
+
+    .form-attestation {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin: 1rem 0;
+    }
+
+    .form-attestation input {
+      width: auto;
+      margin-top: 0.15rem;
+      accent-color: var(--orange);
+    }
+
+    .form-success {
+      display: none;
+      padding: 0.85rem;
+      border-radius: 8px;
+      background: rgba(76, 90, 58, 0.2);
+      border: 1px solid rgba(76, 90, 58, 0.5);
+      color: #c5d0b0;
+      font-size: 0.9rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .form-success.show { display: block; }
+
+    .form-note {
+      font-size: 0.74rem;
+      color: var(--steel);
+      margin-top: 0.75rem;
+    }
+
+    /* Legal footer */
+    .legal-footer {
+      background: #050708;
+      border-top: 2px solid var(--orange);
+      padding: 3rem 0 2rem;
+    }
+
+    .legal-footer h2 {
+      font-family: var(--font-head);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 1rem;
+    }
+
+    .legal-block { margin-bottom: 1.25rem; }
+
+    .legal-block h3 {
+      font-family: var(--font-head);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #c8ccd0;
+      margin-bottom: 0.4rem;
+    }
+
+    .legal-block p,
+    .legal-block li {
+      font-size: 0.78rem;
+      color: var(--steel);
+      line-height: 1.55;
+    }
+
+    .legal-block ul {
+      list-style: disc;
+      padding-left: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .legal-block strong { color: #d8dce0; }
+
+    .legal-highlight {
+      background: rgba(255, 90, 0, 0.07);
+      border: 1px solid rgba(255, 90, 0, 0.3);
+      border-radius: 10px;
+      padding: 1rem 1.15rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .legal-highlight p {
+      font-size: 0.85rem;
+      color: #ffd4bf;
+    }
+
+    .legal-highlight strong { color: var(--orange); }
+
+    .site-footer {
+      padding: 1.75rem 0 2rem;
+      border-top: 1px solid var(--border);
+      background: #030405;
+    }
+
+    .footer-brand-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem 1rem;
+      margin-bottom: 1.25rem;
+      font-family: var(--font-head);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--od-green);
+    }
+
+    .footer-brand-bar .sep { color: var(--orange); opacity: 0.7; }
+
+    .site-footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .site-footer p {
+      font-size: 0.76rem;
+      color: var(--steel);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .footer-links a {
+      color: var(--steel);
+      text-decoration: none;
+    }
+
+    .footer-links a:hover { color: var(--orange); }
+
+    @media (max-width: 900px) {
+      .hero .container,
+      .contact-grid,
+      .compliance-grid { grid-template-columns: 1fr; }
+
+      .cat-grid,
+      .cards { grid-template-columns: 1fr; }
+
+      .values { grid-template-columns: repeat(3, 1fr); }
+
+      .prohibited ul { grid-template-columns: 1fr; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        background: var(--graphite);
+        border-bottom: 1px solid var(--border);
+        padding: 1rem 1.25rem 1.25rem;
+        gap: 0.65rem;
+      }
+
+      .nav-links.open { display: flex; }
+      .menu-toggle { display: block; }
+      header { position: relative; top: 0; }
+      .ruo-banner { position: relative; top: 0; }
+      .gate-actions { grid-template-columns: 1fr; }
+      .brand-link img.logo-full { height: 40px; max-width: min(240px, 58vw); }
+    }
+
+    @media (max-width: 520px) {
+      .form-row { grid-template-columns: 1fr; }
+      .values { grid-template-columns: repeat(2, 1fr); }
+      .gate-card { padding: 1.5rem 1.15rem; }
+      .brand-link img.logo-full { height: 34px; max-width: min(200px, 55vw); }
+      .brand-link img.logo-mark { height: 28px; }
+    }
+  </style>
+</head>
+<body class="gate-locked">
+  <!-- ═══════════ AGE / ACCESS GATE ═══════════ -->
+  <div id="age-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-desc">
+    <div class="gate-card">
+      <div class="gate-logo">
+        <img src="logo-header.png" alt="220 BioWorX — Biomolecular Research" width="320" height="92" />
+      </div>
+
+      <div style="text-align:center;">
+        <span class="gate-badge">Restricted access · 21+</span>
+      </div>
+
+      <h1 id="gate-title">Age &amp; research-use verification</h1>
+      <p class="lead" id="gate-desc">
+        This website is for qualified adults engaged in legitimate laboratory or scientific research.
+        Certify your age and intended use before entering.
+      </p>
+
+      <div class="gate-ruo">
+        <strong>RESEARCH USE ONLY (RUO).</strong><br />
+        Materials on this site are not for human or veterinary use, consumption, injection, or clinical application.
+      </div>
+
+      <div class="gate-check">
+        <input type="checkbox" id="cert-age" name="cert-age" />
+        <label for="cert-age">I certify that I am <strong>21 years of age or older</strong>.</label>
+      </div>
+
+      <div class="gate-check">
+        <input type="checkbox" id="cert-ruo" name="cert-ruo" />
+        <label for="cert-ruo">
+          I understand all products are sold strictly for <strong>Research Use Only</strong>, are
+          <strong>not for human use</strong>, and are not drugs, supplements, or medical devices.
+        </label>
+      </div>
+
+      <div class="gate-check">
+        <input type="checkbox" id="cert-lawful" name="cert-lawful" />
+        <label for="cert-lawful">
+          I will use any materials only in accordance with applicable federal, state, and local laws, and only for lawful research purposes.
+        </label>
+      </div>
+
+      <div class="gate-actions">
+        <button type="button" class="btn btn-secondary" id="gate-exit">Exit</button>
+        <button type="button" class="btn btn-primary" id="gate-enter" disabled>Enter site</button>
+      </div>
+      <p class="gate-error" id="gate-error" role="alert">Please complete all certifications to continue.</p>
+      <p class="gate-legal">
+        By selecting “Enter site,” you acknowledge the certifications above and the legal disclosures on this website.
+        If you do not agree, you must leave.
+      </p>
+    </div>
+  </div>
+
+  <!-- ═══════════ MAIN SITE ═══════════ -->
+  <div class="site-wrap" id="site-wrap" aria-hidden="true">
+    <div class="ruo-banner" role="note">
+      <span>
+        <strong>Research Use Only (RUO)</strong> — Not for human or veterinary use · Not for diagnosis, treatment, cure, or prevention of any disease · Not a 503A or 503B compounding pharmacy
+      </span>
+    </div>
+
+    <header>
+      <div class="container nav">
+        <a href="#top" class="brand-link" aria-label="220 BioWorX home">
+          <img class="logo-full" src="logo-header.png" alt="220 BioWorX — Biomolecular Research" width="280" height="80" />
+        </a>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" type="button">☰</button>
+        <nav class="nav-links" id="navLinks">
+          <a href="#categories">Products</a>
+          <a href="#intended-use">Intended use</a>
+          <a href="#compliance">Compliance</a>
+          <a href="#disclosures">Disclosures</a>
+          <a href="#contact" class="btn btn-primary btn-nav">Research inquiry</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="container">
+          <div>
+            <p class="eyebrow">
+              Research peptides
+              <span class="dot" aria-hidden="true">●</span>
+              Biomolecular compounds
+              <span class="dot" aria-hidden="true">●</span>
+              Lab supplies
+            </p>
+            <h1 class="hero-title">
+              Advancing research.
+              <span class="accent">Delivering reliability.</span>
+            </h1>
+            <p class="hero-lead">
+              High purity peptides and biomolecular compounds for scientific exploration and discovery.
+              220 BioWorX supplies Research Use Only (RUO) materials for qualified laboratory professionals—not for human use.
+            </p>
+            <div class="hero-ctas">
+              <a href="#contact" class="btn btn-primary">Explore research inquiry →</a>
+              <a href="#disclosures" class="btn btn-secondary">Legal disclosures</a>
+            </div>
+            <div class="trust-row">
+              <span class="trust-pill"><span class="ico">⬡</span> Lab tested for purity</span>
+              <span class="trust-pill"><span class="ico">⬡</span> Research use only · not for human use</span>
+              <span class="trust-pill"><span class="ico">⬡</span> Quality assured</span>
+            </div>
+          </div>
+
+          <aside class="hero-panel" aria-label="Important restrictions">
+            <h2>Before you proceed</h2>
+            <ul>
+              <li>
+                <span class="mark">01</span>
+                <span>Products are labeled and sold for <strong>Research Use Only</strong>.</span>
+              </li>
+              <li>
+                <span class="mark">02</span>
+                <span><strong>Not for human or animal consumption</strong>, injection, implantation, or clinical use.</span>
+              </li>
+              <li>
+                <span class="mark">03</span>
+                <span>We are <strong>not</strong> a pharmacy and <strong>not</strong> a 503A or 503B compounding facility.</span>
+              </li>
+              <li>
+                <span class="mark">04</span>
+                <span>Purchasers are solely responsible for lawful handling, storage, and research use.</span>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section id="categories">
+        <div class="container">
+          <p class="section-label">Catalog focus</p>
+          <h2 class="section-title">Materials for the laboratory</h2>
+          <p class="section-intro">
+            Research peptides, biomolecular compounds, and lab supplies—positioned for scientific investigation,
+            precision workflows, and institutional research programs.
+          </p>
+          <div class="cat-grid">
+            <article class="cat-card">
+              <div class="cat-icon" aria-hidden="true">⚗</div>
+              <h3>Research peptides</h3>
+              <p>High-purity peptide materials intended solely for in vitro laboratory research and scientific exploration.</p>
+            </article>
+            <article class="cat-card">
+              <div class="cat-icon" aria-hidden="true">◎</div>
+              <h3>Biomolecular compounds</h3>
+              <p>Research-grade biomolecular compounds supporting method development, analytical work, and controlled studies.</p>
+            </article>
+            <article class="cat-card">
+              <div class="cat-icon" aria-hidden="true">▣</div>
+              <h3>Lab supplies</h3>
+              <p>Supporting laboratory supplies aligned with biomolecular research environments and documentation practices.</p>
+            </article>
+          </div>
+
+          <div class="values" aria-label="Brand values">
+            <div class="value-item"><div class="vi">🔬</div><span>Research</span></div>
+            <div class="value-item"><div class="vi">◎</div><span>Precision</span></div>
+            <div class="value-item"><div class="vi">⬡</div><span>Quality</span></div>
+            <div class="value-item"><div class="vi">◈</div><span>Innovation</span></div>
+            <div class="value-item"><div class="vi">✓</div><span>Integrity</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="intended-use">
+        <div class="container">
+          <p class="section-label">Intended use</p>
+          <h2 class="section-title">Research Use Only — defined</h2>
+          <p class="section-intro">
+            Materials offered by 220 BioWorX are intended exclusively for laboratory research applications
+            by qualified researchers, institutions, and organizations operating under applicable law.
+          </p>
+
+          <div class="cards">
+            <article class="card">
+              <h3>Laboratory investigation</h3>
+              <p>
+                For controlled in vitro experimental use, analytical method development, and other lawful
+                scientific research settings—not for clinical practice or patient care.
+              </p>
+            </article>
+            <article class="card">
+              <h3>No clinical claims</h3>
+              <p>
+                Products have not been evaluated by the FDA for safety or efficacy. No product is offered
+                to diagnose, treat, cure, mitigate, or prevent any disease or condition.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Qualified purchasers</h3>
+              <p>
+                Access is limited to adults 21+ who certify lawful research intent. We reserve the right
+                to refuse or cancel any order inconsistent with RUO status or applicable law.
+              </p>
+            </article>
+          </div>
+
+          <div class="prohibited">
+            <h3>Products are not intended for</h3>
+            <ul>
+              <li>Human consumption or administration</li>
+              <li>Veterinary / animal clinical use</li>
+              <li>In vivo use in humans</li>
+              <li>Diagnostic procedures or clinical testing</li>
+              <li>Dietary supplement or food use</li>
+              <li>Compounding into patient-specific medications</li>
+              <li>Resale as drugs, cosmetics, or consumer wellness products</li>
+              <li>Any use requiring FDA approval or marketing authorization</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="compliance">
+        <div class="container">
+          <p class="section-label">Regulatory posture</p>
+          <h2 class="section-title">Compliance &amp; institutional responsibility</h2>
+          <p class="section-intro">
+            RUO materials require careful handling and clear separation from clinical supply chains.
+            Buyers must ensure their programs remain within research boundaries.
+          </p>
+          <div class="compliance-grid">
+            <article class="compliance-item">
+              <h3>FDA oversight context</h3>
+              <p>
+                Research Use Only products are not cleared or approved as drugs, biologics, or medical devices
+                for human use. Marketing or using RUO materials as if they were approved therapeutics may
+                violate the Federal Food, Drug, and Cosmetic Act and related regulations.
+              </p>
+            </article>
+            <article class="compliance-item">
+              <h3>Not a compounding pharmacy</h3>
+              <p>
+                220 BioWorX is not a state-licensed pharmacy, is not registered as a Section 503A compounding
+                pharmacy, and is not registered as a Section 503B outsourcing facility. We do not compound
+                patient-specific medications or office-use sterile preparations under 503A/503B.
+              </p>
+            </article>
+            <article class="compliance-item">
+              <h3>No medical or pharmacy services</h3>
+              <p>
+                We do not prescribe, dispense, counsel patients, or provide medical, nursing, or pharmacy
+                services. Content on this site is informational regarding research materials only and is not
+                professional advice.
+              </p>
+            </article>
+            <article class="compliance-item">
+              <h3>Buyer compliance duty</h3>
+              <p>
+                You are solely responsible for verifying that your purchase, possession, storage, documentation,
+                disposal, and research protocols comply with all applicable laws, institutional policies,
+                biosafety requirements, and export/import controls.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <div class="cta-band">
+        <div class="container">
+          <div class="cta-inner">
+            <h2>Ready for the next protocol? <span>Inquire today.</span></h2>
+            <p>
+              Qualified researchers and institutions: contact us for catalog availability, documentation needs,
+              and research-use purchasing questions.
+            </p>
+            <div class="cta-actions">
+              <a href="#contact" class="btn btn-primary">Research inquiry</a>
+              <a href="mailto:Customerservice@220bioworx.com" class="btn btn-secondary">Email us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="contact">
+        <div class="container contact-grid">
+          <div>
+            <p class="section-label">Contact</p>
+            <h2 class="section-title">Research &amp; institutional inquiries</h2>
+            <p class="section-intro" style="margin-bottom: 1rem;">
+              For qualified laboratory or institutional research inquiries only. Do not use this form to request
+              products for personal, clinical, or human-use purposes.
+            </p>
+            <div class="contact-meta">
+              <h3>Email</h3>
+              <p><a href="mailto:Customerservice@220bioworx.com">Customerservice@220bioworx.com</a></p>
+              <h3>Access policy</h3>
+              <p>21+ only · Research Use Only · Lawful research intent required</p>
+            </div>
+          </div>
+
+          <form class="form" id="contactForm" novalidate>
+            <div class="form-success" id="formSuccess" role="status">
+              Thank you. Your research inquiry has been recorded for follow-up. Connect this form to your inbox or Wix form before production use.
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Full name</label>
+                <input id="name" name="name" type="text" autocomplete="name" required />
+              </div>
+              <div class="form-group">
+                <label for="org">Institution / organization</label>
+                <input id="org" name="org" type="text" autocomplete="organization" required />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Work email</label>
+                <input id="email" name="email" type="email" autocomplete="email" required />
+              </div>
+              <div class="form-group">
+                <label for="role">Role</label>
+                <select id="role" name="role">
+                  <option value="researcher">Researcher / scientist</option>
+                  <option value="lab">Laboratory manager</option>
+                  <option value="procurement">Procurement</option>
+                  <option value="institution">Institutional contact</option>
+                  <option value="other">Other (research-related)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message">Research inquiry (no human-use requests)</label>
+              <textarea id="message" name="message" placeholder="Describe your laboratory research context or institutional needs…" required></textarea>
+            </div>
+            <div class="form-attestation">
+              <input type="checkbox" id="form-ruo" name="form-ruo" required />
+              <label for="form-ruo" style="margin: 0; color: var(--muted);">
+                I reaffirm I am 21+, that this inquiry is for lawful Research Use Only, and that I am not seeking
+                products for human or veterinary use.
+              </label>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Submit inquiry</button>
+            <p class="form-note">
+              Submitting does not create a sale, prescription, or clinical relationship. Orders, if any, remain
+              subject to verification, availability, and our terms.
+            </p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- ═══════════ LEGAL DISCLOSURES ═══════════ -->
+    <footer class="legal-footer" id="disclosures">
+      <div class="container">
+        <h2>Legal disclosures &amp; regulatory notices</h2>
+
+        <div class="legal-highlight">
+          <p>
+            <strong>IMPORTANT:</strong> All products and materials offered by 220 BioWorX are for
+            <strong>Research Use Only (RUO)</strong>. They are <strong>not for human use</strong>, not for
+            veterinary clinical use, and not intended for diagnosis, treatment, cure, mitigation, or prevention
+            of any disease or condition in humans or animals.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>1. Research Use Only (RUO) status</h3>
+          <p>
+            Products are intended solely for laboratory research purposes, including in vitro research and
+            scientific investigation by qualified personnel. Unless expressly stated otherwise in writing by
+            220 BioWorX for a specific SKU, products are <strong>not</strong> intended for use in diagnostic
+            procedures, clinical decision-making, patient care, manufacturing of drugs for human use, or any
+            application requiring regulatory approval, clearance, or authorization.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>2. Not for human or animal use</h3>
+          <p>
+            Products are <strong>not for human consumption</strong>, administration, injection, infusion,
+            implantation, inhalation, or topical clinical use. Products are not for use in animals except where
+            strictly limited to non-clinical laboratory research under applicable institutional animal-care
+            requirements and law. Any other use is unauthorized and contrary to product labeling and this website.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>3. Not a 503A or 503B compounding pharmacy / outsourcing facility</h3>
+          <p>
+            <strong>220 BioWorX is not a compounding pharmacy and is not a 503A or 503B facility.</strong>
+            Specifically:
+          </p>
+          <ul>
+            <li>We are <strong>not</strong> a Section <strong>503A</strong> compounding pharmacy compounding patient-specific medications pursuant to prescriptions.</li>
+            <li>We are <strong>not</strong> a Section <strong>503B</strong> outsourcing facility registered with the U.S. FDA for sterile or non-sterile compounding for office use or distribution under 503B.</li>
+            <li>We do <strong>not</strong> operate as a state-licensed retail, hospital, or mail-order pharmacy for dispensing drugs to patients.</li>
+            <li>We do <strong>not</strong> compound, prepare, or dispense medications for human clinical use, and we do not fill prescriptions.</li>
+          </ul>
+        </div>
+
+        <div class="legal-block">
+          <h3>4. No FDA approval; not drugs, supplements, or devices for clinical use</h3>
+          <p>
+            Products have <strong>not been evaluated, approved, cleared, or authorized by the U.S. Food and Drug
+            Administration (FDA)</strong> (or equivalent foreign regulators) for safety, effectiveness, or quality
+            as drugs, biologics, medical devices, cosmetics, or dietary supplements for human use. Statements on
+            this website have not been evaluated by the FDA. Nothing on this site is intended to represent that
+            any product is safe or effective for any human application.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>5. No disease or health claims; no medical advice</h3>
+          <p>
+            This website and all product information are for research and informational purposes only.
+            Nothing herein constitutes medical, pharmaceutical, veterinary, legal, or professional advice.
+            Products are <strong>not intended to diagnose, treat, cure, mitigate, or prevent any disease</strong>.
+            Always consult appropriate licensed professionals and institutional compliance officers regarding
+            research design and regulatory obligations. Do not disregard professional advice based on content on this site.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>6. Misbranding / intended-use integrity</h3>
+          <p>
+            Purchasers agree not to market, relabel, repackage, advertise, or represent 220 BioWorX materials as
+            FDA-approved drugs, compounded medications, dietary supplements, or consumer wellness products.
+            Purchasers agree not to provide human dosing instructions, clinical protocols for patient treatment,
+            or therapeutic claims in connection with resale or redistribution of any materials obtained from us.
+            We may refuse service where intended use appears inconsistent with RUO status.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>7. Age restriction</h3>
+          <p>
+            Access to this website and any purchase requires that you be <strong>at least 21 years of age</strong>.
+            By entering the site and/or purchasing, you represent and warrant that you meet this age requirement
+            and have legal capacity to enter binding agreements in your jurisdiction.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>8. Purchaser responsibility; institutional &amp; legal compliance</h3>
+          <p>
+            You are solely responsible for: (a) determining suitability of any material for your research;
+            (b) compliance with all federal, state, local, and institutional laws and policies; (c) required
+            permits, licenses, biosafety approvals, and ethics/IACUC/IRB requirements where applicable;
+            (d) proper storage, handling, documentation, and disposal; and (e) export, import, and sanctions
+            compliance for any cross-border shipment. 220 BioWorX does not assume responsibility for purchaser
+            noncompliance.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>9. Handling, storage, and laboratory safety</h3>
+          <p>
+            Research materials may require specialized storage and laboratory controls. Follow all labels,
+            certificates of analysis (if provided), safety data practices, and institutional SOPs. Use
+            appropriate PPE and trained personnel only. Stability, purity, and performance characteristics
+            depend on proper handling; we are not responsible for degradation or outcomes arising from
+            improper storage, contamination, or protocol errors.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>10. No warranties; limitation of liability</h3>
+          <p>
+            TO THE MAXIMUM EXTENT PERMITTED BY LAW, PRODUCTS AND SITE CONTENT ARE PROVIDED “AS IS” AND “AS AVAILABLE,”
+            WITHOUT WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR RESULTS.
+            220 BioWorX and its owners, officers, employees, and agents shall not be liable for any
+            indirect, incidental, special, consequential, punitive, or exemplary damages, or for loss of data, profits,
+            or research time, arising from use of the site or products, even if advised of the possibility of
+            such damages. Liability for direct damages, if any, shall not exceed the amount paid for the specific
+            product giving rise to the claim. Some jurisdictions do not allow certain limitations; rights may vary.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>11. Indemnification</h3>
+          <p>
+            You agree to indemnify, defend, and hold harmless 220 BioWorX and its affiliates,
+            officers, directors, employees, and agents from and against any claims, damages, losses, liabilities,
+            costs, and expenses (including reasonable attorneys’ fees) arising out of or related to your misuse of
+            products, violation of law, breach of these disclosures/terms, or unauthorized human, clinical, or
+            commercial use.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>12. Shipping, customs, and restricted destinations</h3>
+          <p>
+            Orders may be subject to carrier, customs, and destination-country restrictions. You are responsible
+            for duties, taxes, import permits, and local legality. We are not responsible for seizure, delay,
+            destruction, or return of shipments by carriers or government authorities. We may cancel orders that
+            cannot be fulfilled lawfully.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>13. Third-party content &amp; links</h3>
+          <p>
+            References to scientific literature, third-party sites, or general research topics, if any, are for
+            educational context only and do not constitute endorsement, clinical guidance, or an implied approved use.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>14. Modifications; governing law</h3>
+          <p>
+            We may update these disclosures and site terms at any time by posting changes to this website.
+            Continued use after changes constitutes acceptance. These notices are governed by the laws of the
+            applicable United States jurisdiction in which 220 BioWorX operates, without regard to conflict-of-law
+            rules, unless mandatory laws provide otherwise. Dispute resolution terms may be set forth in separate
+            Terms of Sale.
+          </p>
+        </div>
+
+        <div class="legal-block">
+          <h3>15. Counsel review notice</h3>
+          <p>
+            These disclosures are provided as operational website language for RUO positioning and transparency.
+            They are <strong>not a substitute for advice from qualified regulatory counsel</strong>. Product
+            labeling, quality systems, sales practices, and advertising should be reviewed by your legal and
+            compliance advisors for your specific catalog and jurisdictions.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <div class="site-footer">
+      <div class="container">
+        <div class="footer-brand-bar">
+          <span>Biomolecular research</span>
+          <span class="sep">·</span>
+          <span>Precision</span>
+          <span class="sep">·</span>
+          <span>Quality</span>
+          <span class="sep">·</span>
+          <span>Innovation</span>
+          <span class="sep">·</span>
+          <span>Integrity</span>
+        </div>
+        <div class="site-footer-inner">
+          <div>
+            <a href="#top" class="brand-link" style="margin-bottom: 0.4rem;">
+              <img class="logo-mark" src="logo-hex.png" alt="" width="32" height="32" style="height:32px;" />
+              <span class="wordmark" style="font-size:0.95rem;">220 BIO<span class="worx">WORX</span></span>
+            </a>
+            <p>
+              © <span id="year"></span> 220 BioWorX. All rights reserved.<br />
+              Research Use Only. Not for Human Use.
+            </p>
+          </div>
+          <div class="footer-links">
+            <a href="#categories">Products</a>
+            <a href="#intended-use">Intended use</a>
+            <a href="#disclosures">Legal disclosures</a>
+            <a href="#contact">Contact</a>
+            <a href="#" id="reset-gate">Reset age gate</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const GATE_KEY = "bw220_age_gate_v2";
+      const gate = document.getElementById("age-gate");
+      const site = document.getElementById("site-wrap");
+      const btnEnter = document.getElementById("gate-enter");
+      const btnExit = document.getElementById("gate-exit");
+      const err = document.getElementById("gate-error");
+      const checks = [
+        document.getElementById("cert-age"),
+        document.getElementById("cert-ruo"),
+        document.getElementById("cert-lawful"),
+      ];
+
+      function allChecked() {
+        return checks.every((c) => c.checked);
+      }
+
+      function syncEnter() {
+        btnEnter.disabled = !allChecked();
+        if (allChecked()) err.classList.remove("show");
+      }
+
+      function unlockSite() {
+        gate.hidden = true;
+        site.removeAttribute("aria-hidden");
+        document.body.classList.remove("gate-locked");
+        const main = document.getElementById("top");
+        if (main) {
+          main.setAttribute("tabindex", "-1");
+          main.focus({ preventScroll: true });
+        }
+      }
+
+      function lockSite() {
+        gate.hidden = false;
+        site.setAttribute("aria-hidden", "true");
+        document.body.classList.add("gate-locked");
+        checks.forEach((c) => (c.checked = false));
+        syncEnter();
+      }
+
+      checks.forEach((c) => c.addEventListener("change", syncEnter));
+
+      btnEnter.addEventListener("click", () => {
+        if (!allChecked()) {
+          err.classList.add("show");
+          return;
+        }
+        try {
+          sessionStorage.setItem(
+            GATE_KEY,
+            JSON.stringify({ ts: Date.now(), age21: true, ruo: true, lawful: true })
+          );
+        } catch (_) {}
+        unlockSite();
+      });
+
+      btnExit.addEventListener("click", () => {
+        window.location.href = "https://www.google.com";
+      });
+
+      document.getElementById("reset-gate").addEventListener("click", (e) => {
+        e.preventDefault();
+        try { sessionStorage.removeItem(GATE_KEY); } catch (_) {}
+        lockSite();
+        window.scrollTo(0, 0);
+      });
+
+      let admitted = false;
+      try {
+        const raw = sessionStorage.getItem(GATE_KEY);
+        if (raw) {
+          const data = JSON.parse(raw);
+          if (data && data.age21 && data.ruo && data.lawful) admitted = true;
+        }
+      } catch (_) {}
+
+      if (admitted) unlockSite();
+      else lockSite();
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      const toggle = document.getElementById("menuToggle");
+      const links = document.getElementById("navLinks");
+      toggle.addEventListener("click", () => {
+        const open = links.classList.toggle("open");
+        toggle.textContent = open ? "✕" : "☰";
+      });
+      links.querySelectorAll("a").forEach((a) =>
+        a.addEventListener("click", () => {
+          links.classList.remove("open");
+          toggle.textContent = "☰";
+        })
+      );
+
+      document.getElementById("contactForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formRuo = document.getElementById("form-ruo");
+        if (!formRuo.checked) {
+          formRuo.focus();
+          return;
+        }
+        document.getElementById("formSuccess").classList.add("show");
+        e.target.reset();
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (!gate.hidden && e.key === "Escape") e.preventDefault();
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Keep deploy lean — not needed on the live site
+logo.svg
+logo-full.jpg
+logo-icon.jpg
+logo-main.jpg
+logo-main-transparent.png
+logo-hex-from-icon.png
+README-WIX-SETUP.md
+.DS_Store
+Thumbs.db
