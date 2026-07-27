@@ -3,12 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Storefront · Coming Soon | 220 BioWorX</title>
-  <meta name="description" content="220 BioWorX research storefront — coming soon. Research Use Only. Payments accepted via Zelle and ACH only. Not for human use." />
+  <title>Research Catalog | 220 BioWorX</title>
+  <meta name="description" content="220 BioWorX research peptides and compounds. Research Use Only. Not for human use. Scientific specifications for laboratory research." />
   <meta name="theme-color" content="#080B0D" />
+  <meta name="referrer" content="origin" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="products-data.js"></script>
+  <script src="cart.js"></script>
+  <script src="payment-config.js"></script>
   <style>
     :root {
       --carbon: #080B0D;
@@ -23,826 +27,411 @@
       --text: #e8eaec;
       --muted: #9aa1a6;
       --border: rgba(112, 119, 125, 0.28);
-      --border-strong: rgba(255, 90, 0, 0.4);
       --max: 1120px;
       --font-head: "Poppins", system-ui, sans-serif;
       --font-body: "Inter", system-ui, sans-serif;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
       font-family: var(--font-body);
       background: var(--carbon);
       color: var(--text);
-      line-height: 1.65;
-      overflow-x: hidden;
+      line-height: 1.6;
       min-height: 100vh;
     }
-
     body.gate-locked { overflow: hidden; }
     a { color: var(--orange); text-decoration: none; }
     a:hover { color: var(--orange-hover); text-decoration: underline; }
+    .container { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
+    img { max-width: 100%; display: block; }
 
-    .container {
-      width: min(100% - 2rem, var(--max));
-      margin-inline: auto;
-    }
-
-    /* ── Age gate (same policy as home) ── */
     #age-gate {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 1.25rem;
-      background:
-        radial-gradient(ellipse 70% 45% at 50% -10%, rgba(255, 90, 0, 0.14), transparent 55%),
-        rgba(8, 11, 13, 0.97);
-      backdrop-filter: blur(10px);
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.25rem; background: rgba(8, 11, 13, 0.97);
     }
-
     #age-gate[hidden] { display: none !important; }
-
     .gate-card {
-      width: min(100%, 540px);
-      background: var(--graphite);
-      border: 1px solid var(--border-strong);
-      border-radius: 16px;
-      padding: 2rem 1.75rem 1.65rem;
-      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.65);
+      width: min(100%, 520px); background: var(--graphite);
+      border: 1px solid rgba(255, 90, 0, 0.4); border-radius: 16px; padding: 1.75rem;
     }
-
-    .gate-logo {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1.25rem;
-      line-height: 0;
-    }
-
-    .gate-logo img {
-      width: min(100%, 320px);
-      max-height: 92px;
-      object-fit: contain;
-    }
-
+    .gate-logo { text-align: center; margin-bottom: 1rem; line-height: 0; }
+    .gate-logo img { width: min(100%, 280px); max-height: 80px; object-fit: contain; margin: 0 auto; }
     .gate-badge {
-      display: inline-flex;
-      padding: 0.3rem 0.7rem;
-      border-radius: 999px;
-      background: var(--orange-soft);
-      border: 1px solid rgba(255, 90, 0, 0.4);
-      color: var(--orange);
-      font-family: var(--font-head);
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin: 0 auto 1rem;
+      display: block; width: fit-content; margin: 0 auto 0.85rem;
+      padding: 0.3rem 0.7rem; border-radius: 999px; background: var(--orange-soft);
+      border: 1px solid rgba(255, 90, 0, 0.4); color: var(--orange);
+      font-family: var(--font-head); font-size: 0.68rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
     }
-
     .gate-card h1 {
-      font-family: var(--font-head);
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--white);
-      text-align: center;
-      margin-bottom: 0.65rem;
+      font-family: var(--font-head); font-size: 1.25rem; color: var(--white);
+      text-align: center; margin-bottom: 0.5rem;
     }
-
-    .gate-card .lead {
-      font-family: var(--font-body);
-      color: var(--muted);
-      font-size: 0.92rem;
-      text-align: center;
-      margin-bottom: 1.15rem;
-    }
-
+    .gate-card .lead { color: var(--muted); font-size: 0.9rem; text-align: center; margin-bottom: 1rem; }
     .gate-ruo {
-      background: rgba(255, 90, 0, 0.08);
-      border: 1px solid rgba(255, 90, 0, 0.35);
-      border-radius: 10px;
-      padding: 0.85rem 1rem;
-      font-size: 0.86rem;
-      color: #ffd4bf;
-      margin-bottom: 1.15rem;
-      text-align: center;
+      background: rgba(255, 90, 0, 0.08); border: 1px solid rgba(255, 90, 0, 0.35);
+      border-radius: 10px; padding: 0.75rem; font-size: 0.85rem; color: #ffd4bf;
+      text-align: center; margin-bottom: 1rem;
     }
-
-    .gate-ruo strong { color: var(--orange); font-family: var(--font-head); }
-
-    .gate-check {
-      display: flex;
-      gap: 0.75rem;
-      align-items: flex-start;
-      margin-bottom: 0.85rem;
-      font-size: 0.88rem;
-    }
-
-    .gate-check input {
-      margin-top: 0.2rem;
-      width: 1.05rem;
-      height: 1.05rem;
-      accent-color: var(--orange);
-      flex-shrink: 0;
-      cursor: pointer;
-    }
-
-    .gate-check label { cursor: pointer; }
-
-    .gate-actions {
-      display: grid;
-      grid-template-columns: 1fr 1.25fr;
-      gap: 0.75rem;
-      margin-top: 1.15rem;
-    }
-
+    .gate-check { display: flex; gap: 0.65rem; margin-bottom: 0.75rem; font-size: 0.88rem; }
+    .gate-check input { accent-color: var(--orange); margin-top: 0.2rem; }
+    .gate-actions { display: grid; grid-template-columns: 1fr 1.2fr; gap: 0.65rem; margin-top: 1rem; }
     .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.85rem 1.35rem;
-      border-radius: 8px;
-      font-family: var(--font-head);
-      font-weight: 600;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.15s, background 0.15s, opacity 0.15s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+      padding: 0.75rem 1.15rem; border-radius: 8px; font-family: var(--font-head);
+      font-weight: 600; font-size: 0.88rem; border: none; cursor: pointer;
       text-decoration: none !important;
     }
-
-    .btn:hover { transform: translateY(-1px); }
-    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-    .btn-primary {
-      background: var(--orange);
-      color: var(--white);
-      box-shadow: 0 8px 28px var(--orange-glow);
-    }
-
-    .btn-primary:hover:not(:disabled) {
-      background: var(--orange-hover);
-      color: var(--white);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--steel);
-      border: 1px solid var(--border);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--steel);
-      color: var(--text);
-    }
-
-    .gate-error {
-      display: none;
-      margin-top: 0.85rem;
-      font-size: 0.84rem;
-      color: #ff8a5c;
-      text-align: center;
-    }
-
+    .btn-primary { background: var(--orange); color: var(--white) !important; box-shadow: 0 8px 24px var(--orange-glow); }
+    .btn-primary:hover { background: var(--orange-hover); }
+    .btn-secondary { background: transparent; color: var(--steel); border: 1px solid var(--border); }
+    .btn-secondary:hover { color: var(--text); border-color: var(--steel); text-decoration: none; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .btn-sm { padding: 0.5rem 0.85rem; font-size: 0.8rem; }
+    .gate-error { display: none; color: #ff8a5c; font-size: 0.84rem; text-align: center; margin-top: 0.75rem; }
     .gate-error.show { display: block; }
+    .gate-legal { font-size: 0.72rem; color: var(--steel); text-align: center; margin-top: 0.85rem; }
 
-    .gate-legal {
-      margin-top: 1.1rem;
-      font-size: 0.72rem;
-      color: var(--steel);
-      text-align: center;
-    }
-
-    .site-wrap[aria-hidden="true"] {
-      visibility: hidden;
-      pointer-events: none;
-      user-select: none;
-    }
-
+    .site-wrap[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
     .ruo-banner {
-      background: #140c08;
-      border-bottom: 1px solid rgba(255, 90, 0, 0.45);
-      font-family: var(--font-head);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 0.55rem 1rem;
+      background: #140c08; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
+      text-align: center; padding: 0.5rem 1rem; font-family: var(--font-head);
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      color: #ffc9a8;
     }
-
-    .ruo-banner span { color: #ffc9a8; }
-    .ruo-banner strong { color: var(--orange); }
-
     header {
-      border-bottom: 1px solid var(--border);
-      background: rgba(8, 11, 13, 0.94);
-      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); background: rgba(8, 11, 13, 0.94);
+      position: sticky; top: 0; z-index: 50;
     }
-
     .nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.85rem 0;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; padding: 0.85rem 0;
     }
-
-    .brand-link {
-      display: flex;
-      align-items: center;
-      text-decoration: none !important;
-      line-height: 0;
+    .brand-link { line-height: 0; }
+    .brand-link img { height: 44px; width: auto; max-width: min(260px, 48vw); object-fit: contain; }
+    .nav-links { display: flex; align-items: center; gap: 1.15rem; font-size: 0.88rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    .cart-pill {
+      font-family: var(--font-head); font-size: 0.75rem; font-weight: 700;
+      background: var(--orange); color: var(--white); border-radius: 999px;
+      padding: 0.15rem 0.45rem; margin-left: 0.25rem;
     }
-
-    .brand-link img.logo-full {
-      height: 48px;
-      width: auto;
-      max-width: min(280px, 52vw);
-      object-fit: contain;
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 1.4rem;
-      font-size: 0.88rem;
-      font-weight: 500;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--white); }
-
-    .btn-nav {
-      padding: 0.55rem 1.1rem;
-      font-size: 0.8rem;
-      color: var(--white) !important;
-    }
-
+    .btn-nav { padding: 0.5rem 1rem; font-size: 0.8rem; color: var(--white) !important; }
     .menu-toggle {
-      display: none;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--white);
-      border-radius: 8px;
-      padding: 0.35rem 0.55rem;
-      font-size: 1.1rem;
-      cursor: pointer;
+      display: none; background: transparent; border: 1px solid var(--border);
+      color: var(--white); border-radius: 8px; padding: 0.35rem 0.55rem; cursor: pointer;
     }
 
-    /* ── Storefront coming soon ── */
-    .storefront {
-      position: relative;
-      padding: 5rem 0 4.5rem;
-      overflow: hidden;
-      min-height: calc(100vh - 180px);
-      display: flex;
-      align-items: center;
+    main { padding: 2.25rem 0 4rem; }
+    .page-head { margin-bottom: 1.75rem; max-width: 40rem; }
+    .page-head h1 {
+      font-family: var(--font-head); font-weight: 800;
+      font-size: clamp(1.65rem, 3vw, 2.2rem); text-transform: uppercase;
+      color: var(--white); margin-bottom: 0.5rem;
     }
-
-    .storefront::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 55% 50% at 80% 20%, rgba(255, 90, 0, 0.12), transparent 55%),
-        radial-gradient(ellipse 40% 45% at 15% 80%, rgba(76, 90, 58, 0.18), transparent 50%),
-        var(--carbon);
-      z-index: 0;
+    .page-head h1 .accent { color: var(--orange); }
+    .page-head p { color: var(--muted); }
+    .toolbar {
+      display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;
+      justify-content: space-between; margin-bottom: 1.25rem;
     }
+    .toolbar .hint { font-size: 0.85rem; color: var(--steel); }
 
-    .storefront .container {
-      position: relative;
-      z-index: 1;
-      max-width: 720px;
-      text-align: center;
-    }
-
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.4rem 0.9rem;
-      border-radius: 999px;
-      background: rgba(76, 90, 58, 0.2);
-      border: 1px solid rgba(76, 90, 58, 0.5);
-      color: #c5d0b0;
-      font-family: var(--font-head);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 1.25rem;
-    }
-
-    .status-pill::before {
-      content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: var(--od-green);
-      box-shadow: 0 0 10px var(--od-green);
-    }
-
-    h1 {
-      font-family: var(--font-head);
-      font-weight: 800;
-      font-size: clamp(2rem, 4.5vw, 2.85rem);
-      line-height: 1.1;
-      letter-spacing: -0.02em;
-      text-transform: uppercase;
-      color: var(--white);
-      margin-bottom: 1rem;
-    }
-
-    h1 .accent { color: var(--orange); }
-
-    .lead {
-      color: var(--muted);
-      font-size: 1.05rem;
-      margin-bottom: 2rem;
-      max-width: 36rem;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .panel-grid {
+    .grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      text-align: left;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.1rem;
     }
-
-    .panel {
+    .product-card {
       background: var(--graphite);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 1.35rem 1.25rem;
-    }
-
-    .panel h2 {
-      font-family: var(--font-head);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 0.65rem;
-    }
-
-    .panel p,
-    .panel li {
-      font-size: 0.9rem;
-      color: var(--muted);
-    }
-
-    .panel ul {
-      list-style: none;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      gap: 0.45rem;
+      transition: border-color 0.2s, transform 0.2s;
     }
-
-    .panel li {
-      padding-left: 1.1rem;
-      position: relative;
+    .product-card:hover {
+      border-color: rgba(255, 90, 0, 0.45);
+      transform: translateY(-2px);
     }
-
-    .panel li::before {
-      content: "·";
-      position: absolute;
-      left: 0;
-      color: var(--orange);
-      font-weight: 700;
-    }
-
-    /* Payments */
-    .payment-banner {
-      background: linear-gradient(160deg, rgba(28, 31, 34, 0.98), rgba(8, 11, 13, 0.98));
-      border: 1px solid rgba(255, 90, 0, 0.4);
-      border-radius: 14px;
-      padding: 1.65rem 1.45rem;
-      text-align: left;
-      margin-bottom: 1.5rem;
-      scroll-margin-top: 5rem;
-    }
-
-    .payment-banner .pay-kicker {
-      font-family: var(--font-head);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 0.4rem;
-    }
-
-    .payment-banner h2 {
-      font-family: var(--font-head);
-      font-size: 1.25rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      text-transform: none;
-      color: var(--white);
-      margin-bottom: 0.55rem;
-    }
-
-    .payment-banner > .pay-intro {
-      font-size: 0.95rem;
-      color: var(--text);
-      margin-bottom: 1.15rem;
-    }
-
-    .pay-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.45rem;
-      margin-bottom: 1.15rem;
-    }
-
-    .pay-badge {
-      font-family: var(--font-head);
-      font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 0.35rem 0.7rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 90, 0, 0.4);
-      background: var(--orange-soft);
-      color: var(--orange);
-    }
-
-    .pay-badge.muted {
-      border-color: var(--border);
-      background: transparent;
-      color: var(--steel);
-      text-decoration: line-through;
-      opacity: 0.85;
-    }
-
-    .payment-methods {
+    .product-card .img-wrap {
+      aspect-ratio: 1;
+      background: #0d1014;
+      border-bottom: 1px solid var(--border);
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.85rem;
+      place-items: center;
+      overflow: hidden;
+    }
+    .product-card .img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .product-card .body { padding: 1rem 1.05rem 1.1rem; flex: 1; display: flex; flex-direction: column; }
+    .product-card .cat {
+      font-size: 0.68rem; font-family: var(--font-head); font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--od-green);
+      margin-bottom: 0.35rem;
+    }
+    .product-card h2 {
+      font-family: var(--font-head); font-size: 1.05rem; font-weight: 700;
+      color: var(--white); margin-bottom: 0.2rem; line-height: 1.25;
+    }
+    .product-card .strength {
+      font-size: 0.85rem; color: var(--orange); font-weight: 600; margin-bottom: 0.5rem;
+    }
+    .product-card .short {
+      font-size: 0.84rem; color: var(--muted); flex: 1; margin-bottom: 0.85rem;
+    }
+    .product-card .meta {
+      font-size: 0.75rem; color: var(--steel); margin-bottom: 0.75rem;
+    }
+    .product-card .actions {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;
     }
 
-    .pay-card {
-      background: rgba(8, 11, 13, 0.65);
+    /* Detail view */
+    #detailView { display: none; }
+    #detailView.show { display: block; }
+    #catalogView.hide { display: none; }
+
+    .detail {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 1.75rem;
+      align-items: start;
+    }
+    .detail-gallery {
+      background: var(--graphite);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .detail-gallery .main-img {
+      aspect-ratio: 1;
+      background: #0d1014;
+    }
+    .detail-gallery .main-img img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .thumbs {
+      display: flex; gap: 0.5rem; padding: 0.75rem;
+      border-top: 1px solid var(--border); flex-wrap: wrap;
+    }
+    .thumbs button {
+      width: 64px; height: 64px; padding: 0; border: 1px solid var(--border);
+      border-radius: 8px; overflow: hidden; cursor: pointer; background: #0d1014;
+    }
+    .thumbs button.active { border-color: var(--orange); }
+    .thumbs img { width: 100%; height: 100%; object-fit: cover; }
+
+    .detail-info h1 {
+      font-family: var(--font-head); font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+      color: var(--white); text-transform: uppercase; margin-bottom: 0.25rem;
+    }
+    .detail-info .strength {
+      color: var(--orange); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.75rem;
+    }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+    .badge {
+      font-family: var(--font-head); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.3rem 0.55rem; border-radius: 999px;
+      border: 1px solid rgba(255, 90, 0, 0.4); color: var(--orange);
+      background: var(--orange-soft);
+    }
+    .badge.muted {
+      border-color: var(--border); color: var(--steel); background: transparent;
+    }
+    .detail-info .desc {
+      color: var(--muted); font-size: 0.95rem; margin-bottom: 1.25rem;
+    }
+    .specs {
+      background: rgba(8, 11, 13, 0.55);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 1.15rem 1.1rem;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
     }
-
-    .pay-card h3 {
-      font-family: var(--font-head);
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 0.35rem;
-      display: flex;
-      align-items: center;
-      gap: 0.45rem;
+    .specs h3 {
+      font-family: var(--font-head); font-size: 0.72rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--orange);
+      padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);
     }
-
-    .pay-card h3 .tag {
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--od-green);
-      border: 1px solid rgba(76, 90, 58, 0.55);
-      background: rgba(76, 90, 58, 0.2);
-      padding: 0.15rem 0.4rem;
-      border-radius: 4px;
-      font-weight: 700;
-    }
-
-    .pay-card > .desc {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 0.85rem;
-    }
-
-    .pay-rows {
-      display: flex;
-      flex-direction: column;
-      gap: 0.55rem;
-    }
-
-    .pay-row {
-      display: grid;
-      grid-template-columns: 7.5rem 1fr;
-      gap: 0.5rem;
-      font-size: 0.84rem;
-      align-items: start;
-      border-top: 1px solid rgba(112, 119, 125, 0.18);
-      padding-top: 0.5rem;
-    }
-
-    .pay-row .lbl {
-      color: var(--steel);
-      font-weight: 500;
-    }
-
-    .pay-row .val {
-      color: var(--text);
-      font-weight: 500;
-      word-break: break-word;
-    }
-
-    .pay-row .val.is-pending {
-      color: var(--steel);
-      font-style: italic;
-      font-weight: 400;
-    }
-
-    .pay-steps {
-      margin-top: 1.15rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-    }
-
-    .pay-steps h3 {
-      font-family: var(--font-head);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 0.65rem;
-    }
-
-    .pay-steps ol {
-      margin: 0;
-      padding-left: 1.2rem;
-      color: var(--muted);
+    .spec-row {
+      display: grid; grid-template-columns: 9.5rem 1fr;
+      gap: 0.5rem; padding: 0.65rem 1rem;
+      border-bottom: 1px solid rgba(112, 119, 125, 0.15);
       font-size: 0.88rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-row .lbl { color: var(--steel); }
+    .spec-row .val { color: var(--text); word-break: break-word; }
+
+    .blend-table {
+      width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-bottom: 1rem;
+    }
+    .blend-table th, .blend-table td {
+      text-align: left; padding: 0.5rem 0.65rem; border-bottom: 1px solid var(--border);
+    }
+    .blend-table th { color: var(--steel); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .buy-box {
+      display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: center;
+      padding: 1rem; border-radius: 12px;
+      background: var(--graphite); border: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+    .buy-box label { font-size: 0.8rem; color: var(--steel); }
+    .buy-box input[type="number"] {
+      width: 4.5rem; padding: 0.5rem; border-radius: 8px;
+      border: 1px solid var(--border); background: rgba(8,11,13,0.6);
+      color: var(--white); font-family: inherit;
+    }
+    .price-tag { font-family: var(--font-head); font-weight: 700; color: var(--white); margin-right: auto; }
+    .toast {
+      display: none; margin-top: 0.75rem; padding: 0.65rem 0.85rem;
+      border-radius: 8px; background: rgba(76, 90, 58, 0.25);
+      border: 1px solid rgba(76, 90, 58, 0.5); color: #c5d0b0; font-size: 0.88rem;
+    }
+    .toast.show { display: block; }
+
+    .ruo-strip {
+      font-size: 0.8rem; color: var(--steel); margin-top: 1rem;
+      padding: 0.75rem; border-left: 3px solid var(--orange);
+      background: rgba(255, 90, 0, 0.06);
     }
 
-    .pay-steps li::marker { color: var(--orange); }
-
-    .not-accepted {
-      margin-top: 1rem;
-      font-size: 0.8rem;
-      color: var(--steel);
-      line-height: 1.5;
+    #payment-details {
+      margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border);
     }
-
-    .pay-warn {
-      margin-top: 0.85rem;
-      padding: 0.75rem 0.9rem;
-      border-radius: 8px;
-      background: rgba(255, 90, 0, 0.08);
-      border: 1px solid rgba(255, 90, 0, 0.28);
-      font-size: 0.82rem;
-      color: #ffd4bf;
+    #payment-details h2 {
+      font-family: var(--font-head); font-size: 1.1rem; color: var(--white);
+      margin-bottom: 0.5rem;
     }
-
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem;
-      justify-content: center;
-    }
-
-    .ruo-note {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-      color: var(--steel);
-      max-width: 34rem;
-      margin-left: auto;
-      margin-right: auto;
-    }
+    #payment-details p { color: var(--muted); font-size: 0.92rem; max-width: 40rem; }
 
     footer {
-      border-top: 1px solid var(--border);
-      padding: 1.5rem 0 2rem;
-      background: #030405;
+      border-top: 1px solid var(--border); padding: 1.25rem 0 2rem;
+      font-size: 0.76rem; color: var(--steel);
     }
-
     .footer-inner {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 1rem;
-      align-items: center;
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem;
     }
-
-    footer p {
-      font-size: 0.76rem;
-      color: var(--steel);
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      font-size: 0.8rem;
-    }
-
-    .footer-links a {
-      color: var(--steel);
-      text-decoration: none;
-    }
-
+    .footer-links { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .footer-links a { color: var(--steel); text-decoration: none; }
     .footer-links a:hover { color: var(--orange); }
 
-    @media (max-width: 700px) {
-      .panel-grid,
-      .payment-methods { grid-template-columns: 1fr; }
-
+    @media (max-width: 800px) {
+      .detail { grid-template-columns: 1fr; }
       .nav-links {
-        display: none;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 100%;
-        flex-direction: column;
-        align-items: stretch;
-        background: var(--graphite);
-        border-bottom: 1px solid var(--border);
-        padding: 1rem 1.25rem 1.25rem;
-        gap: 0.65rem;
+        display: none; position: absolute; left: 0; right: 0; top: 100%;
+        flex-direction: column; background: var(--graphite);
+        padding: 1rem; border-bottom: 1px solid var(--border); gap: 0.6rem;
       }
-
       .nav-links.open { display: flex; }
       .menu-toggle { display: block; }
-      header { position: relative; }
+      header { position: relative; top: 0; }
       .gate-actions { grid-template-columns: 1fr; }
-      .brand-link img.logo-full { height: 40px; }
+      .spec-row { grid-template-columns: 1fr; gap: 0.15rem; }
+      .product-card .actions { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body class="gate-locked">
-  <!-- Age gate -->
   <div id="age-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
     <div class="gate-card">
       <div class="gate-logo">
-        <img src="logo-header.png" alt="220 BioWorX — Biomolecular Research" width="320" height="92" />
+        <img src="logo-header.png" alt="220 BioWorX" width="280" height="80" />
       </div>
-      <div style="text-align:center;">
-        <span class="gate-badge">Restricted access · 21+</span>
-      </div>
+      <span class="gate-badge">Restricted · 21+</span>
       <h1 id="gate-title">Age &amp; research-use verification</h1>
-      <p class="lead">
-        This storefront is for qualified adults engaged in legitimate laboratory or scientific research.
-      </p>
-      <div class="gate-ruo">
-        <strong>RESEARCH USE ONLY (RUO).</strong><br />
-        Materials are not for human or veterinary use, consumption, injection, or clinical application.
-      </div>
+      <p class="lead">Catalog access is limited to adults engaged in lawful laboratory research.</p>
+      <div class="gate-ruo"><strong>RESEARCH USE ONLY.</strong> Not for human or veterinary use.</div>
       <div class="gate-check">
         <input type="checkbox" id="cert-age" />
-        <label for="cert-age">I certify that I am <strong>21 years of age or older</strong>.</label>
+        <label for="cert-age">I am <strong>21+</strong>.</label>
       </div>
       <div class="gate-check">
         <input type="checkbox" id="cert-ruo" />
-        <label for="cert-ruo">
-          I understand products are <strong>Research Use Only</strong> and <strong>not for human use</strong>.
-        </label>
+        <label for="cert-ruo">Products are <strong>RUO / not for human use</strong>.</label>
       </div>
       <div class="gate-check">
         <input type="checkbox" id="cert-lawful" />
-        <label for="cert-lawful">
-          I will use materials only for lawful research under applicable law.
-        </label>
+        <label for="cert-lawful">Lawful research use only.</label>
       </div>
       <div class="gate-actions">
         <button type="button" class="btn btn-secondary" id="gate-exit">Exit</button>
-        <button type="button" class="btn btn-primary" id="gate-enter" disabled>Enter storefront</button>
+        <button type="button" class="btn btn-primary" id="gate-enter" disabled>Enter catalog</button>
       </div>
-      <p class="gate-error" id="gate-error" role="alert">Please complete all certifications to continue.</p>
-      <p class="gate-legal">
-        By entering, you acknowledge these certifications and our Research Use Only terms.
-      </p>
+      <p class="gate-error" id="gate-error">Please complete all certifications.</p>
+      <p class="gate-legal">By entering you accept RUO terms on this site.</p>
     </div>
   </div>
 
   <div class="site-wrap" id="site-wrap" aria-hidden="true">
-    <div class="ruo-banner" role="note">
-      <span>
-        <strong>Research Use Only (RUO)</strong> — Not for human use · Storefront coming soon · Zelle &amp; ACH only
-      </span>
-    </div>
-
+    <div class="ruo-banner">Research Use Only · Not for human use · Not a 503A/503B pharmacy · Scientific research materials</div>
     <header>
       <div class="container nav">
-        <a href="index.html" class="brand-link" aria-label="220 BioWorX home">
-          <img class="logo-full" src="logo-header.png" alt="220 BioWorX — Biomolecular Research" width="280" height="80" />
+        <a href="index.html" class="brand-link">
+          <img src="logo-header.png" alt="220 BioWorX" width="260" height="72" />
         </a>
-        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu">☰</button>
+        <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menu">☰</button>
         <nav class="nav-links" id="navLinks">
           <a href="products.html" class="active">Products</a>
-          <a href="cart.html">Cart</a>
+          <a href="cart.html">Cart <span class="cart-pill" id="cartCount">0</span></a>
           <a href="#payment-details">Payments</a>
           <a href="index.html#disclosures">Disclosures</a>
-          <a href="index.html#contact" class="btn btn-primary btn-nav">Research inquiry</a>
+          <a href="cart.html" class="btn btn-primary btn-nav">Checkout</a>
         </nav>
       </div>
     </header>
 
-    <main class="storefront">
+    <main>
       <div class="container">
-        <div class="status-pill">Payments · selected at checkout</div>
-        <h1>
-          How to pay
-          <span class="accent">for research orders.</span>
-        </h1>
-        <p class="lead">
-          We accept <strong>Zelle</strong>, <strong>ACH</strong>, and <strong>cryptocurrency</strong> (via NOWPayments).
-          Banking / Zelle / wallet details are <strong>not published here</strong> — choose a method in the
-          <a href="cart.html">shopping cart</a>; instructions (or a NOWPayments pay link) appear on confirmation
-          and at the top of the order email with cart / invoice details.
-        </p>
-
-        <div class="panel-grid">
-          <article class="panel">
-            <h2>Order flow</h2>
-            <ul>
-              <li>Add research items to cart (catalog launching soon)</li>
-              <li>In cart, select <strong>Zelle</strong>, <strong>ACH</strong>, or <strong>Crypto</strong></li>
-              <li>Request invoice — get a cart reference number</li>
-              <li>Pay using the instructions for your selected method</li>
-            </ul>
-          </article>
-          <article class="panel">
-            <h2>Not accepted</h2>
-            <ul>
-              <li>Credit or debit cards</li>
-              <li>PayPal, Venmo, Cash App, crypto</li>
-              <li>Cash or checks by mail (unless arranged in writing)</li>
-              <li>Payment without cart reference / invoice</li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="payment-banner" id="payment-details">
-          <p class="pay-kicker">Accepted methods</p>
-          <h2>Zelle &amp; ACH only</h2>
-          <p class="pay-intro">
-            Exact payment credentials are delivered <strong>only after you select a method at checkout</strong>
-            (on-screen confirmation + email to our team with instructions and cart/invoice details).
-          </p>
-
-          <div class="pay-badges" aria-label="Payment methods">
-            <span class="pay-badge">Zelle · at checkout</span>
-            <span class="pay-badge">ACH · at checkout</span>
-            <span class="pay-badge">Crypto · NOWPayments</span>
-            <span class="pay-badge muted">Cards</span>
-            <span class="pay-badge muted">PayPal</span>
+        <!-- CATALOG -->
+        <div id="catalogView">
+          <div class="page-head">
+            <h1>Research <span class="accent">catalog</span></h1>
+            <p>
+              Laboratory research peptides and related materials. Each listing includes scientific context
+              (identity, typical molecular weight, sequence where applicable). All products are
+              <strong>Research Use Only</strong> — not for human or veterinary use.
+            </p>
           </div>
-
-          <div class="pay-steps">
-            <h3>How payment works</h3>
-            <ol>
-              <li>Build your cart (or request research items via inquiry while catalog is in progress).</li>
-              <li>Open <a href="cart.html">Cart &amp; checkout</a> and select <strong>Zelle</strong>, <strong>ACH</strong>, or <strong>Crypto</strong>.</li>
-              <li>Submit “Request invoice” — you receive a <strong>cart / invoice reference</strong>.</li>
-              <li>Confirmation shows instructions (or a NOWPayments link for crypto) and emails the same block to us with cart details.</li>
-              <li>Pay using that reference (Zelle/ACH memo) or complete the NOWPayments invoice. Do not pay without a reference.</li>
-            </ol>
+          <div class="toolbar">
+            <span class="hint" id="productCount"></span>
+            <a href="cart.html" class="btn btn-secondary btn-sm">View cart</a>
           </div>
-
-          <p class="pay-warn">
-            <strong>Zelle, bank, and crypto deposit details are not listed on this page.</strong>
-            They appear only after payment method selection in cart (crypto uses a NOWPayments hosted invoice, not a public Coinbase address).
-            Research Use Only — not for human use.
-          </p>
-
-          <p class="not-accepted">
-            Volume discounts (when catalog is live): 3+ vials 10% off · 5+ 15% · 10+ 20% (applied to unit price × quantity).
-          </p>
+          <div class="grid" id="productGrid"></div>
         </div>
 
-        <div class="actions">
-          <a href="cart.html" class="btn btn-primary">Go to cart / choose payment →</a>
-          <a href="index.html#contact" class="btn btn-secondary">Research inquiry</a>
+        <!-- DETAIL -->
+        <div id="detailView">
+          <p style="margin-bottom:1rem;">
+            <a href="products.html" id="backToCatalog">← Back to catalog</a>
+          </p>
+          <div class="detail" id="detailRoot"></div>
         </div>
 
-        <p class="ruo-note">
-          Research Use Only. Not for human or veterinary use. Not a 503A or 503B compounding pharmacy.
-          Products are not intended to diagnose, treat, cure, or prevent any disease.
-        </p>
+        <section id="payment-details">
+          <h2>Payments</h2>
+          <p>
+            At checkout select <strong>Zelle</strong>, <strong>ACH</strong>, or <strong>Cryptocurrency</strong> (NOWPayments).
+            Banking and wallet details are not listed on product pages — they appear only after you choose a method in
+            <a href="cart.html">cart checkout</a>, with cart/invoice details included.
+          </p>
+        </section>
       </div>
     </main>
 
     <footer>
       <div class="container footer-inner">
-        <p>© <span id="year"></span> 220 BioWorX. All rights reserved. Research Use Only. Not for Human Use.</p>
+        <p>© <span id="year"></span> 220 BioWorX. Research Use Only. Not for Human Use.</p>
         <div class="footer-links">
           <a href="index.html">Home</a>
           <a href="products.html">Products</a>
@@ -856,8 +445,6 @@
 
   <script>
     (function () {
-      /* Payment credentials live in payment-config.js — shown only after cart checkout selection. */
-
       const GATE_KEY = "bw220_age_gate_v2";
       const gate = document.getElementById("age-gate");
       const site = document.getElementById("site-wrap");
@@ -873,18 +460,15 @@
       function allChecked() {
         return checks.every((c) => c.checked);
       }
-
       function syncEnter() {
         btnEnter.disabled = !allChecked();
         if (allChecked()) err.classList.remove("show");
       }
-
       function unlockSite() {
         gate.hidden = true;
         site.removeAttribute("aria-hidden");
         document.body.classList.remove("gate-locked");
       }
-
       function lockSite() {
         gate.hidden = false;
         site.setAttribute("aria-hidden", "true");
@@ -892,9 +476,7 @@
         checks.forEach((c) => (c.checked = false));
         syncEnter();
       }
-
       checks.forEach((c) => c.addEventListener("change", syncEnter));
-
       btnEnter.addEventListener("click", () => {
         if (!allChecked()) {
           err.classList.add("show");
@@ -908,44 +490,236 @@
         } catch (_) {}
         unlockSite();
       });
-
       btnExit.addEventListener("click", () => {
         window.location.href = "https://www.google.com";
       });
-
       document.getElementById("reset-gate").addEventListener("click", (e) => {
         e.preventDefault();
         try { sessionStorage.removeItem(GATE_KEY); } catch (_) {}
         lockSite();
-        window.scrollTo(0, 0);
       });
-
       let admitted = false;
       try {
         const raw = sessionStorage.getItem(GATE_KEY);
         if (raw) {
-          const data = JSON.parse(raw);
-          if (data && data.age21 && data.ruo && data.lawful) admitted = true;
+          const d = JSON.parse(raw);
+          if (d && d.age21 && d.ruo && d.lawful) admitted = true;
         }
       } catch (_) {}
-
       if (admitted) unlockSite();
       else lockSite();
 
       document.getElementById("year").textContent = new Date().getFullYear();
-
       const toggle = document.getElementById("menuToggle");
       const links = document.getElementById("navLinks");
       toggle.addEventListener("click", () => {
         const open = links.classList.toggle("open");
         toggle.textContent = open ? "✕" : "☰";
       });
-      links.querySelectorAll("a").forEach((a) =>
-        a.addEventListener("click", () => {
-          links.classList.remove("open");
-          toggle.textContent = "☰";
-        })
-      );
+
+      function updateCartCount() {
+        const el = document.getElementById("cartCount");
+        if (el && window.BWCart) el.textContent = String(BWCart.count());
+      }
+      updateCartCount();
+      window.addEventListener("bw-cart-updated", updateCartCount);
+
+      function money(n) {
+        if (!n || n <= 0) return "Quote on request";
+        return "$" + Number(n).toFixed(2);
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      const grid = document.getElementById("productGrid");
+      const catalogView = document.getElementById("catalogView");
+      const detailView = document.getElementById("detailView");
+      const detailRoot = document.getElementById("detailRoot");
+      const products = window.BW_PRODUCTS || [];
+
+      document.getElementById("productCount").textContent =
+        products.length + " research materials · RUO";
+
+      function renderGrid() {
+        grid.innerHTML = products
+          .map(
+            (p) => `
+          <article class="product-card" data-id="${escapeHtml(p.id)}">
+            <div class="img-wrap">
+              <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)} research material" loading="lazy" />
+            </div>
+            <div class="body">
+              <div class="cat">${escapeHtml(p.category || "Research")}</div>
+              <h2>${escapeHtml(p.name)}</h2>
+              <div class="strength">${escapeHtml(p.strength)}</div>
+              <p class="short">${escapeHtml(p.shortDescription)}</p>
+              <div class="meta">MW: ${escapeHtml(p.molecularWeight)} · SKU ${escapeHtml(p.sku)}</div>
+              <div class="actions">
+                <a class="btn btn-secondary btn-sm" href="products.html?id=${encodeURIComponent(p.id)}">Details</a>
+                <button type="button" class="btn btn-primary btn-sm btn-add" data-id="${escapeHtml(p.id)}">Add to cart</button>
+              </div>
+            </div>
+          </article>`
+          )
+          .join("");
+
+        grid.querySelectorAll(".btn-add").forEach((btn) => {
+          btn.addEventListener("click", () => addToCart(btn.getAttribute("data-id"), 1, btn));
+        });
+      }
+
+      function addToCart(id, qty, btn) {
+        const p = window.BW_getProduct(id);
+        if (!p || !window.BWCart) return;
+        BWCart.add({
+          id: p.id,
+          sku: p.sku,
+          name: p.name + " " + p.strength,
+          unitPrice: p.unitPrice || 0,
+          qty: qty || 1,
+          unit: p.unit || "vial",
+        });
+        updateCartCount();
+        if (btn) {
+          const prev = btn.textContent;
+          btn.textContent = "Added ✓";
+          setTimeout(() => {
+            btn.textContent = prev;
+          }, 1200);
+        }
+        const toast = document.getElementById("addToast");
+        if (toast) {
+          toast.textContent = p.name + " added to cart.";
+          toast.classList.add("show");
+        }
+      }
+
+      function showCatalog() {
+        catalogView.classList.remove("hide");
+        detailView.classList.remove("show");
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState({}, "", "products.html");
+        }
+      }
+
+      function showDetail(id) {
+        const p = window.BW_getProduct(id);
+        if (!p) {
+          showCatalog();
+          return;
+        }
+        catalogView.classList.add("hide");
+        detailView.classList.add("show");
+
+        const imgs = p.images && p.images.length ? p.images : [p.image];
+        let blendHtml = "";
+        if (p.blendComponents && p.blendComponents.length) {
+          blendHtml =
+            "<h3 style=\"font-family:var(--font-head);font-size:0.85rem;color:var(--white);margin:0 0 0.5rem;\">Blend composition</h3>" +
+            '<table class="blend-table"><thead><tr><th>Component</th><th>Amount</th><th>Typical MW</th></tr></thead><tbody>' +
+            p.blendComponents
+              .map(
+                (c) =>
+                  "<tr><td>" +
+                  escapeHtml(c.name) +
+                  "</td><td>" +
+                  escapeHtml(c.amount) +
+                  "</td><td>" +
+                  escapeHtml(c.mw || "—") +
+                  "</td></tr>"
+              )
+              .join("") +
+            "</tbody></table>";
+        }
+
+        detailRoot.innerHTML = `
+          <div class="detail-gallery">
+            <div class="main-img"><img id="mainProductImg" src="${escapeHtml(imgs[0])}" alt="${escapeHtml(p.name)}" /></div>
+            <div class="thumbs" id="thumbRow">
+              ${imgs
+                .map(
+                  (src, i) =>
+                    `<button type="button" class="${i === 0 ? "active" : ""}" data-src="${escapeHtml(src)}">
+                      <img src="${escapeHtml(src)}" alt="" />
+                    </button>`
+                )
+                .join("")}
+            </div>
+          </div>
+          <div class="detail-info">
+            <div class="badge-row">
+              <span class="badge">Research Use Only</span>
+              <span class="badge muted">Not for human use</span>
+              <span class="badge muted">${escapeHtml(p.form || "Research material")}</span>
+            </div>
+            <h1>${escapeHtml(p.name)}</h1>
+            <div class="strength">${escapeHtml(p.strength)} · SKU ${escapeHtml(p.sku)}</div>
+            <p class="desc">${escapeHtml(p.description)}</p>
+            ${blendHtml}
+            <div class="specs">
+              <h3>Scientific specifications</h3>
+              <div class="spec-row"><span class="lbl">Scientific name</span><span class="val">${escapeHtml(p.scientificName)}</span></div>
+              <div class="spec-row"><span class="lbl">CAS / identity</span><span class="val">${escapeHtml(p.cas)}</span></div>
+              <div class="spec-row"><span class="lbl">Molecular weight</span><span class="val">${escapeHtml(p.molecularWeight)}</span></div>
+              <div class="spec-row"><span class="lbl">Formula</span><span class="val">${escapeHtml(p.formula)}</span></div>
+              <div class="spec-row"><span class="lbl">Sequence / structure</span><span class="val">${escapeHtml(p.sequence)}</span></div>
+              <div class="spec-row"><span class="lbl">Purity</span><span class="val">${escapeHtml(p.purity)}</span></div>
+              <div class="spec-row"><span class="lbl">Appearance</span><span class="val">${escapeHtml(p.appearance)}</span></div>
+              <div class="spec-row"><span class="lbl">Storage</span><span class="val">${escapeHtml(p.storage)}</span></div>
+              <div class="spec-row"><span class="lbl">Category</span><span class="val">${escapeHtml(p.category)}</span></div>
+            </div>
+            <p class="desc" style="font-size:0.88rem;">${escapeHtml(p.researchNotes || "")}</p>
+            <div class="buy-box">
+              <span class="price-tag">${money(p.unitPrice)}</span>
+              <div>
+                <label for="qtyInput">Qty (vials)</label><br/>
+                <input id="qtyInput" type="number" min="1" step="1" value="1" />
+              </div>
+              <button type="button" class="btn btn-primary" id="detailAdd">Add to cart</button>
+              <a class="btn btn-secondary" href="cart.html">Go to cart</a>
+            </div>
+            <div class="toast" id="addToast" role="status"></div>
+            <div class="ruo-strip">
+              Research Use Only. Not for human or veterinary use. Not intended to diagnose, treat, cure, or prevent any disease.
+              Not a 503A or 503B compounding pharmacy. Buyer is responsible for lawful laboratory use.
+            </div>
+          </div>`;
+
+        detailRoot.querySelectorAll("#thumbRow button").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            detailRoot.querySelectorAll("#thumbRow button").forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            document.getElementById("mainProductImg").src = btn.getAttribute("data-src");
+          });
+        });
+
+        document.getElementById("detailAdd").addEventListener("click", () => {
+          const q = Math.max(1, parseInt(document.getElementById("qtyInput").value, 10) || 1);
+          addToCart(p.id, q, document.getElementById("detailAdd"));
+        });
+
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState({}, "", "products.html?id=" + encodeURIComponent(p.id));
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      document.getElementById("backToCatalog").addEventListener("click", (e) => {
+        e.preventDefault();
+        showCatalog();
+      });
+
+      renderGrid();
+
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      if (id) showDetail(id);
     })();
   </script>
 </body>
