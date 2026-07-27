@@ -58,7 +58,14 @@
       padding: 1.75rem;
     }
     .gate-logo { text-align: center; margin-bottom: 1rem; line-height: 0; }
-    .gate-logo img { width: min(100%, 280px); max-height: 80px; object-fit: contain; }
+    .gate-logo img {
+      width: min(100%, 420px);
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+      margin: 0 auto;
+      display: block;
+    }
     .gate-badge {
       display: inline-block; margin: 0 auto 0.85rem;
       padding: 0.3rem 0.7rem; border-radius: 999px;
@@ -109,7 +116,7 @@
       gap: 1rem; padding: 0.85rem 0;
     }
     .brand-link { line-height: 0; }
-    .brand-link img { height: 44px; width: auto; max-width: min(260px, 50vw); object-fit: contain; }
+    .brand-link img { height: 55px; width: auto; max-width: min(325px, 58vw); object-fit: contain; }
     .nav-links { display: flex; align-items: center; gap: 1.2rem; font-size: 0.88rem; }
     .nav-links a { color: var(--muted); text-decoration: none; }
     .nav-links a:hover, .nav-links a.active { color: var(--white); }
@@ -385,7 +392,7 @@
   <div id="age-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
     <div class="gate-card">
       <div class="gate-logo">
-        <img src="logo-header.png" alt="220 BioWorX" width="280" height="80" />
+        <img src="logo-header.png" alt="220 BioWorX" width="420" height="120" />
       </div>
       <div style="text-align:center"><span class="gate-badge">Restricted · 21+</span></div>
       <h1 id="gate-title">Age &amp; research-use verification</h1>

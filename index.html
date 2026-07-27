@@ -113,14 +113,15 @@
 
     .gate-logo img {
       height: auto;
-      width: min(100%, 320px);
-      max-height: 92px;
+      width: min(100%, 420px);
+      max-height: none;
       margin: 0 auto;
       background: transparent;
       border: none;
       border-radius: 0;
       box-shadow: none;
       object-fit: contain;
+      display: block;
     }
 
     .wordmark {
@@ -373,9 +374,9 @@
     .brand-link:hover { color: inherit; opacity: 0.92; }
 
     .brand-link img.logo-full {
-      height: 48px;
+      height: 60px;
       width: auto;
-      max-width: min(280px, 52vw);
+      max-width: min(350px, 58vw);
       display: block;
       background: transparent;
       border: none;
@@ -1117,14 +1118,14 @@
       header { position: relative; top: 0; }
       .ruo-banner { position: relative; top: 0; }
       .gate-actions { grid-template-columns: 1fr; }
-      .brand-link img.logo-full { height: 40px; max-width: min(240px, 58vw); }
+      .brand-link img.logo-full { height: 50px; max-width: min(300px, 62vw); }
     }
 
     @media (max-width: 520px) {
       .form-row { grid-template-columns: 1fr; }
       .values { grid-template-columns: repeat(2, 1fr); }
       .gate-card { padding: 1.5rem 1.15rem; }
-      .brand-link img.logo-full { height: 34px; max-width: min(200px, 55vw); }
+      .brand-link img.logo-full { height: 43px; max-width: min(250px, 60vw); }
       .brand-link img.logo-mark { height: 28px; }
     }
   </style>
@@ -1134,7 +1135,7 @@
   <div id="age-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title" aria-describedby="gate-desc">
     <div class="gate-card">
       <div class="gate-logo">
-        <img src="logo-header.png" alt="220 BioWorX — Biomolecular Research" width="320" height="92" />
+        <img src="logo-header.png" alt="220 BioWorX — Biomolecular Research" width="420" height="120" />
       </div>
 
       <div style="text-align:center;">
@@ -1195,7 +1196,7 @@
     <header>
       <div class="container nav">
         <a href="#top" class="brand-link" aria-label="220 BioWorX home">
-          <img class="logo-full" src="logo-header.png" alt="220 BioWorX — Biomolecular Research" width="280" height="80" />
+          <img class="logo-full" src="logo-header.png" alt="220 BioWorX — Biomolecular Research" width="350" height="100" />
         </a>
         <button class="menu-toggle" id="menuToggle" aria-label="Open menu" type="button">☰</button>
         <nav class="nav-links" id="navLinks">
