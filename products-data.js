@@ -1,7 +1,7 @@
 /**
- * 220 BioWorX — Research catalog (RUO)
- * Images: light + dark variants where available under images/products/
- * All materials: Research Use Only. Not for human or veterinary use.
+ * 220 BioWorX — Research catalog
+ * Research grade materials. Not FDA approved.
+ * Not for human or veterinary use.
  */
 window.BW_PRODUCTS = [
   {
@@ -13,21 +13,19 @@ window.BW_PRODUCTS = [
     category: "Incretin-pathway research",
     unitPrice: 140,
     unit: "vial",
-    image: "images/products/glp3-rt-30.svg",
-    images: ["images/products/glp3-rt-30.svg"],
+    image: "images/products/reta-klow.jpeg",
+    images: ["images/products/reta-klow.jpeg"],
     shortDescription:
-      "Research-grade Reta / GLP-3 RT, 30 mg, for controlled laboratory investigation of multi-agonist incretin pathway models.",
+      "Research-grade Reta / GLP-3 RT, 30 mg, for laboratory investigation of multi-agonist incretin pathway models.",
     description:
-      "Reta (GLP-3 RT) 30 mg is provided strictly for Research Use Only as a lyophilized research peptide. Intended for qualified laboratories studying multi-receptor incretin-related signaling in non-clinical research systems. Not a drug, not a compounded medication, and not for human or veterinary use.",
+      "Reta (GLP-3 RT) 30 mg is a research-grade lyophilized peptide for qualified laboratory use only. Not FDA approved. Not a drug or compounded medication. Not for human or veterinary use, diagnosis, treatment, cure, or prevention of any disease.",
     scientificName: "Reta / GLP-3 RT (research designation)",
-    cas: "Research material — see COA / lot documentation when supplied",
-    molecularWeight: "See lot COA (multi-agonist research peptide; confirm per batch)",
-    formula: "See sequence / COA documentation",
-    sequence: "Lot-specific documentation on request for qualified research accounts",
-    purity: "Research grade; purity stated on lot COA when provided",
+    molecularWeight: "Multi-agonist research peptide (batch-dependent)",
+    formula: "See product labeling / research documentation",
+    sequence: "Available to qualified research accounts on request",
     appearance: "White to off-white lyophilized solid (typical)",
-    storage: "Store lyophilized material frozen, protected from light and moisture. Handling per laboratory SOP only.",
-    researchNotes: "Photo pack pending for this SKU — placeholder shown until dedicated Reta vial images are uploaded.",
+    storage: "Store frozen, protected from light and moisture. Laboratory handling only.",
+    researchNotes: "Research grade only. Not FDA approved for any indication or use.",
     tags: ["reta", "GLP-3", "30mg"],
   },
   {
@@ -45,18 +43,16 @@ window.BW_PRODUCTS = [
       "images/products/tirz-dark.jpeg",
     ],
     shortDescription:
-      "Tirz-class dual incretin pathway research peptide, 40 mg per vial.",
+      "Research-grade Tirz-class dual incretin pathway peptide, 40 mg per vial.",
     description:
-      "Tirz 40 mg is supplied for Research Use Only for laboratory research exploring dual incretin-related receptor pathways in non-clinical settings. Not for human consumption, clinical administration, or compounding into patient medications.",
+      "Tirz 40 mg is research-grade material for non-clinical laboratory study of dual incretin-related pathways. Not FDA approved. Not for human consumption, clinical administration, or compounding into patient medications.",
     scientificName: "Tirz-class dual incretin pathway research peptide",
-    cas: "See COA / supplier documentation for lot identity",
-    molecularWeight: "~4810–4814 g·mol⁻¹ (typical literature range; confirm on lot COA)",
-    formula: "See sequence documentation / COA",
-    sequence: "Available to qualified research purchasers with lot documentation",
-    purity: "Research grade; see lot COA",
+    molecularWeight: "~4810–4814 g·mol⁻¹ (typical literature range)",
+    formula: "See research sequence documentation",
+    sequence: "Available to qualified research purchasers on request",
     appearance: "Lyophilized solid",
-    storage: "Frozen, dry, protected from light. Handle under laboratory controls only.",
-    researchNotes: "Not FDA approved for any use. Research Use Only.",
+    storage: "Frozen, dry, protected from light. Laboratory controls only.",
+    researchNotes: "Research grade only. Not FDA approved for any use.",
     tags: ["tirz", "incretin", "40mg"],
   },
   {
@@ -74,18 +70,16 @@ window.BW_PRODUCTS = [
       "images/products/bpc-157-dark.jpeg",
     ],
     shortDescription:
-      "Synthetic pentadecapeptide research material (BPC-157), 10 mg.",
+      "Research-grade synthetic pentadecapeptide (BPC-157), 10 mg.",
     description:
-      "BPC-157 is offered solely as a Research Use Only chemical for in vitro and other lawful laboratory research. Not intended for human or animal clinical use. No therapeutic claims are made.",
+      "BPC-157 is a research-grade synthetic peptide for lawful laboratory research only. Not FDA approved. Not intended for human or animal clinical use. No therapeutic claims are made.",
     scientificName: "BPC-157 (GEPPPGKPADDAGLV; research pentadecapeptide)",
-    cas: "137525-51-0 (commonly cited; verify lot identity)",
     molecularWeight: "1419.5 g·mol⁻¹ (typical)",
     formula: "C₆₂H₉₈N₁₆O₂₂ (typical)",
     sequence: "Gly-Glu-Pro-Pro-Pro-Gly-Lys-Pro-Ala-Asp-Asp-Ala-Gly-Leu-Val (GEPPPGKPADDAGLV)",
-    purity: "Research grade; see lot COA",
     appearance: "White to off-white lyophilized powder (typical)",
-    storage: "−20 °C recommended for long-term storage of lyophilizate; protect from moisture and light.",
-    researchNotes: "Research Use Only. Confirm SKU on order.",
+    storage: "−20 °C recommended for lyophilizate; protect from moisture and light.",
+    researchNotes: "Research grade only. Not FDA approved.",
     tags: ["BPC-157", "10mg"],
   },
   {
@@ -103,18 +97,16 @@ window.BW_PRODUCTS = [
       "images/products/tb500-dark.jpeg",
     ],
     shortDescription:
-      "TB-500 research peptide, 10 mg per vial, for non-clinical laboratory research.",
+      "Research-grade TB-500 peptide, 10 mg, for non-clinical laboratory research.",
     description:
-      "TB-500 is supplied for Research Use Only. Confirm exact identity and sequence on the lot Certificate of Analysis. Not for human or veterinary use.",
-    scientificName: "TB-500 (thymosin β4–related research peptide; lot-defined)",
-    cas: "Lot-defined — confirm on COA",
-    molecularWeight: "Lot-defined (confirm on COA)",
-    formula: "See lot COA",
-    sequence: "See lot COA / specification sheet",
-    purity: "Research grade; see lot COA",
+      "TB-500 is research-grade material for laboratory use only. Not FDA approved. Not for human or veterinary use.",
+    scientificName: "TB-500 (thymosin β4–related research peptide)",
+    molecularWeight: "Batch-defined research material",
+    formula: "See research documentation",
+    sequence: "See research documentation for this SKU",
     appearance: "Lyophilized solid",
     storage: "Store frozen, dry, protected from light.",
-    researchNotes: "Always match vial label, COA, and order SKU.",
+    researchNotes: "Research grade only. Not FDA approved.",
     tags: ["TB-500", "10mg"],
   },
   {
@@ -132,24 +124,22 @@ window.BW_PRODUCTS = [
       "images/products/klow-dark.jpeg",
     ],
     shortDescription:
-      "80 mg research blend: 50 mg GHK-Cu, 10 mg TB-500, 10 mg BPC-157, 10 mg KPV.",
+      "Research-grade 80 mg blend: 50 mg GHK-Cu, 10 mg TB-500, 10 mg BPC-157, 10 mg KPV.",
     description:
-      "KLOW is a multi-component lyophilized research blend totaling 80 mg per vial. Composition (label claim): GHK-Cu 50 mg, TB-500 10 mg, BPC-157 10 mg, KPV 10 mg. Research Use Only. Not for human or veterinary use. Not a 503A/503B compounded drug.",
+      "KLOW is a research-grade multi-component lyophilized blend (80 mg total). Label composition: GHK-Cu 50 mg, TB-500 10 mg, BPC-157 10 mg, KPV 10 mg. Not FDA approved. Not for human or veterinary use. Not a 503A/503B compounded drug.",
     scientificName: "KLOW multi-peptide research blend",
-    cas: "Mixture — see component CAS on COA where applicable",
     molecularWeight: "Component-specific (see blend breakdown)",
     formula: "Multi-component blend",
     sequence: "See individual components",
-    purity: "Research grade blend; component purity per COA",
     appearance: "Lyophilized solid (color may reflect copper-peptide component)",
     storage: "Frozen, dry, protected from light.",
     blendComponents: [
       { name: "GHK-Cu", amount: "50 mg", mw: "~403.9 g·mol⁻¹ (complex; peptide ~340.4)" },
-      { name: "TB-500", amount: "10 mg", mw: "Lot-defined" },
+      { name: "TB-500", amount: "10 mg", mw: "Batch-defined" },
       { name: "BPC-157", amount: "10 mg", mw: "1419.5 g·mol⁻¹ (typical)" },
       { name: "KPV", amount: "10 mg", mw: "342.4 g·mol⁻¹ (typical)" },
     ],
-    researchNotes: "Independent analytical verification recommended for critical protocols.",
+    researchNotes: "Research grade blend only. Not FDA approved.",
     tags: ["blend", "KLOW", "80mg"],
   },
   {
@@ -163,18 +153,16 @@ window.BW_PRODUCTS = [
     unit: "vial",
     image: "images/products/kpv-10.svg",
     images: ["images/products/kpv-10.svg"],
-    shortDescription: "KPV tripeptide research material, 10 mg.",
+    shortDescription: "Research-grade KPV tripeptide, 10 mg.",
     description:
-      "KPV (Lys-Pro-Val) is a synthetic tripeptide supplied for Research Use Only. Not for human or veterinary administration or consumption.",
+      "KPV (Lys-Pro-Val) is a research-grade synthetic tripeptide for laboratory use only. Not FDA approved. Not for human or veterinary administration or consumption.",
     scientificName: "KPV (L-lysyl-L-prolyl-L-valine)",
-    cas: "67727-97-3 (commonly cited; verify lot)",
     molecularWeight: "342.4 g·mol⁻¹ (typical)",
     formula: "C₁₆H₃₀N₄O₄ (typical)",
     sequence: "Lys-Pro-Val (KPV)",
-    purity: "Research grade; see lot COA",
     appearance: "Lyophilized solid",
     storage: "Frozen, dry, protected from light.",
-    researchNotes: "Dedicated light/dark product photos pending — placeholder until uploaded.",
+    researchNotes: "Research grade only. Not FDA approved. Dedicated vial photos can replace the placeholder when available.",
     tags: ["KPV", "10mg"],
   },
   {
@@ -192,19 +180,17 @@ window.BW_PRODUCTS = [
       "images/products/klow-dark.jpeg",
     ],
     shortDescription:
-      "GHK-Cu copper tripeptide research material, 100 mg, for laboratory use only.",
+      "Research-grade GHK-Cu copper tripeptide, 100 mg.",
     description:
-      "Glycyl-L-histidyl-L-lysine copper complex (GHK-Cu) is supplied for Research Use Only as a laboratory research material. Not for human or veterinary use, cosmetic consumer use claims, or clinical administration.",
+      "Glycyl-L-histidyl-L-lysine copper complex (GHK-Cu) is research-grade material for laboratory use only. Not FDA approved. Not for human or veterinary use.",
     scientificName: "GHK-Cu (glycyl-L-histidyl-L-lysine copper complex)",
-    cas: "89030-95-5 (commonly cited for GHK-Cu; verify lot)",
     molecularWeight: "Peptide ~340.4 g·mol⁻¹; Cu complex ~403.9 g·mol⁻¹ (typical)",
     formula: "C₁₄H₂₄N₆O₄ · Cu (typical complex representation)",
     sequence: "Gly-His-Lys (GHK) complexed with copper(II)",
-    purity: "Research grade; see lot COA",
     appearance: "Blue to blue-green lyophilized solid (typical for Cu peptide)",
     storage: "Frozen, dry, protected from light.",
     researchNotes:
-      "Standalone GHK-Cu 100 mg SKU. Temporary gallery uses KLOW pack imagery until dedicated GHK-Cu photos are added.",
+      "Research grade only. Not FDA approved. Gallery uses related brand photography until dedicated GHK-Cu pack shots are uploaded.",
     tags: ["GHK-Cu", "100mg"],
   },
   {
@@ -222,24 +208,22 @@ window.BW_PRODUCTS = [
       "images/products/cjc-ipa-dark.jpeg",
     ],
     shortDescription:
-      "Dual research vial: CJC-1295 without DAC 10 mg + Ipamorelin 10 mg (20 mg total).",
+      "Research-grade dual vial: CJC-1295 (No DAC) 10 mg + Ipamorelin 10 mg.",
     description:
-      "Dual-fill research vial providing CJC-1295 (No DAC) 10 mg and Ipamorelin 10 mg for laboratory research into GHRH-analogue and ghrelin-mimetic pathway models. Research Use Only.",
+      "Research-grade dual-fill vial for laboratory study of GHRH-analogue and ghrelin-mimetic pathway models. Not FDA approved. Not for human or veterinary use.",
     scientificName: "CJC-1295 (modGRF 1-29, no DAC) + Ipamorelin",
-    cas: "Component-specific — see COA",
     molecularWeight:
       "CJC-1295 no DAC ~3367.9 g·mol⁻¹ (typical); Ipamorelin ~711.9 g·mol⁻¹ (typical)",
-    formula: "See component documentation",
+    formula: "See component research documentation",
     sequence:
       "CJC-1295 (No DAC): modified GRF(1-29) analogue without Drug Affinity Complex. Ipamorelin: Aib-His-D-2-Nal-D-Phe-Lys-NH₂ (typical).",
-    purity: "Research grade; see lot COA",
     appearance: "Lyophilized solid",
     storage: "Frozen, dry, protected from light.",
     blendComponents: [
       { name: "CJC-1295 (No DAC)", amount: "10 mg", mw: "~3367.9 g·mol⁻¹ (typical)" },
       { name: "Ipamorelin", amount: "10 mg", mw: "~711.9 g·mol⁻¹ (typical)" },
     ],
-    researchNotes: "Confirm structure on COA. Research Use Only.",
+    researchNotes: "Research grade only. Not FDA approved.",
     tags: ["CJC-1295", "Ipamorelin", "20mg"],
   },
   {
@@ -257,18 +241,16 @@ window.BW_PRODUCTS = [
       "images/products/motsc-dark.jpeg",
     ],
     shortDescription:
-      "MOTS-c mitochondrial-derived peptide research material, 40 mg.",
+      "Research-grade MOTS-c mitochondrial peptide, 40 mg.",
     description:
-      "MOTS-c is a mitochondrial open reading frame–encoded peptide supplied for Research Use Only. For laboratory investigation of mitochondrial signaling models. Not for human or veterinary use.",
+      "MOTS-c is a research-grade mitochondrial open reading frame–encoded peptide for non-clinical laboratory research. Not FDA approved. Not for human or veterinary use.",
     scientificName: "MOTS-c (mitochondrial ORF-derived peptide)",
-    cas: "1627580-64-6 (commonly cited; verify lot)",
     molecularWeight: "~2174.6 g·mol⁻¹ (typical)",
-    formula: "See literature / COA",
-    sequence: "MRWQEMGYIFYPRKLR (typical — confirm lot)",
-    purity: "Research grade; see lot COA",
+    formula: "See research documentation",
+    sequence: "MRWQEMGYIFYPRKLR (typical human MOTS-c sequence)",
     appearance: "Lyophilized solid",
     storage: "Frozen, dry, protected from light.",
-    researchNotes: "Verify sequence/MW against lot COA.",
+    researchNotes: "Research grade only. Not FDA approved.",
     tags: ["MOTS-c", "40mg"],
   },
   {
@@ -285,22 +267,18 @@ window.BW_PRODUCTS = [
       "images/products/nad-light.jpeg",
       "images/products/nad-dark.jpeg",
     ],
-    shortDescription: "NAD+ research material, 1000 mg, laboratory biochemical RUO.",
+    shortDescription: "Research-grade NAD+, 1000 mg, laboratory biochemical only.",
     description:
-      "Nicotinamide adenine dinucleotide (NAD+, oxidized form) is supplied for Research Use Only as a laboratory biochemical. Not for human injection, infusion, or dietary use.",
+      "Nicotinamide adenine dinucleotide (NAD+, oxidized form) is research-grade laboratory material. Not FDA approved as a drug or supplement. Not for human injection, infusion, or dietary use.",
     scientificName: "β-Nicotinamide adenine dinucleotide (oxidized), NAD+",
-    cas: "53-84-9",
     molecularWeight: "663.43 g·mol⁻¹",
     formula: "C₂₁H₂₆N₇O₁₄P₂",
     sequence: "N/A (dinucleotide cofactor)",
-    purity: "Research grade; see lot COA",
     appearance: "White to yellowish solid or lyophilized material (lot-dependent)",
-    storage: "Store cold, dry, protected from light and moisture per COA.",
-    researchNotes: "Handle under institutional chemical hygiene plans.",
+    storage: "Store cold, dry, protected from light and moisture.",
+    researchNotes: "Research grade only. Not FDA approved. Handle under institutional chemical hygiene plans.",
     tags: ["NAD+", "1000mg"],
   },
-
-  /* ——— Bundles ——— */
   {
     id: "wolverine",
     sku: "WOLVERINE",
@@ -311,25 +289,26 @@ window.BW_PRODUCTS = [
     unitPrice: 100,
     unit: "bundle",
     image: "images/products/wolverine-light.jpeg",
-    images: ["images/products/wolverine-light.jpeg"],
+    images: [
+      "images/products/wolverine-light.jpeg",
+      "images/products/bpc-157-light.jpeg",
+      "images/products/tb500-light.jpeg",
+    ],
     shortDescription:
-      "Wolverine research bundle: BPC-157 10 mg + TB-500 10 mg (paired research vials).",
+      "Research bundle: BPC-157 10 mg + TB-500 10 mg.",
     description:
-      "Wolverine is a research bundle pairing BPC-157 (10 mg) and TB-500 (10 mg) for laboratory programs that require both materials. Research Use Only. Not for human or veterinary use. Not a compounded drug product.",
+      "Wolverine is a research-grade bundle pairing BPC-157 (10 mg) and TB-500 (10 mg) for laboratory programs. Not FDA approved. Not for human or veterinary use. Not a compounded drug product.",
     scientificName: "BPC-157 + TB-500 research bundle",
-    cas: "See component listings",
     molecularWeight: "See BPC-157 and TB-500 component specs",
     formula: "Multi-vial bundle",
     sequence: "See components",
-    purity: "Research grade; see lot COAs for each vial",
-    appearance: "Two lyophilized research vials (as packed)",
+    appearance: "Research vials as packed",
     storage: "Frozen, dry, protected from light.",
     blendComponents: [
       { name: "BPC-157", amount: "10 mg", mw: "1419.5 g·mol⁻¹ (typical)" },
-      { name: "TB-500", amount: "10 mg", mw: "Lot-defined" },
+      { name: "TB-500", amount: "10 mg", mw: "Batch-defined" },
     ],
-    researchNotes:
-      "Bundle composition: BPC-157 10 mg + TB-500 10 mg unless otherwise stated on packing list.",
+    researchNotes: "Research grade bundle only. Not FDA approved.",
     tags: ["bundle", "Wolverine", "BPC-157", "TB-500"],
   },
   {
@@ -346,24 +325,23 @@ window.BW_PRODUCTS = [
       "images/products/nad-light.jpeg",
       "images/products/nad-dark.jpeg",
       "images/products/klow-light.jpeg",
+      "images/products/klow-dark.jpeg",
     ],
     shortDescription:
       "Research bundle: NAD+ 1000 mg + GHK-Cu 100 mg.",
     description:
-      "Paired research materials: NAD+ (1000 mg) and GHK-Cu (100 mg) for laboratory use only. Research Use Only. Not for human or veterinary use.",
+      "Paired research-grade materials: NAD+ (1000 mg) and GHK-Cu (100 mg) for laboratory use only. Not FDA approved. Not for human or veterinary use.",
     scientificName: "NAD+ + GHK-Cu research bundle",
-    cas: "See component listings",
     molecularWeight: "NAD+ 663.43 g·mol⁻¹; GHK-Cu complex ~403.9 g·mol⁻¹ (typical)",
     formula: "Multi-vial bundle",
     sequence: "See components",
-    purity: "Research grade; see lot COAs",
-    appearance: "Two research vials as packed",
-    storage: "Cold/dry per component COA recommendations.",
+    appearance: "Research vials as packed",
+    storage: "Cold/dry per component storage guidance.",
     blendComponents: [
       { name: "NAD+", amount: "1000 mg", mw: "663.43 g·mol⁻¹" },
       { name: "GHK-Cu", amount: "100 mg", mw: "~403.9 g·mol⁻¹ (complex, typical)" },
     ],
-    researchNotes: "Dedicated bundle pack photo pending; gallery uses component imagery.",
+    researchNotes: "Research grade bundle only. Not FDA approved.",
     tags: ["bundle", "NAD+", "GHK-Cu"],
   },
   {
@@ -376,24 +354,26 @@ window.BW_PRODUCTS = [
     unitPrice: 200,
     unit: "bundle",
     image: "images/products/reta-klow.jpeg",
-    images: ["images/products/reta-klow.jpeg"],
+    images: [
+      "images/products/reta-klow.jpeg",
+      "images/products/klow-light.jpeg",
+      "images/products/klow-dark.jpeg",
+    ],
     shortDescription:
       "Research bundle: Reta (GLP-3 RT) 30 mg + KLOW blend 80 mg.",
     description:
-      "Reta + KLOW pairs Reta / GLP-3 RT (30 mg) with the KLOW multi-peptide blend (80 mg total: GHK-Cu 50 mg, TB-500 10 mg, BPC-157 10 mg, KPV 10 mg). Research Use Only. Not for human or veterinary use.",
+      "Research-grade bundle pairing Reta / GLP-3 RT (30 mg) with KLOW (80 mg total: GHK-Cu 50 mg, TB-500 10 mg, BPC-157 10 mg, KPV 10 mg). Not FDA approved. Not for human or veterinary use.",
     scientificName: "Reta (GLP-3 RT) + KLOW research bundle",
-    cas: "See component listings",
     molecularWeight: "See component specs",
     formula: "Multi-vial bundle",
     sequence: "See components",
-    purity: "Research grade; see lot COAs",
     appearance: "Research vials as packed",
     storage: "Frozen, dry, protected from light.",
     blendComponents: [
-      { name: "Reta (GLP-3 RT)", amount: "30 mg", mw: "See lot COA" },
+      { name: "Reta (GLP-3 RT)", amount: "30 mg", mw: "Batch-dependent" },
       { name: "KLOW blend", amount: "80 mg total", mw: "See KLOW components" },
     ],
-    researchNotes: "Include cart reference on payment. Research Use Only.",
+    researchNotes: "Research grade bundle only. Not FDA approved.",
     tags: ["bundle", "Reta", "KLOW"],
   },
 ];
@@ -406,3 +386,6 @@ window.BW_getProduct = function (idOrSku) {
     ) || null
   );
 };
+
+/** Fallback image if a product photo fails to load */
+window.BW_IMG_FALLBACK = "images/products/klow-light.jpeg";

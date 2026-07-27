@@ -398,8 +398,9 @@
           <div class="page-head">
             <h1>Research <span class="accent">catalog</span></h1>
             <p>
-              Laboratory research peptides and related materials. Each listing includes scientific context
-              (identity, typical molecular weight, sequence where applicable). All products are
+              Laboratory research peptides and related materials. Listings include research-oriented
+              scientific context (identity, typical molecular weight, sequence where applicable).
+              All products are <strong>research grade</strong>, <strong>not FDA approved</strong>, and
               <strong>Research Use Only</strong> — not for human or veterinary use.
             </p>
           </div>
@@ -537,6 +538,16 @@
           .replace(/"/g, "&quot;");
       }
 
+      function bindImgFallback(root) {
+        const fallback = window.BW_IMG_FALLBACK || "images/products/klow-light.jpeg";
+        (root || document).querySelectorAll("img").forEach((img) => {
+          img.addEventListener("error", function onErr() {
+            img.removeEventListener("error", onErr);
+            if (img.src.indexOf(fallback) === -1) img.src = fallback;
+          });
+        });
+      }
+
       const grid = document.getElementById("productGrid");
       const catalogView = document.getElementById("catalogView");
       const detailView = document.getElementById("detailView");
@@ -552,14 +563,14 @@
             (p) => `
           <article class="product-card" data-id="${escapeHtml(p.id)}">
             <div class="img-wrap">
-              <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)} research material" loading="lazy" />
+              <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)} research material" loading="lazy" onerror="this.onerror=null;this.src='images/products/klow-light.jpeg';" />
             </div>
             <div class="body">
               <div class="cat">${escapeHtml(p.category || "Research")}</div>
               <h2>${escapeHtml(p.name)}</h2>
-              <div class="strength">${escapeHtml(p.strength)}</div>
+              <div class="strength">${escapeHtml(p.strength)} · ${money(p.unitPrice)}</div>
               <p class="short">${escapeHtml(p.shortDescription)}</p>
-              <div class="meta">MW: ${escapeHtml(p.molecularWeight)} · SKU ${escapeHtml(p.sku)}</div>
+              <div class="meta">Research grade · Not FDA approved · SKU ${escapeHtml(p.sku)}</div>
               <div class="actions">
                 <a class="btn btn-secondary btn-sm" href="products.html?id=${encodeURIComponent(p.id)}">Details</a>
                 <button type="button" class="btn btn-primary btn-sm btn-add" data-id="${escapeHtml(p.id)}">Add to cart</button>
@@ -572,6 +583,7 @@
         grid.querySelectorAll(".btn-add").forEach((btn) => {
           btn.addEventListener("click", () => addToCart(btn.getAttribute("data-id"), 1, btn));
         });
+        bindImgFallback(grid);
       }
 
       function addToCart(id, qty, btn) {
@@ -640,13 +652,13 @@
 
         detailRoot.innerHTML = `
           <div class="detail-gallery">
-            <div class="main-img"><img id="mainProductImg" src="${escapeHtml(imgs[0])}" alt="${escapeHtml(p.name)}" /></div>
+            <div class="main-img"><img id="mainProductImg" src="${escapeHtml(imgs[0])}" alt="${escapeHtml(p.name)}" onerror="this.onerror=null;this.src='images/products/klow-light.jpeg';" /></div>
             <div class="thumbs" id="thumbRow">
               ${imgs
                 .map(
                   (src, i) =>
                     `<button type="button" class="${i === 0 ? "active" : ""}" data-src="${escapeHtml(src)}">
-                      <img src="${escapeHtml(src)}" alt="" />
+                      <img src="${escapeHtml(src)}" alt="" onerror="this.onerror=null;this.src='images/products/klow-light.jpeg';" />
                     </button>`
                 )
                 .join("")}
@@ -654,31 +666,32 @@
           </div>
           <div class="detail-info">
             <div class="badge-row">
+              <span class="badge">Research grade</span>
               <span class="badge">Research Use Only</span>
+              <span class="badge muted">Not FDA approved</span>
               <span class="badge muted">Not for human use</span>
-              <span class="badge muted">${escapeHtml(p.form || "Research material")}</span>
             </div>
             <h1>${escapeHtml(p.name)}</h1>
             <div class="strength">${escapeHtml(p.strength)} · SKU ${escapeHtml(p.sku)}</div>
             <p class="desc">${escapeHtml(p.description)}</p>
             ${blendHtml}
             <div class="specs">
-              <h3>Scientific specifications</h3>
+              <h3>Research specifications</h3>
               <div class="spec-row"><span class="lbl">Scientific name</span><span class="val">${escapeHtml(p.scientificName)}</span></div>
-              <div class="spec-row"><span class="lbl">CAS / identity</span><span class="val">${escapeHtml(p.cas)}</span></div>
               <div class="spec-row"><span class="lbl">Molecular weight</span><span class="val">${escapeHtml(p.molecularWeight)}</span></div>
-              <div class="spec-row"><span class="lbl">Formula</span><span class="val">${escapeHtml(p.formula)}</span></div>
-              <div class="spec-row"><span class="lbl">Sequence / structure</span><span class="val">${escapeHtml(p.sequence)}</span></div>
-              <div class="spec-row"><span class="lbl">Purity</span><span class="val">${escapeHtml(p.purity)}</span></div>
-              <div class="spec-row"><span class="lbl">Appearance</span><span class="val">${escapeHtml(p.appearance)}</span></div>
-              <div class="spec-row"><span class="lbl">Storage</span><span class="val">${escapeHtml(p.storage)}</span></div>
-              <div class="spec-row"><span class="lbl">Category</span><span class="val">${escapeHtml(p.category)}</span></div>
+              <div class="spec-row"><span class="lbl">Formula</span><span class="val">${escapeHtml(p.formula || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Sequence / structure</span><span class="val">${escapeHtml(p.sequence || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Form</span><span class="val">${escapeHtml(p.form || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Appearance</span><span class="val">${escapeHtml(p.appearance || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Storage</span><span class="val">${escapeHtml(p.storage || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Category</span><span class="val">${escapeHtml(p.category || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Regulatory status</span><span class="val">Research grade · Not FDA approved · Not for human or veterinary use</span></div>
             </div>
             <p class="desc" style="font-size:0.88rem;">${escapeHtml(p.researchNotes || "")}</p>
             <div class="buy-box">
               <span class="price-tag">${money(p.unitPrice)}</span>
               <div>
-                <label for="qtyInput">Qty (vials)</label><br/>
+                <label for="qtyInput">Qty</label><br/>
                 <input id="qtyInput" type="number" min="1" step="1" value="1" />
               </div>
               <button type="button" class="btn btn-primary" id="detailAdd">Add to cart</button>
@@ -686,7 +699,8 @@
             </div>
             <div class="toast" id="addToast" role="status"></div>
             <div class="ruo-strip">
-              Research Use Only. Not for human or veterinary use. Not intended to diagnose, treat, cure, or prevent any disease.
+              Research grade materials for laboratory research only. Not FDA approved for any use.
+              Not for human or veterinary use. Not intended to diagnose, treat, cure, or prevent any disease.
               Not a 503A or 503B compounding pharmacy. Buyer is responsible for lawful laboratory use.
             </div>
           </div>`;
@@ -695,9 +709,11 @@
           btn.addEventListener("click", () => {
             detailRoot.querySelectorAll("#thumbRow button").forEach((b) => b.classList.remove("active"));
             btn.classList.add("active");
-            document.getElementById("mainProductImg").src = btn.getAttribute("data-src");
+            const main = document.getElementById("mainProductImg");
+            main.src = btn.getAttribute("data-src");
           });
         });
+        bindImgFallback(detailRoot);
 
         document.getElementById("detailAdd").addEventListener("click", () => {
           const q = Math.max(1, parseInt(document.getElementById("qtyInput").value, 10) || 1);
