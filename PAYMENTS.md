@@ -37,10 +37,12 @@ Do **not** put routing/account/Zelle send-to on `products.html` or `index.html`.
 | Total vials | Discount |
 |-------------|----------|
 | 3+ | 10% |
-| 5+ | 15% |
-| 10+ | 20% |
+| 5+ | 20% |
+| 10+ | 30% |
 
-Applied as: `unit price × qty`, then volume % off subtotal.
+Applied as: `unit price × qty` across cart, then best matching volume % off subtotal.
+
+Product detail page: − / + stepper + quick chips (1 / 3 / 5 / 10) with live savings preview.
 
 ## Deploy
 ```powershell
