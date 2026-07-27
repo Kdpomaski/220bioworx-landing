@@ -281,18 +281,76 @@
     .blend-table th { color: var(--steel); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
 
     .buy-box {
-      display: flex; flex-wrap: wrap; gap: 0.65rem; align-items: center;
-      padding: 1rem; border-radius: 12px;
+      display: flex; flex-direction: column; gap: 0.85rem;
+      padding: 1.1rem 1.15rem; border-radius: 12px;
       background: var(--graphite); border: 1px solid var(--border);
       margin-bottom: 1rem;
     }
-    .buy-box label { font-size: 0.8rem; color: var(--steel); }
-    .buy-box input[type="number"] {
-      width: 4.5rem; padding: 0.5rem; border-radius: 8px;
-      border: 1px solid var(--border); background: rgba(8,11,13,0.6);
-      color: var(--white); font-family: inherit;
+    .buy-box-top {
+      display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center;
+      justify-content: space-between;
     }
-    .price-tag { font-family: var(--font-head); font-weight: 700; color: var(--white); margin-right: auto; }
+    .price-tag {
+      font-family: var(--font-head); font-weight: 700; color: var(--white);
+      font-size: 1.15rem;
+    }
+    .price-tag .was {
+      font-size: 0.85rem; color: var(--steel); text-decoration: line-through;
+      font-weight: 500; margin-left: 0.4rem;
+    }
+    .price-tag .save {
+      display: block; font-size: 0.75rem; color: #86efac; font-weight: 600;
+      margin-top: 0.15rem; letter-spacing: 0.02em;
+    }
+    .qty-block { width: 100%; }
+    .qty-block > label {
+      display: block; font-size: 0.78rem; color: var(--steel);
+      font-weight: 600; margin-bottom: 0.45rem;
+      font-family: var(--font-head); letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .qty-stepper {
+      display: inline-flex; align-items: center;
+      border: 1px solid var(--border); border-radius: 10px;
+      overflow: hidden; background: rgba(8, 11, 13, 0.65);
+    }
+    .qty-stepper button {
+      width: 2.5rem; height: 2.5rem; border: none; background: transparent;
+      color: var(--white); font-size: 1.25rem; font-weight: 600;
+      cursor: pointer; line-height: 1;
+    }
+    .qty-stepper button:hover { background: var(--orange-soft); color: var(--orange); }
+    .qty-stepper input[type="number"] {
+      width: 3.25rem; height: 2.5rem; border: none;
+      border-left: 1px solid var(--border); border-right: 1px solid var(--border);
+      background: transparent; color: var(--white); text-align: center;
+      font-family: var(--font-head); font-weight: 700; font-size: 1rem;
+      -moz-appearance: textfield;
+    }
+    .qty-stepper input::-webkit-outer-spin-button,
+    .qty-stepper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .qty-presets {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.65rem;
+    }
+    .qty-presets button {
+      font-family: var(--font-head); font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.02em; padding: 0.4rem 0.7rem; border-radius: 999px;
+      border: 1px solid var(--border); background: transparent; color: var(--muted);
+      cursor: pointer;
+    }
+    .qty-presets button:hover { border-color: rgba(255, 90, 0, 0.45); color: var(--text); }
+    .qty-presets button.active {
+      border-color: var(--orange); background: var(--orange-soft); color: var(--orange);
+    }
+    .qty-presets button .pct {
+      color: #86efac; font-weight: 700;
+    }
+    .discount-hint {
+      font-size: 0.8rem; color: var(--steel); margin-top: 0.35rem;
+    }
+    .buy-actions {
+      display: flex; flex-wrap: wrap; gap: 0.55rem; width: 100%;
+    }
+    .buy-actions .btn { flex: 1 1 auto; min-width: 8rem; }
     .toast {
       display: none; margin-top: 0.75rem; padding: 0.65rem 0.85rem;
       border-radius: 8px; background: rgba(76, 90, 58, 0.25);
@@ -689,13 +747,30 @@
             </div>
             <p class="desc" style="font-size:0.88rem;">${escapeHtml(p.researchNotes || "")}</p>
             <div class="buy-box">
-              <span class="price-tag">${money(p.unitPrice)}</span>
-              <div>
-                <label for="qtyInput">Qty</label><br/>
-                <input id="qtyInput" type="number" min="1" step="1" value="1" />
+              <div class="buy-box-top">
+                <div class="price-tag" id="priceDisplay">${money(p.unitPrice)}</div>
               </div>
-              <button type="button" class="btn btn-primary" id="detailAdd">Add to cart</button>
-              <a class="btn btn-secondary" href="cart.html">Go to cart</a>
+              <div class="qty-block">
+                <label for="qtyInput">Quantity (vials / units)</label>
+                <div class="qty-stepper" role="group" aria-label="Quantity">
+                  <button type="button" id="qtyMinus" aria-label="Decrease quantity">−</button>
+                  <input id="qtyInput" type="number" min="1" step="1" value="1" inputmode="numeric" />
+                  <button type="button" id="qtyPlus" aria-label="Increase quantity">+</button>
+                </div>
+                <div class="qty-presets" id="qtyPresets" role="group" aria-label="Quick quantity">
+                  <button type="button" data-qty="1" class="active">1</button>
+                  <button type="button" data-qty="3">3 <span class="pct">−10%</span></button>
+                  <button type="button" data-qty="5">5 <span class="pct">−20%</span></button>
+                  <button type="button" data-qty="10">10 <span class="pct">−30%</span></button>
+                </div>
+                <p class="discount-hint" id="discountHint">
+                  Volume (cart total vials): 3+ = 10% off · 5+ = 20% off · 10+ = 30% off
+                </p>
+              </div>
+              <div class="buy-actions">
+                <button type="button" class="btn btn-primary" id="detailAdd">Add to cart</button>
+                <a class="btn btn-secondary" href="cart.html">Go to cart</a>
+              </div>
             </div>
             <div class="toast" id="addToast" role="status"></div>
             <div class="ruo-strip">
@@ -714,6 +789,78 @@
           });
         });
         bindImgFallback(detailRoot);
+
+        const qtyInput = document.getElementById("qtyInput");
+        const priceDisplay = document.getElementById("priceDisplay");
+        const discountHint = document.getElementById("discountHint");
+        const unit = Number(p.unitPrice) || 0;
+
+        function tierPct(q) {
+          if (q >= 10) return 30;
+          if (q >= 5) return 20;
+          if (q >= 3) return 10;
+          return 0;
+        }
+
+        function syncQtyUI() {
+          let q = Math.max(1, parseInt(qtyInput.value, 10) || 1);
+          qtyInput.value = String(q);
+          document.querySelectorAll("#qtyPresets button").forEach((b) => {
+            b.classList.toggle("active", parseInt(b.getAttribute("data-qty"), 10) === q);
+          });
+          const pct = tierPct(q);
+          if (!unit) {
+            priceDisplay.innerHTML = "Quote on request";
+            discountHint.textContent =
+              "Volume (cart total vials): 3+ = 10% · 5+ = 20% · 10+ = 30% — applied at checkout";
+            return;
+          }
+          const sub = unit * q;
+          const disc = Math.round(sub * (pct / 100) * 100) / 100;
+          const total = Math.round((sub - disc) * 100) / 100;
+          if (pct > 0) {
+            priceDisplay.innerHTML =
+              "$" +
+              total.toFixed(2) +
+              ' <span class="was">$' +
+              sub.toFixed(2) +
+              "</span>" +
+              '<span class="save">Save ' +
+              pct +
+              "% on " +
+              q +
+              " units (−$" +
+              disc.toFixed(2) +
+              ")</span>";
+            discountHint.textContent =
+              "Preview for this line only. Final discount uses total vials in cart (3+ = 10%, 5+ = 20%, 10+ = 30%).";
+          } else {
+            priceDisplay.innerHTML =
+              "$" +
+              total.toFixed(2) +
+              (q > 1 ? " <span class=\"was\" style=\"text-decoration:none;opacity:0.8\">(" + q + " × $" + unit.toFixed(2) + ")</span>" : "");
+            discountHint.textContent =
+              "Add 3+ vials (cart total) for 10% off · 5+ for 20% · 10+ for 30%.";
+          }
+        }
+
+        document.getElementById("qtyMinus").addEventListener("click", () => {
+          qtyInput.value = String(Math.max(1, (parseInt(qtyInput.value, 10) || 1) - 1));
+          syncQtyUI();
+        });
+        document.getElementById("qtyPlus").addEventListener("click", () => {
+          qtyInput.value = String(Math.max(1, (parseInt(qtyInput.value, 10) || 1) + 1));
+          syncQtyUI();
+        });
+        qtyInput.addEventListener("input", syncQtyUI);
+        qtyInput.addEventListener("change", syncQtyUI);
+        document.querySelectorAll("#qtyPresets button").forEach((b) => {
+          b.addEventListener("click", () => {
+            qtyInput.value = b.getAttribute("data-qty");
+            syncQtyUI();
+          });
+        });
+        syncQtyUI();
 
         document.getElementById("detailAdd").addEventListener("click", () => {
           const q = Math.max(1, parseInt(document.getElementById("qtyInput").value, 10) || 1);

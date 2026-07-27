@@ -84,7 +84,7 @@
     if (t.pct > 0) {
       lines.push("Volume discount (" + t.pct + "%): −" + money(t.discountAmount));
     } else {
-      lines.push("Volume discount: none (3+ vials 10%, 5+ 15%, 10+ 20%)");
+      lines.push("Volume discount: none (3+ vials 10%, 5+ 20%, 10+ 30%)");
     }
     lines.push("ORDER TOTAL: " + money(t.total));
     lines.push("--------------------------------");

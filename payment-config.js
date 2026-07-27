@@ -40,9 +40,10 @@ window.BW_PAYMENT = {
   },
   formSubmitEndpoint: "https://formsubmit.co/6732b0b86bff8989d370457024b960ee",
   ownerCc: "Owner@220bioworx.com",
+  /** Highest matching tier wins (sorted high→low by minQty) */
   discounts: [
-    { minQty: 10, pct: 20 },
-    { minQty: 5, pct: 15 },
+    { minQty: 10, pct: 30 },
+    { minQty: 5, pct: 20 },
     { minQty: 3, pct: 10 },
   ],
 };
