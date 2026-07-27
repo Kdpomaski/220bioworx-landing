@@ -33,6 +33,17 @@
     return 0;
   }
 
+  function shippingConfig() {
+    const s = (global.BW_PAYMENT && global.BW_PAYMENT.shipping) || {};
+    return {
+      method: s.method || "2–3 Day shipping",
+      flatRate: Number(s.flatRate) >= 0 ? Number(s.flatRate) : 18,
+      freeShippingMin: Number(s.freeShippingMin) >= 0 ? Number(s.freeShippingMin) : 250,
+      shipWithinHours: s.shipWithinHours || 72,
+      note: s.note || "We aim to ship all orders within 72 hours of confirmed payment.",
+    };
+  }
+
   function totals(items) {
     const subtotal = items.reduce(
       (s, i) => s + (Number(i.unitPrice) || 0) * (Number(i.qty) || 0),
@@ -41,8 +52,30 @@
     const vials = totalVials(items);
     const pct = discountPct(vials);
     const discountAmount = Math.round(subtotal * (pct / 100) * 100) / 100;
-    const total = Math.round((subtotal - discountAmount) * 100) / 100;
-    return { subtotal, vials, pct, discountAmount, total };
+    const merchandise = Math.round((subtotal - discountAmount) * 100) / 100;
+    const ship = shippingConfig();
+    const freeShip = merchandise >= ship.freeShippingMin;
+    const shippingAmount = freeShip ? 0 : ship.flatRate;
+    const shippingLabel = freeShip
+      ? ship.method + " — FREE (order over $" + ship.freeShippingMin + ")"
+      : ship.method + " — flat rate";
+    const total = Math.round((merchandise + shippingAmount) * 100) / 100;
+    return {
+      subtotal,
+      vials,
+      pct,
+      discountAmount,
+      merchandise,
+      shippingAmount,
+      shippingLabel,
+      shippingMethod: ship.method,
+      freeShipping: freeShip,
+      freeShippingMin: ship.freeShippingMin,
+      flatRate: ship.flatRate,
+      shipWithinHours: ship.shipWithinHours,
+      shippingNote: ship.note,
+      total,
+    };
   }
 
   function money(n) {
@@ -86,8 +119,16 @@
     } else {
       lines.push("Volume discount: none (3+ vials 10%, 5+ 20%, 10+ 30%)");
     }
+    lines.push("Merchandise total: " + money(t.merchandise));
+    lines.push(
+      "Shipping (" +
+        t.shippingMethod +
+        "): " +
+        (t.freeShipping ? "FREE (over $" + t.freeShippingMin + ")" : money(t.shippingAmount))
+    );
     lines.push("ORDER TOTAL: " + money(t.total));
     lines.push("--------------------------------");
+    lines.push(t.shippingNote);
     lines.push("Research Use Only. Not for human use.");
     return lines.join("\n");
   }

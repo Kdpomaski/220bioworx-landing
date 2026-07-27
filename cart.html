@@ -445,8 +445,9 @@
         <h1>Cart <span class="accent">&amp; checkout</span></h1>
         <p class="lead">
           Select <strong>Zelle</strong>, <strong>ACH</strong>, or <strong>Cryptocurrency</strong> (NOWPayments).
-          After you request an invoice, instructions for your choice appear on screen and at the top of the
-          order email (with full cart / invoice details). Crypto opens a hosted NOWPayments invoice when configured.
+          Shipping is <strong>flat $18</strong> for <strong>2–3 Day</strong> service;
+          <strong>free shipping on merchandise totals over $250</strong> (after volume discounts).
+          We aim to ship within <strong>72 hours of confirmed payment</strong>.
         </p>
 
         <div class="layout">
@@ -737,6 +738,21 @@
         }
 
         const t = BWCart.totals();
+        const shipRow = t.freeShipping
+          ? '<div class="totals-row disc"><span>Shipping (2–3 Day)</span><span>FREE over $' +
+            t.freeShippingMin +
+            "</span></div>"
+          : '<div class="totals-row"><span>Shipping (2–3 Day flat)</span><span>' +
+            BWCart.money(t.shippingAmount) +
+            "</span></div>";
+        const shipHint =
+          !t.freeShipping && t.merchandise > 0
+            ? '<div class="totals-row" style="font-size:0.8rem;color:var(--steel)"><span>Free shipping at $' +
+              t.freeShippingMin +
+              "+ merchandise</span><span>" +
+              BWCart.money(Math.max(0, t.freeShippingMin - t.merchandise)) +
+              " to go</span></div>"
+            : "";
         cartTotals.innerHTML =
           '<div class="totals-row"><span>Subtotal</span><span>' +
           BWCart.money(t.subtotal) +
@@ -751,6 +767,11 @@
               BWCart.money(t.discountAmount) +
               "</span></div>"
             : '<div class="totals-row"><span>Volume discount</span><span>None yet (3+ = 10%, 5+ = 20%, 10+ = 30%)</span></div>') +
+          shipRow +
+          shipHint +
+          '<div class="totals-row" style="font-size:0.8rem;color:var(--steel)"><span colspan="2">Ship within ' +
+          t.shipWithinHours +
+          " hours of confirmed payment (target)</span><span></span></div>" +
           '<div class="totals-row grand"><span>Total</span><span>' +
           BWCart.money(t.total) +
           "</span></div>";

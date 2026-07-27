@@ -46,6 +46,16 @@ window.BW_PAYMENT = {
     { minQty: 5, pct: 20 },
     { minQty: 3, pct: 10 },
   ],
+  /**
+   * Flat 2–3 day shipping. Free when merchandise (after volume discount) is over freeShippingMin.
+   */
+  shipping: {
+    method: "2–3 Day shipping",
+    flatRate: 18,
+    freeShippingMin: 250,
+    shipWithinHours: 72,
+    note: "We aim to ship all orders within 72 hours of confirmed payment.",
+  },
 };
 
 window.BW_methodLabel = function (method) {
