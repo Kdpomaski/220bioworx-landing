@@ -30,8 +30,8 @@ window.BW_PRODUCTS = [
   },
   {
     id: "tirz-40",
-    sku: "TIRZ-40",
-    name: "Tirz (GLP)",
+    sku: "GLP2-TR-40",
+    name: "GLP-2 TR",
     strength: "40 mg",
     form: "Lyophilized research peptide",
     category: "Incretin-pathway research",
@@ -43,17 +43,19 @@ window.BW_PRODUCTS = [
       "images/products/tirz-dark.jpeg",
     ],
     shortDescription:
-      "Research-grade Tirz-class dual incretin pathway peptide, 40 mg per vial.",
+      "Research-grade dual GIP / GLP-1 receptor agonist peptide, 40 mg per vial, for laboratory research only.",
     description:
-      "Tirz 40 mg is research-grade material for non-clinical laboratory study of dual incretin-related pathways. Not FDA approved. Not for human consumption, clinical administration, or compounding into patient medications.",
-    scientificName: "Tirz-class dual incretin pathway research peptide",
-    molecularWeight: "~4810–4814 g·mol⁻¹ (typical literature range)",
-    formula: "See research sequence documentation",
-    sequence: "Available to qualified research purchasers on request",
-    appearance: "Lyophilized solid",
+      "GLP-2 TR 40 mg is research-grade lyophilized material for non-clinical laboratory investigation of dual glucose-dependent insulinotropic polypeptide (GIP) and glucagon-like peptide-1 (GLP-1) receptor pathway models. Not FDA approved. Not for human consumption, clinical administration, or compounding into patient medications.",
+    scientificName: "Dual GIP / GLP-1 receptor agonist research peptide (39-amino-acid synthetic peptide)",
+    molecularWeight: "4813.45 g·mol⁻¹",
+    formula: "C₂₂₅H₃₄₈N₄₈O₆₈",
+    sequence:
+      "Tyr-Aib-Glu-Gly-Thr-Phe-Thr-Ser-Asp-Tyr-Ser-Ile-Aib-Leu-Asp-Lys-Ile-Ala-Gln-Lys-Ala-Phe-Val-Gln-Trp-Leu-Ile-Ala-Gly-Gly-Pro-Ser-Ser-Gly-Ala-Pro-Pro-Pro-Ser-NH₂ (C20 fatty-diacid acylation on Lys side chain as described for this dual-agonist research structure)",
+    appearance: "White to off-white lyophilized solid (typical)",
     storage: "Frozen, dry, protected from light. Laboratory controls only.",
-    researchNotes: "Research grade only. Not FDA approved for any use.",
-    tags: ["tirz", "incretin", "40mg"],
+    researchNotes:
+      "Catalog name GLP-2 TR denotes this research SKU only. Research grade. Not FDA approved for any use. Not for human or veterinary use.",
+    tags: ["GLP-2 TR", "incretin", "40mg"],
   },
   {
     id: "bpc-157-10",
