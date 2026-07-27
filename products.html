@@ -731,21 +731,8 @@
             </div>
             <h1>${escapeHtml(p.name)}</h1>
             <div class="strength">${escapeHtml(p.strength)} · SKU ${escapeHtml(p.sku)}</div>
-            <p class="desc">${escapeHtml(p.description)}</p>
-            ${blendHtml}
-            <div class="specs">
-              <h3>Research specifications</h3>
-              <div class="spec-row"><span class="lbl">Scientific name</span><span class="val">${escapeHtml(p.scientificName)}</span></div>
-              <div class="spec-row"><span class="lbl">Molecular weight</span><span class="val">${escapeHtml(p.molecularWeight)}</span></div>
-              <div class="spec-row"><span class="lbl">Formula</span><span class="val">${escapeHtml(p.formula || "—")}</span></div>
-              <div class="spec-row"><span class="lbl">Sequence / structure</span><span class="val">${escapeHtml(p.sequence || "—")}</span></div>
-              <div class="spec-row"><span class="lbl">Form</span><span class="val">${escapeHtml(p.form || "—")}</span></div>
-              <div class="spec-row"><span class="lbl">Appearance</span><span class="val">${escapeHtml(p.appearance || "—")}</span></div>
-              <div class="spec-row"><span class="lbl">Storage</span><span class="val">${escapeHtml(p.storage || "—")}</span></div>
-              <div class="spec-row"><span class="lbl">Category</span><span class="val">${escapeHtml(p.category || "—")}</span></div>
-              <div class="spec-row"><span class="lbl">Regulatory status</span><span class="val">Research grade · Not FDA approved · Not for human or veterinary use</span></div>
-            </div>
-            <p class="desc" style="font-size:0.88rem;">${escapeHtml(p.researchNotes || "")}</p>
+
+            <!-- Add to cart first (above long product details) -->
             <div class="buy-box">
               <div class="buy-box-top">
                 <div class="price-tag" id="priceDisplay">${money(p.unitPrice)}</div>
@@ -773,6 +760,22 @@
               </div>
             </div>
             <div class="toast" id="addToast" role="status"></div>
+
+            <p class="desc">${escapeHtml(p.description)}</p>
+            ${blendHtml}
+            <div class="specs">
+              <h3>Research specifications</h3>
+              <div class="spec-row"><span class="lbl">Scientific name</span><span class="val">${escapeHtml(p.scientificName)}</span></div>
+              <div class="spec-row"><span class="lbl">Molecular weight</span><span class="val">${escapeHtml(p.molecularWeight)}</span></div>
+              <div class="spec-row"><span class="lbl">Formula</span><span class="val">${escapeHtml(p.formula || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Sequence / structure</span><span class="val">${escapeHtml(p.sequence || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Form</span><span class="val">${escapeHtml(p.form || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Appearance</span><span class="val">${escapeHtml(p.appearance || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Storage</span><span class="val">${escapeHtml(p.storage || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Category</span><span class="val">${escapeHtml(p.category || "—")}</span></div>
+              <div class="spec-row"><span class="lbl">Regulatory status</span><span class="val">Research grade · Not FDA approved · Not for human or veterinary use</span></div>
+            </div>
+            <p class="desc" style="font-size:0.88rem;">${escapeHtml(p.researchNotes || "")}</p>
             <div class="ruo-strip">
               Research grade materials for laboratory research only. Not FDA approved for any use.
               Not for human or veterinary use. Not intended to diagnose, treat, cure, or prevent any disease.

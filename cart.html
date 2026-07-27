@@ -274,6 +274,34 @@
       color: var(--muted);
       margin-bottom: 0.85rem;
     }
+    .attest-checks {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .attest-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      padding: 0.55rem 0.7rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(8, 11, 13, 0.45);
+      font-size: 0.88rem;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .attest-check:hover { border-color: rgba(255, 90, 0, 0.4); }
+    .attest-check:has(input:checked) {
+      border-color: var(--orange);
+      background: var(--orange-soft);
+    }
+    .attest-check input {
+      margin-top: 0.15rem;
+      accent-color: var(--orange);
+      flex-shrink: 0;
+    }
+    .attest-check em { color: var(--steel); font-style: normal; font-size: 0.82em; }
 
     .form-error {
       display: none; padding: 0.75rem; border-radius: 8px; margin-bottom: 0.75rem;
@@ -479,36 +507,47 @@
 
               <!-- Checkout attestation gateway -->
               <div class="attest-gateway" id="attestGateway">
-                <h3 class="attest-title">Intended use attestation</h3>
+                <h3 class="attest-title">Buyer / institution type</h3>
                 <p class="attest-lead">
-                  Required before checkout. Select the option that matches your intended use.
-                  Human / clinical use is not permitted for these materials.
+                  Required before checkout. Select all that apply. Materials are Research Use Only —
+                  not for human or veterinary use. Orders inconsistent with RUO policy may be declined.
                 </p>
-                <div class="pay-options" role="radiogroup" aria-label="Intended use attestation">
-                  <label class="pay-option">
-                    <input type="radio" name="useAttest" value="research" required />
-                    <div class="po-title">Research Use Only</div>
-                    <div class="po-desc">
-                      Laboratory / scientific research only. Not for human or veterinary use, diagnosis, treatment, or consumption.
-                    </div>
+                <div class="attest-checks" role="group" aria-label="Institution or buyer type">
+                  <label class="attest-check">
+                    <input type="checkbox" name="buyerType" value="University / academic laboratory" />
+                    <span>University / academic laboratory</span>
                   </label>
-                  <label class="pay-option">
-                    <input type="radio" name="useAttest" value="other" />
-                    <div class="po-title">Other</div>
-                    <div class="po-desc">
-                      Describe your intended use below. Orders inconsistent with RUO policy may be declined.
-                    </div>
+                  <label class="attest-check">
+                    <input type="checkbox" name="buyerType" value="Clinic / clinical research facility (RUO protocols only)" />
+                    <span>Clinic / clinical research facility <em>(RUO protocols only)</em></span>
+                  </label>
+                  <label class="attest-check">
+                    <input type="checkbox" name="buyerType" value="Independent research laboratory" />
+                    <span>Independent research laboratory</span>
+                  </label>
+                  <label class="attest-check">
+                    <input type="checkbox" name="buyerType" value="Biotech / pharmaceutical research" />
+                    <span>Biotech / pharmaceutical research</span>
+                  </label>
+                  <label class="attest-check">
+                    <input type="checkbox" name="buyerType" value="Government / institutional research" />
+                    <span>Government / institutional research</span>
+                  </label>
+                  <label class="attest-check">
+                    <input type="checkbox" name="buyerType" value="Contract research organization (CRO)" />
+                    <span>Contract research organization (CRO)</span>
+                  </label>
+                  <label class="attest-check">
+                    <input type="checkbox" name="buyerType" value="Other" />
+                    <span>Other</span>
                   </label>
                 </div>
-                <div class="form-group" id="otherUseWrap" hidden>
-                  <label for="otherUseText">Describe “Other” intended use (required if Other selected)</label>
-                  <textarea id="otherUseText" name="otherUseText" placeholder="Describe the lawful non-clinical research or other intended use…"></textarea>
-                </div>
-                <div class="attestation" style="margin-top:0.85rem;">
+                <div class="attestation" style="margin-top:1rem;">
                   <input type="checkbox" id="buyerRuo" required />
                   <label for="buyerRuo" style="margin:0;">
-                    I am 21+ and I understand these materials are not for human or veterinary use. I accept that
-                    220 BioWorX may refuse any order that appears inconsistent with Research Use Only policy.
+                    I am 21+ and attest this purchase is for <strong>Research Use Only</strong> — not for human or
+                    veterinary use, diagnosis, treatment, or consumption. 220 BioWorX may refuse any order that
+                    appears inconsistent with RUO policy.
                   </label>
                 </div>
               </div>
@@ -711,21 +750,6 @@
       const submitBtn = document.getElementById("submitBtn");
       const confirmPanel = document.getElementById("confirmPanel");
 
-      // Toggle "Other" description field
-      document.querySelectorAll('input[name="useAttest"]').forEach((r) => {
-        r.addEventListener("change", () => {
-          const wrap = document.getElementById("otherUseWrap");
-          const other = document.querySelector('input[name="useAttest"][value="other"]');
-          if (other && other.checked) {
-            wrap.hidden = false;
-            document.getElementById("otherUseText").required = true;
-          } else {
-            wrap.hidden = true;
-            document.getElementById("otherUseText").required = false;
-          }
-        });
-      });
-
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         formError.classList.remove("show");
@@ -738,22 +762,16 @@
           formError.classList.add("show");
           return;
         }
-        const useAttestEl = document.querySelector('input[name="useAttest"]:checked');
-        const useAttest = useAttestEl ? useAttestEl.value : "";
-        const otherUseText = document.getElementById("otherUseText").value.trim();
-        if (!useAttest) {
-          formError.textContent = "Select an intended use: Research Use Only or Other.";
+        const buyerTypes = Array.from(
+          document.querySelectorAll('input[name="buyerType"]:checked')
+        ).map((c) => c.value);
+        if (!buyerTypes.length) {
+          formError.textContent = "Select at least one buyer / institution type (or Other).";
           formError.classList.add("show");
-          return;
-        }
-        if (useAttest === "other" && otherUseText.length < 8) {
-          formError.textContent = "Please describe your “Other” intended use (at least a short sentence).";
-          formError.classList.add("show");
-          document.getElementById("otherUseText").focus();
           return;
         }
         if (!document.getElementById("buyerRuo").checked) {
-          formError.textContent = "Please confirm the age / non-human-use attestation checkbox.";
+          formError.textContent = "Please confirm the Research Use Only / age attestation checkbox.";
           formError.classList.add("show");
           return;
         }
@@ -773,10 +791,7 @@
         const cartText = BWCart.formatCartText(items, cartRef);
         const methodLabel = window.BW_methodLabel(method);
         const cryptoCfg = (window.BW_PAYMENT && window.BW_PAYMENT.crypto) || {};
-        const useLabel =
-          useAttest === "research"
-            ? "Research Use Only (laboratory / scientific research)"
-            : "Other — " + otherUseText;
+        const useLabel = buyerTypes.join("; ");
 
         submitBtn.disabled = true;
         submitBtn.textContent = "Sending…";
@@ -825,8 +840,8 @@
             "Organization: " + org,
             "Email: " + email,
             "Payment method selected: " + methodLabel,
-            "Intended use attestation: " + useLabel,
-            "Non-human-use / 21+ checkbox: Yes",
+            "Buyer / institution type: " + useLabel,
+            "RUO / 21+ / not for human use attestation: Yes",
             note ? "Notes: " + note : "Notes: —",
             invoiceUrl ? "NOWPayments invoice URL: " + invoiceUrl : "",
             "Source: www.220bioworx.com/cart.html",
@@ -854,7 +869,7 @@
             organization: org,
             payment_method: methodLabel,
             cart_reference: cartRef,
-            intended_use: useLabel,
+            buyer_institution_type: useLabel,
             message: emailBody,
           };
 
