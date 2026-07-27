@@ -13,8 +13,11 @@ window.BW_PRODUCTS = [
     category: "Incretin-pathway research",
     unitPrice: 140,
     unit: "vial",
-    image: "images/products/reta-klow.jpeg",
-    images: ["images/products/reta-klow.jpeg"],
+    image: "images/products/glp3-rt-light.jpeg",
+    images: [
+      "images/products/glp3-rt-light.jpeg",
+      "images/products/glp3-rt-dark.jpeg",
+    ],
     shortDescription:
       "Research-grade Reta / GLP-3 RT, 30 mg, for laboratory investigation of multi-agonist incretin pathway models.",
     description:
@@ -284,12 +287,12 @@ window.BW_PRODUCTS = [
   {
     id: "wolverine",
     sku: "WOLVERINE",
-    name: "Wolverine Bundle",
-    strength: "Bundle",
-    form: "Multi-vial research bundle",
-    category: "Bundles",
+    name: "Wolverine Stack",
+    strength: "Stack",
+    form: "Multi-vial research stack",
+    category: "Stacks",
     unitPrice: 100,
-    unit: "bundle",
+    unit: "stack",
     image: "images/products/wolverine-light.jpeg",
     images: [
       "images/products/wolverine-light.jpeg",
@@ -297,12 +300,12 @@ window.BW_PRODUCTS = [
       "images/products/tb500-light.jpeg",
     ],
     shortDescription:
-      "Research bundle: BPC-157 10 mg + TB-500 10 mg.",
+      "Research stack: BPC-157 10 mg + TB-500 10 mg.",
     description:
-      "Wolverine is a research-grade bundle pairing BPC-157 (10 mg) and TB-500 (10 mg) for laboratory programs. Not FDA approved. Not for human or veterinary use. Not a compounded drug product.",
-    scientificName: "BPC-157 + TB-500 research bundle",
+      "Wolverine is a research-grade stack pairing BPC-157 (10 mg) and TB-500 (10 mg) for laboratory programs. Not FDA approved. Not for human or veterinary use. Not a compounded drug product.",
+    scientificName: "BPC-157 + TB-500 research stack",
     molecularWeight: "See BPC-157 and TB-500 component specs",
-    formula: "Multi-vial bundle",
+    formula: "Multi-vial stack",
     sequence: "See components",
     appearance: "Research vials as packed",
     storage: "Frozen, dry, protected from light.",
@@ -310,8 +313,8 @@ window.BW_PRODUCTS = [
       { name: "BPC-157", amount: "10 mg", mw: "1419.5 g·mol⁻¹ (typical)" },
       { name: "TB-500", amount: "10 mg", mw: "Batch-defined" },
     ],
-    researchNotes: "Research grade bundle only. Not FDA approved.",
-    tags: ["bundle", "Wolverine", "BPC-157", "TB-500"],
+    researchNotes: "Research grade stack only. Not FDA approved.",
+    tags: ["stack", "Wolverine", "BPC-157", "TB-500"],
   },
   {
     id: "nad-ghk",
