@@ -1,18 +1,19 @@
-Drop product photos here using these exact filenames
-(replace the .svg placeholders when ready):
+URL-safe image names used by the storefront (light + dark where available):
 
-  glp3-rt-30.png   (or .jpg)  — GLP-3 RT 30mg
-  tirz-40.png                 — GLP Tirz 40mg
-  bpc-157-10.png              — BPC-157 10mg
-  tb-500-10.png               — TB-500 10mg
-  klow-80.png                 — KLOW 80mg blend
-  kpv-10.png                  — KPV 10mg
-  cjc-ipa-20.png              — CJC-1295 No DAC + Ipamorelin
-  mots-c-40.png               — MOTS-c 40mg
-  ss-31-10.png                — SS-31 10mg
-  nad-1000.png                — NAD+ 1000mg
+  tirz-light.jpeg / tirz-dark.jpeg
+  bpc-157-light.jpeg / bpc-157-dark.jpeg
+  tb500-light.jpeg / tb500-dark.jpeg
+  klow-light.jpeg / klow-dark.jpeg
+  cjc-ipa-light.jpeg / cjc-ipa-dark.jpeg
+  motsc-light.jpeg / motsc-dark.jpeg
+  nad-light.jpeg / nad-dark.jpeg
+  reta-klow.jpeg
+  wolverine-light.jpeg
 
-Then update products-data.js "image" / "images" paths from .svg to .png
-(or tell Grok and we will update paths for you).
+Still need dedicated photos (placeholders in use):
+  Reta 30mg alone (light + dark)
+  KPV 10mg (light + dark)
+  GHK-Cu 100mg (light + dark)
+  NAD+GHK-Cu bundle pack shot (optional)
 
-Recommended: square 800x800 or larger, clear vial label, RUO packaging.
+Drop new files with matching names and tell us to re-link.
