@@ -180,10 +180,10 @@ window.BW_PRODUCTS = [
     category: "Copper peptide research",
     unitPrice: 50,
     unit: "vial",
-    image: "images/products/klow-light.jpeg",
+    image: "images/products/ghk-cu-light.jpeg",
     images: [
-      "images/products/klow-light.jpeg",
-      "images/products/klow-dark.jpeg",
+      "images/products/ghk-cu-light.jpeg",
+      "images/products/ghk-cu-dark.jpeg",
     ],
     shortDescription:
       "Research-grade GHK-Cu copper tripeptide, 100 mg.",
