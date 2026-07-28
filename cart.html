@@ -568,8 +568,9 @@
                 Request invoice &amp; get payment instructions
               </button>
               <p class="pay-hint">
-                Submits cart + payment choice to customer service. You will see method-specific instructions
-                on this page after a successful request (crypto may open NOWPayments).
+                Submits your cart and emails a full invoice with payment instructions to
+                <strong>the work email you enter above</strong>, and to our customer service team.
+                You will also see instructions on screen after submit (crypto may open NOWPayments).
                 By submitting, you agree to our
                 <a href="returns.html">Return &amp; Refund Policy</a>
                 (no returns or exchanges after shipping; all sales final once shipped).
@@ -865,7 +866,12 @@
 
           const payText = window.BW_formatPaymentInstructions(method, cartRef, cryptoExtra);
 
-          const emailBody = [
+          // Invoice email body (buyer + CS receive the same content)
+          const invoiceBody = [
+            "220 BIOWORX — RESEARCH ORDER INVOICE",
+            "Reference: " + cartRef,
+            "--------------------------------",
+            "",
             payText,
             "",
             cartText,
@@ -875,12 +881,18 @@
             "Name: " + name,
             "Organization: " + org,
             "Email: " + email,
-            "Payment method selected: " + methodLabel,
-            "Buyer / institution type: " + useLabel,
-            "RUO / 21+ / not for human use attestation: Yes",
+            "Payment method: " + methodLabel,
+            "Institution type: " + useLabel,
+            "RUO / 21+ attestation: Yes",
             note ? "Notes: " + note : "Notes: —",
-            invoiceUrl ? "NOWPayments invoice URL: " + invoiceUrl : "",
-            "Source: www.220bioworx.com/cart.html",
+            invoiceUrl ? "NOWPayments pay link: " + invoiceUrl : "",
+            "",
+            "--------------------------------",
+            "Ship target: within 72 hours of confirmed payment.",
+            "Shipping: $18 flat 2–3 Day, or FREE when merchandise total is over $250.",
+            "No returns or exchanges after shipping. See returns.html",
+            "Research Use Only. Not for human use. Not FDA approved.",
+            "Questions: Customerservice@220bioworx.com",
           ]
             .filter(Boolean)
             .join("\n");
@@ -888,13 +900,46 @@
           const endpoint =
             (window.BW_PAYMENT && window.BW_PAYMENT.formSubmitEndpoint) ||
             "https://formsubmit.co/6732b0b86bff8989d370457024b960ee";
-          const cc = (window.BW_PAYMENT && window.BW_PAYMENT.ownerCc) || "Owner@220bioworx.com";
+          const ownerCc = (window.BW_PAYMENT && window.BW_PAYMENT.ownerCc) || "Owner@220bioworx.com";
+          // CC owner + buyer so the buyer receives the full invoice email
+          const ccList = [ownerCc, email].filter(Boolean).join(",");
+
+          // Autoresponse email to the buyer (FormSubmit sends this to the `email` field)
+          const buyerAutoResponse = [
+            "Thank you for your 220 BioWorX research order request.",
+            "",
+            "Your invoice reference is: " + cartRef,
+            "Payment method selected: " + methodLabel,
+            "Amount due: " + BWCart.money(t.total),
+            "",
+            "PAYMENT INSTRUCTIONS",
+            "--------------------",
+            payText,
+            "",
+            "ORDER / CART DETAILS",
+            "--------------------",
+            cartText,
+            "",
+            invoiceUrl ? "Crypto pay link: " + invoiceUrl : "",
+            "",
+            "Please include reference " + cartRef + " with your payment.",
+            "We aim to ship within 72 hours of confirmed payment.",
+            "",
+            "If you have questions, reply to this email or write Customerservice@220bioworx.com.",
+            "",
+            "Research Use Only. Not for human use. Not FDA approved.",
+            "— 220 BioWorX",
+          ]
+            .filter((line) => line !== undefined)
+            .join("\n");
 
           const payload = {
-            _subject: "220 BioWorX — Cart invoice [" + cartRef + "] — " + methodLabel,
-            _cc: cc,
+            _subject: "220 BioWorX invoice [" + cartRef + "] — " + methodLabel + " — " + BWCart.money(t.total),
+            _cc: ccList,
             _template: "box",
             _captcha: "false",
+            // FormSubmit autoresponse goes to the address in `email`
+            _autoresponse: buyerAutoResponse,
             _next:
               "https://www.220bioworx.com/cart.html?ordered=1&ref=" +
               encodeURIComponent(cartRef) +
@@ -905,23 +950,13 @@
             organization: org,
             payment_method: methodLabel,
             cart_reference: cartRef,
+            order_total: BWCart.money(t.total),
             buyer_institution_type: useLabel,
-            message: emailBody,
+            message: invoiceBody,
           };
 
-          const res = await fetch(endpoint.replace("formsubmit.co/", "formsubmit.co/ajax/"), {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Accept: "application/json" },
-            body: JSON.stringify(payload),
-          });
-
-          let ok = res.ok;
-          let data = {};
-          try {
-            data = await res.json();
-          } catch (_) {}
-          if (data.success === "false" || data.success === false) ok = false;
-
+          // Prefer classic form POST for reliable email + autoresponse delivery
+          // (AJAX sometimes skips buyer-facing autoresponse on FormSubmit)
           sessionStorage.setItem(
             "bw220_last_order",
             JSON.stringify({
@@ -932,37 +967,31 @@
               name,
               email,
               invoiceUrl,
+              total: t.total,
             })
           );
 
-          if (!ok) {
-            const f = document.createElement("form");
-            f.method = "POST";
-            f.action = endpoint;
-            f.style.display = "none";
-            Object.keys(payload).forEach((k) => {
-              const inp = document.createElement("input");
-              inp.type = "hidden";
-              inp.name = k;
-              inp.value = payload[k];
-              f.appendChild(inp);
-            });
-            document.body.appendChild(f);
-            f.submit();
-            return;
-          }
-
-          showConfirmation(method, payText, cartText, name, email, invoiceUrl);
-
-          // Auto-open NOWPayments hosted invoice when available
-          if (method === "crypto" && invoiceUrl) {
-            window.open(invoiceUrl, "_blank", "noopener,noreferrer");
-          }
+          const f = document.createElement("form");
+          f.method = "POST";
+          f.action = endpoint;
+          f.style.display = "none";
+          Object.keys(payload).forEach((k) => {
+            const inp = document.createElement("input");
+            inp.type = "hidden";
+            inp.name = k;
+            inp.value = payload[k];
+            f.appendChild(inp);
+          });
+          document.body.appendChild(f);
+          f.submit();
+          return;
         } catch (err) {
           console.error(err);
           const payText = window.BW_formatPaymentInstructions(method, cartRef, cryptoExtra);
           formError.textContent =
-            "Could not complete automatically. Instructions are shown below if available.";
+            "Could not send the invoice email automatically. Instructions are shown below — also email Customerservice@220bioworx.com with reference " +
+            cartRef +
+            ".";
           formError.classList.add("show");
           showConfirmation(method, payText, cartText, name, email, invoiceUrl);
         } finally {
@@ -980,16 +1009,20 @@
           methodLabel +
           ". Use reference " +
           cartRef +
-          ". A copy was sent to customer service" +
-          (email ? " (" + email + ")" : "") +
           ".";
+        if (email) {
+          lead +=
+            " An invoice email with payment instructions was sent to " +
+            email +
+            " (and to our customer service team). Check inbox and spam.";
+        }
         if (method === "crypto" && invoiceUrl) {
-          lead += " A NOWPayments window should open — complete crypto payment there only.";
+          lead += " A NOWPayments window may open — complete crypto payment there only.";
         } else if (method === "crypto") {
           lead +=
-            " Crypto invoice link will be emailed by customer service if not shown below (Worker not configured yet).";
+            " If a crypto pay link is missing, customer service will follow up with a NOWPayments invoice.";
         } else {
-          lead += " Pay only with the instructions below.";
+          lead += " Pay using the instructions below.";
         }
         document.getElementById("confirmLead").textContent = lead;
         document.getElementById("payInstructions").textContent = payText;
