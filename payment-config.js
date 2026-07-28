@@ -40,6 +40,9 @@ window.BW_PAYMENT = {
   },
   /** AJAX only — never use the non-/ajax/ URL as a form action (that navigates away). */
   formSubmitEndpoint: "https://formsubmit.co/ajax/6732b0b86bff8989d370457024b960ee",
+  /** Internal copy only — FormSubmit _bcc so buyer never sees this address */
+  ownerBcc: "Owner@220bioworx.com",
+  /** @deprecated use ownerBcc */
   ownerCc: "Owner@220bioworx.com",
   /**
    * Branded invoice email FROM Customerservice@220bioworx.com

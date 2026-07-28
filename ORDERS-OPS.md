@@ -3,7 +3,7 @@
 Your storefront does **not** run a full order-management database. Orders are:
 
 1. **Cart reference** (e.g. `BW-250727-AB12`) stored in the buyer’s browser + emailed to you  
-2. **FormSubmit email** to Customerservice@ (CC Owner@)  
+2. **FormSubmit email** to Customerservice@ (CC buyer; BCC Owner@ — not shown to buyer)  
 3. Optional **NOWPayments crypto invoice** (if they chose crypto and Worker is live)  
 4. Your own **manual invoice** / quote if you send one separately  
 

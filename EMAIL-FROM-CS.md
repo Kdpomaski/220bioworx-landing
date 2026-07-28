@@ -25,7 +25,7 @@ FormSubmit **cannot** send as your domain. To get a real
    - Optional text:
      - `FROM_EMAIL` = `Customerservice@220bioworx.com`
      - `FROM_NAME` = `220 BioWorX Customer Service`
-     - `OWNER_CC` = `Owner@220bioworx.com`
+     - `OWNER_BCC` = `Owner@220bioworx.com` (BCC only — not shown to buyer; `OWNER_CC` still works)
      - `CS_INBOX` = `Customerservice@220bioworx.com`
      - `ALLOWED_ORIGIN` = `https://www.220bioworx.com`
 6. Copy worker URL, e.g.  

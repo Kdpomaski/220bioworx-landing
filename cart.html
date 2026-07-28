@@ -978,9 +978,11 @@
                 "https://formsubmit.co/ajax/"
               );
             }
-            const ownerCc =
-              (window.BW_PAYMENT && window.BW_PAYMENT.ownerCc) || "Owner@220bioworx.com";
-            const ccList = [ownerCc, email].filter(Boolean).join(",");
+            // Buyer may be CC'd so they get the invoice. Owner is BCC only (not visible to buyer).
+            const ownerBcc =
+              (window.BW_PAYMENT &&
+                (window.BW_PAYMENT.ownerBcc || window.BW_PAYMENT.ownerCc)) ||
+              "Owner@220bioworx.com";
             const invoiceBody = [
               "⚠ ACTION NEEDED — PAY TO PROCEED",
               "No shipping until payment is confirmed.",
@@ -1024,7 +1026,8 @@
                     orderRef +
                     " — 220 BioWorX — " +
                     totalStr,
-                  _cc: ccList,
+                  _cc: email,
+                  _bcc: ownerBcc,
                   _template: "box",
                   _captcha: "false",
                   name: name,

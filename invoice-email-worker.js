@@ -12,7 +12,7 @@
  *    Optional vars:
  *      FROM_EMAIL = Customerservice@220bioworx.com
  *      FROM_NAME  = 220 BioWorX Customer Service
- *      OWNER_CC   = Owner@220bioworx.com
+ *      OWNER_BCC  = Owner@220bioworx.com  (hidden from buyer; OWNER_CC still accepted)
  *      ALLOWED_ORIGIN = https://www.220bioworx.com
  * 5. Deploy → set payment-config.js:
  *      invoiceEmailUrl: "https://YOUR_WORKER.workers.dev/send-invoice"
@@ -62,7 +62,8 @@ export default {
 
     const fromEmail = env.FROM_EMAIL || "Customerservice@220bioworx.com";
     const fromName = env.FROM_NAME || "220 BioWorX Customer Service";
-    const ownerCc = env.OWNER_CC || "Owner@220bioworx.com";
+    // Owner gets internal copy only (never on buyer-facing message headers)
+    const ownerBcc = env.OWNER_BCC || env.OWNER_CC || "Owner@220bioworx.com";
     const csInbox = env.CS_INBOX || fromEmail;
 
     const ref = String(body.reference || "BW-UNKNOWN");
@@ -101,15 +102,19 @@ export default {
       cryptoUrl,
     });
 
-    // 1) Buyer invoice FROM Customerservice@
-    const buyerSend = await resendSend(env.RESEND_API_KEY, {
+    // 1) Buyer invoice FROM Customerservice@ — Owner is BCC (hidden from buyer)
+    const buyerPayload = {
       from: `${fromName} <${fromEmail}>`,
       to: [buyerEmail],
       reply_to: fromEmail,
       subject,
       html,
       text,
-    });
+    };
+    if (ownerBcc && ownerBcc.toLowerCase() !== buyerEmail.toLowerCase()) {
+      buyerPayload.bcc = [ownerBcc];
+    }
+    const buyerSend = await resendSend(env.RESEND_API_KEY, buyerPayload);
 
     if (!buyerSend.ok) {
       return json(
@@ -119,16 +124,20 @@ export default {
       );
     }
 
-    // 2) Internal copy to CS + Owner
+    // 2) Internal copy to CS only (Owner already BCC'd on buyer mail; avoid duplicate if same)
     const internalSubject = `[ORDER] ${ref} — ${method} — ${total} — ${buyerName}`;
     const internalHtml = `
       <p><strong>New order request</strong></p>
-      <p>Buyer was sent invoice email from ${fromEmail}.</p>
+      <p>Buyer was sent invoice email from ${fromEmail} (Owner BCC'd, not visible to buyer).</p>
       <hr/>
       ${html}
     `;
-    const toInternal = [csInbox, ownerCc].filter(
-      (e, i, a) => e && a.indexOf(e) === i && e.toLowerCase() !== buyerEmail.toLowerCase()
+    const toInternal = [csInbox].filter(
+      (e, i, a) =>
+        e &&
+        a.indexOf(e) === i &&
+        e.toLowerCase() !== buyerEmail.toLowerCase() &&
+        e.toLowerCase() !== String(ownerBcc || "").toLowerCase()
     );
 
     let internalSend = { ok: true, data: null };
