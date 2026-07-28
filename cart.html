@@ -494,23 +494,32 @@
               Crypto: only pay through the official NOWPayments link we provide — never to addresses from unverified messages.
             </p>
 
-            <form id="checkoutForm" style="margin-top:1.25rem;">
+            <form
+              id="checkoutForm"
+              method="POST"
+              action="https://formsubmit.co/6732b0b86bff8989d370457024b960ee"
+              enctype="application/x-www-form-urlencoded"
+              accept-charset="UTF-8"
+              style="margin-top:1.25rem;"
+            >
               <div class="form-error" id="formError" role="alert"></div>
               <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <!-- FormSubmit special fields (filled by JS before native POST) -->
+              <div id="fsHidden"></div>
 
               <div class="form-row">
                 <div class="form-group">
                   <label for="buyerName">Full name</label>
-                  <input id="buyerName" name="buyerName" type="text" required autocomplete="name" />
+                  <input id="buyerName" name="name" type="text" required autocomplete="name" />
                 </div>
                 <div class="form-group">
                   <label for="buyerOrg">Institution / organization</label>
-                  <input id="buyerOrg" name="buyerOrg" type="text" required autocomplete="organization" />
+                  <input id="buyerOrg" name="organization" type="text" required autocomplete="organization" />
                 </div>
               </div>
               <div class="form-group">
                 <label for="buyerEmail">Work email</label>
-                <input id="buyerEmail" name="buyerEmail" type="email" required autocomplete="email" />
+                <input id="buyerEmail" name="email" type="email" required autocomplete="email" />
               </div>
               <div class="form-group">
                 <label for="buyerNote">Notes (optional)</label>
@@ -955,8 +964,7 @@
             message: invoiceBody,
           };
 
-          // Prefer classic form POST for reliable email + autoresponse delivery
-          // (AJAX sometimes skips buyer-facing autoresponse on FormSubmit)
+          // Native HTML form POST (required by FormSubmit — method="POST")
           sessionStorage.setItem(
             "bw220_last_order",
             JSON.stringify({
@@ -971,19 +979,26 @@
             })
           );
 
-          const f = document.createElement("form");
-          f.method = "POST";
-          f.action = endpoint;
-          f.style.display = "none";
+          const hiddenBox = document.getElementById("fsHidden");
+          hiddenBox.innerHTML = "";
           Object.keys(payload).forEach((k) => {
+            // name/email/organization already on visible fields
+            if (k === "name" || k === "email" || k === "organization") return;
             const inp = document.createElement("input");
             inp.type = "hidden";
             inp.name = k;
             inp.value = payload[k];
-            f.appendChild(inp);
+            hiddenBox.appendChild(inp);
           });
-          document.body.appendChild(f);
-          f.submit();
+
+          form.setAttribute("method", "POST");
+          form.method = "post";
+          form.setAttribute("action", endpoint);
+          form.action = endpoint;
+          form.setAttribute("enctype", "application/x-www-form-urlencoded");
+
+          // HTMLFormElement.submit() = true POST, does not re-fire this listener
+          HTMLFormElement.prototype.submit.call(form);
           return;
         } catch (err) {
           console.error(err);
@@ -994,7 +1009,6 @@
             ".";
           formError.classList.add("show");
           showConfirmation(method, payText, cartText, name, email, invoiceUrl);
-        } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = "Request invoice & get payment instructions";
         }
