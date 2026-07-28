@@ -1057,13 +1057,14 @@
 
       function showConfirmation(method, payText, cartText, name, email, invoiceUrl, emailSent) {
         const methodLabel = window.BW_methodLabel(method);
+        const completedRef = cartRef;
         let lead =
           "Thanks, " +
           name +
           ". You selected " +
           methodLabel +
           ". Invoice reference " +
-          cartRef +
+          completedRef +
           ".";
         if (emailSent && email) {
           lead +=
@@ -1085,12 +1086,27 @@
           methodLabel.toUpperCase() +
           "\nNo shipping until payment confirmation.\n\n" +
           "Reply by email with this invoice reference (" +
-          cartRef +
+          completedRef +
           ") and proof of payment.\n\n" +
           payText;
         document.getElementById("cartSnapshot").textContent = cartText;
         confirmPanel.classList.add("show");
         confirmPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+
+        // Empty cart after a completed checkout (invoice generated).
+        // Keep cart snapshot on screen from cartText; next visit starts fresh.
+        if (emailSent !== false && window.BWCart) {
+          try {
+            BWCart.clear();
+            sessionStorage.removeItem("bw220_cart_ref");
+            cartRef = BWCart.newReference();
+            sessionStorage.setItem("bw220_cart_ref", cartRef);
+            cartRefEl.textContent = cartRef;
+            renderCart();
+          } catch (clearErr) {
+            console.warn("Could not clear cart", clearErr);
+          }
+        }
       }
 
       // Restore confirmation after FormSubmit redirect
