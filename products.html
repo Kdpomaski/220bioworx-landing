@@ -629,7 +629,9 @@
       const catalogView = document.getElementById("catalogView");
       const detailView = document.getElementById("detailView");
       const detailRoot = document.getElementById("detailRoot");
-      const products = window.BW_PRODUCTS || [];
+      const products = window.BW_listedProducts
+        ? window.BW_listedProducts()
+        : (window.BW_PRODUCTS || []).filter((p) => p.listed !== false);
 
       document.getElementById("productCount").textContent =
         products.length + " research materials · RUO";

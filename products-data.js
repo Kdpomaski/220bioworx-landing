@@ -156,6 +156,7 @@ window.BW_PRODUCTS = [
     category: "Synthetic peptide research",
     unitPrice: 50,
     unit: "vial",
+    listed: false, // saved for later — not shown until product photo is ready
     image: "images/products/kpv-10.svg",
     images: ["images/products/kpv-10.svg"],
     shortDescription: "Research-grade KPV tripeptide, 10 mg.",
@@ -382,12 +383,17 @@ window.BW_PRODUCTS = [
   },
 ];
 
-window.BW_getProduct = function (idOrSku) {
+/** Catalog products only (excludes listed: false). Full data remains in BW_PRODUCTS. */
+window.BW_listedProducts = function () {
+  return (window.BW_PRODUCTS || []).filter((p) => p.listed !== false);
+};
+
+window.BW_getProduct = function (idOrSku, opts) {
   const q = String(idOrSku || "").toLowerCase();
+  const includeUnlisted = opts && opts.includeUnlisted;
+  const list = includeUnlisted ? window.BW_PRODUCTS || [] : window.BW_listedProducts();
   return (
-    window.BW_PRODUCTS.find(
-      (p) => p.id.toLowerCase() === q || p.sku.toLowerCase() === q
-    ) || null
+    list.find((p) => p.id.toLowerCase() === q || p.sku.toLowerCase() === q) || null
   );
 };
 
