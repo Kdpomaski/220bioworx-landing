@@ -167,7 +167,7 @@ window.BW_PRODUCTS = [
     sequence: "Lys-Pro-Val (KPV)",
     appearance: "Lyophilized solid",
     storage: "Frozen, dry, protected from light.",
-    researchNotes: "Research grade only. Not FDA approved. Dedicated vial photos can replace the placeholder when available.",
+    researchNotes: "Research grade only. Not FDA approved.",
     tags: ["KPV", "10mg"],
   },
   {
@@ -194,8 +194,7 @@ window.BW_PRODUCTS = [
     sequence: "Gly-His-Lys (GHK) complexed with copper(II)",
     appearance: "Blue to blue-green lyophilized solid (typical for Cu peptide)",
     storage: "Frozen, dry, protected from light.",
-    researchNotes:
-      "Research grade only. Not FDA approved. Gallery uses related brand photography until dedicated GHK-Cu pack shots are uploaded.",
+    researchNotes: "Research grade only. Not FDA approved.",
     tags: ["GHK-Cu", "100mg"],
   },
   {
