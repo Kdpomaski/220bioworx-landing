@@ -484,16 +484,17 @@
             </div>
           </section>
 
-          <!-- Checkout -->
-          <section class="card">
+          <!-- Checkout: no <form> / no FormSubmit navigation — button + fetch only -->
+          <section class="card" id="checkoutSection">
             <h2>Payment method</h2>
             <p class="pay-hint" style="margin-top:0;margin-bottom:0.85rem;">
-              Choose how you will pay. Instructions are revealed only after you submit this order request.
+              Choose how you will pay. Instructions are revealed only after you request the invoice — you stay on this page.
             </p>
 
+            <div id="checkoutControls">
             <div class="pay-options" role="radiogroup" aria-label="Payment method">
               <label class="pay-option">
-                <input type="radio" name="payMethod" value="zelle" required />
+                <input type="radio" name="payMethod" value="zelle" />
                 <div class="po-title">Zelle</div>
                 <div class="po-desc">U.S. domestic · instructions shown after submit</div>
               </label>
@@ -514,33 +515,26 @@
               Crypto: only pay through the official NOWPayments link we provide — never to addresses from unverified messages.
             </p>
 
-            <form
-              id="checkoutForm"
-              method="post"
-              action="#"
-              onsubmit="return false;"
-              style="margin-top:1.25rem;"
-            >
+            <div id="checkoutForm" style="margin-top:1.25rem;">
               <div class="form-error" id="formError" role="alert"></div>
-              <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
               <div class="form-row">
                 <div class="form-group">
                   <label for="buyerName">Full name</label>
-                  <input id="buyerName" name="name" type="text" required autocomplete="name" />
+                  <input id="buyerName" type="text" required autocomplete="name" />
                 </div>
                 <div class="form-group">
                   <label for="buyerOrg">Institution / organization</label>
-                  <input id="buyerOrg" name="organization" type="text" required autocomplete="organization" />
+                  <input id="buyerOrg" type="text" required autocomplete="organization" />
                 </div>
               </div>
               <div class="form-group">
                 <label for="buyerEmail">Work email</label>
-                <input id="buyerEmail" name="email" type="email" required autocomplete="email" />
+                <input id="buyerEmail" type="email" required autocomplete="email" />
               </div>
               <div class="form-group">
                 <label for="buyerNote">Notes (optional)</label>
-                <textarea id="buyerNote" name="buyerNote" placeholder="PO number, shipping notes, research context…"></textarea>
+                <textarea id="buyerNote" placeholder="PO number, shipping notes, research context…"></textarea>
               </div>
 
               <!-- Checkout attestation gateway -->
@@ -590,18 +584,18 @@
                 </div>
               </div>
 
-              <button type="submit" class="btn btn-primary" id="submitBtn" style="width:100%;margin-top:1rem;">
+              <button type="button" class="btn btn-primary" id="submitBtn" style="width:100%;margin-top:1rem;">
                 Request invoice &amp; get payment instructions
               </button>
               <p class="pay-hint">
-                Submits your cart and emails a full invoice with payment instructions to
-                <strong>the work email you enter above</strong>, and to our customer service team.
-                You will also see instructions on screen after submit (crypto may open NOWPayments).
-                By submitting, you agree to our
+                You stay on www.220bioworx.com — no FormSubmit leave page. Invoice instructions show below.
+                We also email <strong>the work email you enter above</strong> and our customer service team.
+                By continuing, you agree to our
                 <a href="returns.html">Return/Refund Policy</a>
                 (no returns or exchanges after shipping; all sales final once shipped).
               </p>
-            </form>
+            </div>
+            </div><!-- #checkoutControls -->
 
             <div id="confirmPanel" role="status">
               <div class="action-banner">
@@ -814,18 +808,34 @@
       renderCart();
       window.addEventListener("bw-cart-updated", renderCart);
 
-      // —— Checkout submit ——
-      const form = document.getElementById("checkoutForm");
+      // —— Checkout: type=button only. Never use <form action=formsubmit>. Never navigate away. ——
       const formError = document.getElementById("formError");
       const submitBtn = document.getElementById("submitBtn");
       const confirmPanel = document.getElementById("confirmPanel");
+      const checkoutControls = document.getElementById("checkoutControls");
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
+      // Block any accidental form submit in this page (contact pages share patterns)
+      document.addEventListener(
+        "submit",
+        function (e) {
+          if (e.target && e.target.id === "checkoutForm") {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }
+        },
+        true
+      );
+
+      submitBtn.addEventListener("click", async function (ev) {
+        if (ev) {
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
         formError.classList.remove("show");
         formError.textContent = "";
 
-        const methodEl = form.closest(".card").querySelector('input[name="payMethod"]:checked');
+        const methodEl = document.querySelector('input[name="payMethod"]:checked');
         const method = methodEl ? methodEl.value : "";
         if (!method) {
           formError.textContent = "Select Zelle, ACH, or Cryptocurrency as your payment method.";
@@ -845,6 +855,21 @@
           formError.classList.add("show");
           return;
         }
+
+        const name = document.getElementById("buyerName").value.trim();
+        const org = document.getElementById("buyerOrg").value.trim();
+        const email = document.getElementById("buyerEmail").value.trim();
+        const note = document.getElementById("buyerNote").value.trim();
+        if (!name || !org || !email) {
+          formError.textContent = "Please fill in name, organization, and work email.";
+          formError.classList.add("show");
+          return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          formError.textContent = "Please enter a valid work email.";
+          formError.classList.add("show");
+          return;
+        }
         if (window.location.protocol === "file:") {
           formError.innerHTML =
             'Open the live site at <a href="https://www.220bioworx.com/cart.html">www.220bioworx.com/cart.html</a>.';
@@ -852,13 +877,11 @@
           return;
         }
 
-        const name = document.getElementById("buyerName").value.trim();
-        const org = document.getElementById("buyerOrg").value.trim();
-        const email = document.getElementById("buyerEmail").value.trim();
-        const note = document.getElementById("buyerNote").value.trim();
+        // Capture order snapshot before any clear
+        const orderRef = cartRef;
         const items = BWCart.getItems();
         const t = BWCart.totals();
-        const cartText = BWCart.formatCartText(items, cartRef);
+        const cartText = BWCart.formatCartText(items, orderRef);
         const methodLabel = window.BW_methodLabel(method);
         const cryptoCfg = (window.BW_PAYMENT && window.BW_PAYMENT.crypto) || {};
         const useLabel = buyerTypes.join("; ");
@@ -868,9 +891,10 @@
 
         let invoiceUrl = "";
         let cryptoExtra = { amount: t.total };
+        let payText = "";
+        let emailSent = false;
 
         try {
-          // Crypto: create NOWPayments invoice via secure Worker (if configured)
           if (method === "crypto" && cryptoCfg.createInvoiceUrl) {
             submitBtn.textContent = "Creating crypto invoice…";
             const invRes = await fetch(cryptoCfg.createInvoiceUrl, {
@@ -879,8 +903,8 @@
               body: JSON.stringify({
                 price_amount: t.total > 0 ? t.total : 1,
                 price_currency: cryptoCfg.priceCurrency || "usd",
-                order_id: cartRef,
-                order_description: "220 BioWorX research cart " + cartRef,
+                order_id: orderRef,
+                order_description: "220 BioWorX research cart " + orderRef,
                 success_url: cryptoCfg.successPath,
                 cancel_url: cryptoCfg.cancelPath,
               }),
@@ -889,21 +913,19 @@
             if (invRes.ok && invData.invoice_url) {
               invoiceUrl = invData.invoice_url;
               cryptoExtra.invoiceUrl = invoiceUrl;
-            } else {
-              console.warn("NOWPayments invoice failed", invData);
             }
           } else if (method === "crypto" && cryptoCfg.staticInvoiceUrl) {
             invoiceUrl = cryptoCfg.staticInvoiceUrl;
             cryptoExtra.invoiceUrl = invoiceUrl;
           }
 
-          const payText = window.BW_formatPaymentInstructions(method, cartRef, cryptoExtra);
+          payText = window.BW_formatPaymentInstructions(method, orderRef, cryptoExtra);
           const totalStr = BWCart.money(t.total);
 
           sessionStorage.setItem(
             "bw220_last_order",
             JSON.stringify({
-              ref: cartRef,
+              ref: orderRef,
               method,
               payText,
               cartText,
@@ -917,147 +939,147 @@
           const invoiceEmailUrl =
             (window.BW_PAYMENT && window.BW_PAYMENT.invoiceEmailUrl) || "";
 
-          // Preferred: branded email FROM Customerservice@ via Cloudflare Worker + Resend
           if (invoiceEmailUrl) {
             submitBtn.textContent = "Emailing invoice…";
-            const mailRes = await fetch(invoiceEmailUrl, {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                buyerEmail: email,
-                buyerName: name,
-                organization: org,
-                institutionType: useLabel,
-                notes: note,
-                reference: cartRef,
-                paymentMethod: methodLabel,
-                orderTotal: totalStr,
-                paymentInstructions: payText,
-                cartDetails: cartText,
-                cryptoInvoiceUrl: invoiceUrl || "",
-              }),
-            });
-            const mailData = await mailRes.json().catch(() => ({}));
-            if (!mailRes.ok || mailData.error) {
-              throw new Error(
-                (mailData && mailData.error) || "Invoice email service failed"
+            try {
+              const mailRes = await fetch(invoiceEmailUrl, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  buyerEmail: email,
+                  buyerName: name,
+                  organization: org,
+                  institutionType: useLabel,
+                  notes: note,
+                  reference: orderRef,
+                  paymentMethod: methodLabel,
+                  orderTotal: totalStr,
+                  paymentInstructions: payText,
+                  cartDetails: cartText,
+                  cryptoInvoiceUrl: invoiceUrl || "",
+                }),
+              });
+              const mailData = await mailRes.json().catch(() => ({}));
+              emailSent = mailRes.ok && !mailData.error;
+            } catch (mailErr) {
+              console.warn("Invoice worker failed; staying on site", mailErr);
+              emailSent = false;
+            }
+          } else {
+            // Background email only via FormSubmit AJAX — fetch never changes the browser URL
+            submitBtn.textContent = "Sending invoice…";
+            const formEndpoint =
+              (window.BW_PAYMENT && window.BW_PAYMENT.formSubmitEndpoint) ||
+              "https://formsubmit.co/ajax/6732b0b86bff8989d370457024b960ee";
+            let ajaxEndpoint = formEndpoint;
+            if (!ajaxEndpoint.includes("/ajax/")) {
+              ajaxEndpoint = ajaxEndpoint.replace(
+                "https://formsubmit.co/",
+                "https://formsubmit.co/ajax/"
               );
             }
-            showConfirmation(method, payText, cartText, name, email, invoiceUrl, true);
-            if (method === "crypto" && invoiceUrl) {
-              window.open(invoiceUrl, "_blank", "noopener,noreferrer");
+            const ownerCc =
+              (window.BW_PAYMENT && window.BW_PAYMENT.ownerCc) || "Owner@220bioworx.com";
+            const ccList = [ownerCc, email].filter(Boolean).join(",");
+            const invoiceBody = [
+              "⚠ ACTION NEEDED — PAY TO PROCEED",
+              "No shipping until payment is confirmed.",
+              "Pay using: " + methodLabel,
+              "",
+              "YOUR ACTION ITEMS:",
+              "1) Pay with the instructions below. Include reference " + orderRef + ".",
+              "2) REPLY TO THIS EMAIL with this invoice reference AND proof of payment.",
+              "3) Wait for confirmation — we ship only after payment is confirmed (target 72h after).",
+              "",
+              payText,
+              "",
+              cartText,
+              "",
+              "Buyer: " + name,
+              "Organization: " + org,
+              "Email: " + email,
+              "Institution type: " + useLabel,
+              note ? "Notes: " + note : "",
+              invoiceUrl ? "Crypto pay link: " + invoiceUrl : "",
+              "",
+              "Return/Refund Policy: https://www.220bioworx.com/returns.html",
+              "Research Use Only. Not for human use. Not FDA approved.",
+            ]
+              .filter(Boolean)
+              .join("\n");
+
+            try {
+              const res = await fetch(ajaxEndpoint, {
+                method: "POST",
+                mode: "cors",
+                credentials: "omit",
+                redirect: "follow",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+                body: JSON.stringify({
+                  _subject:
+                    "Action needed: Pay invoice " +
+                    orderRef +
+                    " — 220 BioWorX — " +
+                    totalStr,
+                  _cc: ccList,
+                  _template: "box",
+                  _captcha: "false",
+                  name: name,
+                  email: email,
+                  organization: org,
+                  payment_method: methodLabel,
+                  cart_reference: orderRef,
+                  order_total: totalStr,
+                  buyer_institution_type: useLabel,
+                  message: invoiceBody,
+                }),
+              });
+              const data = await res.json().catch(() => ({}));
+              emailSent =
+                res.ok &&
+                data.success !== "false" &&
+                data.success !== false;
+            } catch (mailErr) {
+              console.warn("Background email failed; staying on site", mailErr);
+              emailSent = false;
             }
-            submitBtn.disabled = false;
-            submitBtn.textContent = "Request invoice & get payment instructions";
-            return;
           }
 
-          // Fallback: FormSubmit AJAX only (never leave 220bioworx.com)
-          submitBtn.textContent = "Sending invoice…";
-          const formEndpoint =
-            (window.BW_PAYMENT && window.BW_PAYMENT.formSubmitEndpoint) ||
-            "https://formsubmit.co/6732b0b86bff8989d370457024b960ee";
-          const ajaxEndpoint = formEndpoint.includes("/ajax/")
-            ? formEndpoint
-            : formEndpoint.replace("https://formsubmit.co/", "https://formsubmit.co/ajax/");
-          const ownerCc =
-            (window.BW_PAYMENT && window.BW_PAYMENT.ownerCc) || "Owner@220bioworx.com";
-          const ccList = [ownerCc, email].filter(Boolean).join(",");
-
-          const invoiceBody = [
-            "⚠ ACTION NEEDED — PAY TO PROCEED",
-            "No shipping until payment is confirmed.",
-            "Pay using: " + methodLabel,
-            "",
-            "YOUR ACTION ITEMS:",
-            "1) Pay with the instructions below. Include reference " + cartRef + ".",
-            "2) REPLY TO THIS EMAIL with this invoice reference AND proof of payment.",
-            "3) Wait for confirmation — we ship only after payment is confirmed (target 72h after).",
-            "",
-            payText,
-            "",
-            cartText,
-            "",
-            "Buyer: " + name,
-            "Organization: " + org,
-            "Email: " + email,
-            "Institution type: " + useLabel,
-            note ? "Notes: " + note : "",
-            invoiceUrl ? "Crypto pay link: " + invoiceUrl : "",
-            "",
-            "Return/Refund Policy: https://www.220bioworx.com/returns.html",
-            "Research Use Only. Not for human use. Not FDA approved.",
-          ]
-            .filter(Boolean)
-            .join("\n");
-
-          const payload = {
-            _subject:
-              "Action needed: Pay invoice " + cartRef + " — 220 BioWorX — " + totalStr,
-            _cc: ccList,
-            _template: "box",
-            _captcha: "false",
-            name: name,
-            email: email,
-            organization: org,
-            payment_method: methodLabel,
-            cart_reference: cartRef,
-            order_total: totalStr,
-            buyer_institution_type: useLabel,
-            message: invoiceBody,
-          };
-
-          const res = await fetch(ajaxEndpoint, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify(payload),
-          });
-
-          let data = {};
-          try {
-            data = await res.json();
-          } catch (_) {}
-
-          const ok =
-            res.ok &&
-            data.success !== "false" &&
-            data.success !== false &&
-            !(data.message && /GET|method/i.test(String(data.message)));
-
-          if (!ok) {
-            throw new Error(
-              (data && data.message) || "Email service failed — stayed on site; see instructions below"
-            );
-          }
-
-          showConfirmation(method, payText, cartText, name, email, invoiceUrl, true);
+          // Always stay on cart.html — never open FormSubmit in this window
+          showConfirmation(method, payText, cartText, name, email, invoiceUrl, emailSent, orderRef);
           if (method === "crypto" && invoiceUrl) {
             window.open(invoiceUrl, "_blank", "noopener,noreferrer");
           }
-          submitBtn.disabled = false;
-          submitBtn.textContent = "Request invoice & get payment instructions";
-          return;
+          if (!emailSent) {
+            formError.textContent =
+              "Invoice is shown below. Email may not have sent — also write Customerservice@220bioworx.com with reference " +
+              orderRef +
+              ".";
+            formError.classList.add("show");
+          }
         } catch (err) {
           console.error(err);
-          const payText = window.BW_formatPaymentInstructions(method, cartRef, cryptoExtra);
+          if (!payText) {
+            payText = window.BW_formatPaymentInstructions(method, orderRef, cryptoExtra);
+          }
           formError.textContent =
-            "Could not send the invoice email automatically. Instructions are shown below — also email Customerservice@220bioworx.com with reference " +
-            cartRef +
-            ". Error: " +
-            (err && err.message ? err.message : "unknown");
+            "Something went wrong, but you stayed on our site. Instructions are below. Email Customerservice@220bioworx.com with reference " +
+            orderRef +
+            ".";
           formError.classList.add("show");
-          showConfirmation(method, payText, cartText, name, email, invoiceUrl, false);
+          showConfirmation(method, payText, cartText, name, email, invoiceUrl, false, orderRef);
+        } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = "Request invoice & get payment instructions";
         }
       });
 
-      function showConfirmation(method, payText, cartText, name, email, invoiceUrl, emailSent) {
+      function showConfirmation(method, payText, cartText, name, email, invoiceUrl, emailSent, completedRef) {
+        completedRef = completedRef || cartRef;
         const methodLabel = window.BW_methodLabel(method);
-        const completedRef = cartRef;
         let lead =
           "Thanks, " +
           name +
@@ -1068,14 +1090,14 @@
           ".";
         if (emailSent && email) {
           lead +=
-            " A branded invoice was emailed from Customerservice@220bioworx.com to " +
+            " An invoice email was sent to " +
             email +
-            ". Check inbox and spam. ACTION: pay, then reply with this invoice and proof of payment. No shipping until payment is confirmed.";
+            " (check inbox and spam). ACTION: pay, then reply with this invoice and proof of payment. No shipping until payment is confirmed.";
         } else if (email) {
           lead +=
-            " Check " +
-            email +
-            " for the invoice email (and spam). ACTION: pay, then reply with this invoice and proof of payment. No shipping until payment is confirmed.";
+            " Save the instructions below. Also email Customerservice@220bioworx.com with reference " +
+            completedRef +
+            " if you do not see an email. ACTION: pay, then reply with proof of payment.";
         }
         if (method === "crypto" && invoiceUrl) {
           lead += " Complete crypto only on the official NOWPayments link.";
@@ -1090,36 +1112,49 @@
           ") and proof of payment.\n\n" +
           payText;
         document.getElementById("cartSnapshot").textContent = cartText;
+
+        // Hide checkout controls — stay on this URL with confirmation only
+        if (checkoutControls) {
+          checkoutControls.style.display = "none";
+        }
         confirmPanel.classList.add("show");
         confirmPanel.scrollIntoView({ behavior: "smooth", block: "start" });
 
-        // Empty cart after a completed checkout (invoice generated).
-        // Keep cart snapshot on screen from cartText; next visit starts fresh.
-        if (emailSent !== false && window.BWCart) {
-          try {
+        // Always empty cart after invoice is generated (snapshot remains on screen)
+        try {
+          if (window.BWCart) {
             BWCart.clear();
-            sessionStorage.removeItem("bw220_cart_ref");
-            cartRef = BWCart.newReference();
-            sessionStorage.setItem("bw220_cart_ref", cartRef);
-            cartRefEl.textContent = cartRef;
-            renderCart();
-          } catch (clearErr) {
-            console.warn("Could not clear cart", clearErr);
           }
+          sessionStorage.removeItem("bw220_cart_ref");
+          cartRef = BWCart.newReference();
+          sessionStorage.setItem("bw220_cart_ref", cartRef);
+          cartRefEl.textContent = cartRef;
+          renderCart();
+        } catch (clearErr) {
+          console.warn("Could not clear cart", clearErr);
         }
       }
 
-      // Restore confirmation after FormSubmit redirect
+      // Restore confirmation if user returns with ?ordered=1 (legacy) or crypto return
       try {
         const params = new URLSearchParams(window.location.search);
         if (params.get("ordered") === "1") {
           const raw = sessionStorage.getItem("bw220_last_order");
           if (raw) {
             const o = JSON.parse(raw);
-            showConfirmation(o.method, o.payText, o.cartText, o.name, o.email, o.invoiceUrl, true);
+            showConfirmation(
+              o.method,
+              o.payText,
+              o.cartText,
+              o.name,
+              o.email,
+              o.invoiceUrl,
+              true,
+              o.ref
+            );
           }
           if (window.history && window.history.replaceState) {
-            window.history.replaceState({}, "", "https://www.220bioworx.com/cart.html");
+            window.history.replaceState({}, "", window.location.pathname || "/cart.html");
           }
         }
         if (params.get("crypto") === "paid") {
@@ -1131,7 +1166,8 @@
           note.style.color = "#c5d0b0";
           note.textContent =
             "Crypto payment return detected. Keep your NOWPayments receipt and cart reference. Customer service will confirm when funds clear.";
-          form.parentNode.insertBefore(note, form);
+          const host = document.getElementById("checkoutSection") || confirmPanel.parentNode;
+          if (host) host.insertBefore(note, confirmPanel);
         }
       } catch (_) {}
     })();

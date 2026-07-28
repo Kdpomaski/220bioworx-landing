@@ -38,7 +38,8 @@ window.BW_PAYMENT = {
     successPath: "https://www.220bioworx.com/cart.html?crypto=paid",
     cancelPath: "https://www.220bioworx.com/cart.html?crypto=cancel",
   },
-  formSubmitEndpoint: "https://formsubmit.co/6732b0b86bff8989d370457024b960ee",
+  /** AJAX only — never use the non-/ajax/ URL as a form action (that navigates away). */
+  formSubmitEndpoint: "https://formsubmit.co/ajax/6732b0b86bff8989d370457024b960ee",
   ownerCc: "Owner@220bioworx.com",
   /**
    * Branded invoice email FROM Customerservice@220bioworx.com
