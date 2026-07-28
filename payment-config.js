@@ -40,6 +40,13 @@ window.BW_PAYMENT = {
   },
   formSubmitEndpoint: "https://formsubmit.co/6732b0b86bff8989d370457024b960ee",
   ownerCc: "Owner@220bioworx.com",
+  /**
+   * Branded invoice email FROM Customerservice@220bioworx.com
+   * Deploy invoice-email-worker.js on Cloudflare + Resend, then set URL:
+   * "https://YOUR_WORKER.workers.dev/send-invoice"
+   */
+  invoiceEmailUrl: "",
+  fromEmail: "Customerservice@220bioworx.com",
   /** Highest matching tier wins (sorted high→low by minQty) */
   discounts: [
     { minQty: 10, pct: 30 },
