@@ -328,9 +328,29 @@
       border: 1px solid rgba(255, 90, 0, 0.45);
       border-radius: 14px;
       background: linear-gradient(160deg, rgba(28, 31, 34, 0.98), rgba(8, 11, 13, 0.98));
-      padding: 1.35rem;
+      padding: 0;
+      overflow: hidden;
     }
     #confirmPanel.show { display: block; }
+    #confirmPanel .action-banner {
+      background: var(--orange);
+      color: #fff;
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      text-align: center;
+      padding: 0.9rem 1rem;
+      line-height: 1.35;
+    }
+    #confirmPanel .action-banner span {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: 0.35rem;
+      opacity: 0.95;
+    }
+    #confirmPanel .confirm-body { padding: 1.25rem 1.35rem 1.35rem; }
     #confirmPanel h2 {
       font-family: var(--font-head); color: var(--orange);
       font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
@@ -496,16 +516,13 @@
 
             <form
               id="checkoutForm"
-              method="POST"
-              action="https://formsubmit.co/6732b0b86bff8989d370457024b960ee"
-              enctype="application/x-www-form-urlencoded"
-              accept-charset="UTF-8"
+              method="post"
+              action="#"
+              onsubmit="return false;"
               style="margin-top:1.25rem;"
             >
               <div class="form-error" id="formError" role="alert"></div>
               <input type="text" name="_gotcha" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true" />
-              <!-- FormSubmit special fields (filled by JS before native POST) -->
-              <div id="fsHidden"></div>
 
               <div class="form-row">
                 <div class="form-group">
@@ -587,13 +604,20 @@
             </form>
 
             <div id="confirmPanel" role="status">
-              <h2>Order request sent — payment instructions</h2>
-              <p class="confirm-lead" id="confirmLead"></p>
-              <div class="pay-instructions" id="payInstructions"></div>
-              <div class="cart-snapshot" id="cartSnapshot"></div>
-              <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.65rem;">
-                <a href="index.html" class="btn btn-secondary">Home</a>
-                <a href="products.html" class="btn btn-secondary">Products</a>
+              <div class="action-banner">
+                ⚠ ACTION NEEDED — PAY TO PROCEED
+                <span>No shipping until payment is confirmed · Reply with this invoice + proof of payment</span>
+              </div>
+              <div class="confirm-body">
+                <h2>Invoice created — stay on this page</h2>
+                <p class="confirm-lead" id="confirmLead"></p>
+                <div class="pay-instructions" id="payInstructions"></div>
+                <div class="cart-snapshot" id="cartSnapshot"></div>
+                <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.65rem;">
+                  <a href="products.html" class="btn btn-primary">Back to catalog</a>
+                  <a href="index.html" class="btn btn-secondary">Home</a>
+                  <a href="returns.html" class="btn btn-secondary">Return/Refund Policy</a>
+                </div>
               </div>
             </div>
           </section>
@@ -928,10 +952,14 @@
             return;
           }
 
-          // Fallback: FormSubmit (From will NOT be Customerservice@)
-          const endpoint =
+          // Fallback: FormSubmit AJAX only (never leave 220bioworx.com)
+          submitBtn.textContent = "Sending invoice…";
+          const formEndpoint =
             (window.BW_PAYMENT && window.BW_PAYMENT.formSubmitEndpoint) ||
             "https://formsubmit.co/6732b0b86bff8989d370457024b960ee";
+          const ajaxEndpoint = formEndpoint.includes("/ajax/")
+            ? formEndpoint
+            : formEndpoint.replace("https://formsubmit.co/", "https://formsubmit.co/ajax/");
           const ownerCc =
             (window.BW_PAYMENT && window.BW_PAYMENT.ownerCc) || "Owner@220bioworx.com";
           const ccList = [ownerCc, email].filter(Boolean).join(",");
@@ -963,43 +991,12 @@
             .filter(Boolean)
             .join("\n");
 
-          const buyerAutoResponse = [
-            "⚠ ACTION NEEDED — PAY TO PROCEED",
-            "================================",
-            "Pay using: " + methodLabel,
-            "No shipping until payment is confirmed.",
-            "",
-            "Hi " + name + ",",
-            "",
-            "Invoice reference: " + cartRef,
-            "Amount due: " + totalStr,
-            "",
-            "ACTION ITEMS:",
-            "1) Pay using " + methodLabel + " (instructions below). Include " + cartRef + ".",
-            "2) Reply to this email with the invoice reference AND proof of payment.",
-            "3) We will ship only after payment confirmation (target: within 72 hours after).",
-            "",
-            payText,
-            "",
-            cartText,
-            invoiceUrl ? "\nCrypto pay link: " + invoiceUrl : "",
-            "",
-            "— 220 BioWorX · Customerservice@220bioworx.com",
-            "Research Use Only. Not for human use.",
-          ].join("\n");
-
           const payload = {
             _subject:
               "Action needed: Pay invoice " + cartRef + " — 220 BioWorX — " + totalStr,
             _cc: ccList,
             _template: "box",
             _captcha: "false",
-            _autoresponse: buyerAutoResponse,
-            _next:
-              "https://www.220bioworx.com/cart.html?ordered=1&ref=" +
-              encodeURIComponent(cartRef) +
-              "&pay=" +
-              method,
             name: name,
             email: email,
             organization: org,
@@ -1010,23 +1007,38 @@
             message: invoiceBody,
           };
 
-          const hiddenBox = document.getElementById("fsHidden");
-          hiddenBox.innerHTML = "";
-          Object.keys(payload).forEach((k) => {
-            if (k === "name" || k === "email" || k === "organization") return;
-            const inp = document.createElement("input");
-            inp.type = "hidden";
-            inp.name = k;
-            inp.value = payload[k];
-            hiddenBox.appendChild(inp);
+          const res = await fetch(ajaxEndpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(payload),
           });
 
-          form.setAttribute("method", "POST");
-          form.method = "post";
-          form.setAttribute("action", endpoint);
-          form.action = endpoint;
-          form.setAttribute("enctype", "application/x-www-form-urlencoded");
-          HTMLFormElement.prototype.submit.call(form);
+          let data = {};
+          try {
+            data = await res.json();
+          } catch (_) {}
+
+          const ok =
+            res.ok &&
+            data.success !== "false" &&
+            data.success !== false &&
+            !(data.message && /GET|method/i.test(String(data.message)));
+
+          if (!ok) {
+            throw new Error(
+              (data && data.message) || "Email service failed — stayed on site; see instructions below"
+            );
+          }
+
+          showConfirmation(method, payText, cartText, name, email, invoiceUrl, true);
+          if (method === "crypto" && invoiceUrl) {
+            window.open(invoiceUrl, "_blank", "noopener,noreferrer");
+          }
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Request invoice & get payment instructions";
           return;
         } catch (err) {
           console.error(err);
