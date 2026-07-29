@@ -141,7 +141,7 @@ Import from `catalog-export.csv`. Listed products (as of export):
 | SKU | Name | Price |
 |-----|------|------:|
 | RETA-30 | Reta (GLP-3 RT) 30 mg | $140 |
-| GLP2-TR-40 | GLP-2 TR 40 mg | $150 |
+| GLP2-TR-40 | GLP-2 TR 40 mg | $140 |
 | BPC-157-10 | BPC-157 10 mg | $40 |
 | TB-500-10 | TB-500 10 mg | $60 |
 | KLOW-80 | KLOW Blend | $80 |

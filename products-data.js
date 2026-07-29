@@ -38,7 +38,7 @@ window.BW_PRODUCTS = [
     strength: "40 mg",
     form: "Lyophilized research peptide",
     category: "Incretin-pathway research",
-    unitPrice: 150,
+    unitPrice: 140,
     unit: "vial",
     image: "images/products/tirz-light.jpeg",
     images: [
