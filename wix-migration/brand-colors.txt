@@ -1,0 +1,19 @@
+220 BioWorX brand tokens (from current site CSS)
+
+Primary background (carbon):  #080B0D
+Card / graphite:              #1C1F22
+Steel muted:                  #70777D
+OD green accent:              #4C5A3A
+Orange CTA:                   #FF5A00
+Orange hover:                 #ff6f1f
+Orange soft bg:               rgba(255, 90, 0, 0.12)
+Text:                         #e8eaec
+Muted text:                   #9aa1a6
+White:                        #ffffff
+Border:                       rgba(112, 119, 125, 0.28)
+
+Fonts:
+  Headings: Poppins (500–800)
+  Body: Inter (400–700)
+
+Tone: dark industrial lab / carbon + safety orange. No wellness / clinical pharmacy styling.

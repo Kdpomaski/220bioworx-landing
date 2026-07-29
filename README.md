@@ -2,6 +2,20 @@
 
 Static site for **www.220bioworx.com** hosted on **GitHub Pages**.
 
+## Moving to Wix
+
+Full migration kit (catalog CSV, assets, checklists, DNS cutover):
+
+**`wix-migration/`** → start with [`wix-migration/MIGRATE-TO-WIX.md`](wix-migration/MIGRATE-TO-WIX.md)
+
+Regenerate product CSV:
+
+```powershell
+node scripts/export-wix-catalog.js
+```
+
+Keep this GitHub site live until Wix is tested and DNS is switched (`wix-migration/DNS-CUTOVER.md`).
+
 ## Live files
 
 | File | Purpose |
