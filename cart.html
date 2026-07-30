@@ -380,6 +380,46 @@
       padding: 0.85rem;
       border: 1px solid var(--border);
     }
+    #cryptoPayBox {
+      display: none;
+      margin: 0 0 1rem;
+      padding: 1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 90, 0, 0.4);
+      background: rgba(255, 90, 0, 0.08);
+      text-align: center;
+    }
+    #cryptoPayBox.show { display: block; }
+    #cryptoPayBox .crypto-pay-title {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.5rem;
+    }
+    #cryptoPayBox .crypto-pay-hint {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 0.85rem;
+    }
+    #cryptoPayBox a.crypto-pay-btn {
+      display: inline-block;
+      line-height: 0;
+      text-decoration: none !important;
+    }
+    #cryptoPayBox a.crypto-pay-btn img {
+      max-width: min(100%, 280px);
+      height: auto;
+      border-radius: 6px;
+    }
+    #cryptoPayBox .crypto-pay-link {
+      display: block;
+      margin-top: 0.65rem;
+      font-size: 0.8rem;
+      word-break: break-all;
+    }
 
     footer {
       border-top: 1px solid var(--border); padding: 1.25rem 0 2rem;
@@ -506,7 +546,7 @@
               <label class="pay-option">
                 <input type="radio" name="payMethod" value="crypto" />
                 <div class="po-title">Cryptocurrency</div>
-                <div class="po-desc">NOWPayments hosted invoice · BTC, ETH, USDT &amp; more (no cards/PayPal)</div>
+                <div class="po-desc">Pay via NOWPayments after you request the invoice · BTC, ETH, USDT &amp; more</div>
               </label>
             </div>
             <p class="pay-hint">
@@ -606,6 +646,30 @@
                 <h2>Invoice created — stay on this page</h2>
                 <p class="confirm-lead" id="confirmLead"></p>
                 <div class="pay-instructions" id="payInstructions"></div>
+                <!-- Crypto: NOWPayments button (shown only when method = crypto) -->
+                <div id="cryptoPayBox" aria-label="Cryptocurrency payment">
+                  <div class="crypto-pay-title">Pay with cryptocurrency</div>
+                  <p class="crypto-pay-hint">
+                    Use the official NOWPayments button below. Include your cart reference in any follow-up email.
+                    After paying, reply to customer service with this invoice and proof of payment.
+                  </p>
+                  <a
+                    id="cryptoPayBtn"
+                    class="crypto-pay-btn"
+                    href="#"
+                    target="_blank"
+                    rel="noreferrer noopener"
+                  >
+                    <img
+                      id="cryptoPayImg"
+                      src="https://nowpayments.io/images/embeds/payments-button-black.svg"
+                      alt="Crypto payment button by NOWPayments"
+                      width="280"
+                      height="48"
+                    />
+                  </a>
+                  <a id="cryptoPayTextLink" class="crypto-pay-link" href="#" target="_blank" rel="noreferrer noopener"></a>
+                </div>
                 <div class="cart-snapshot" id="cartSnapshot"></div>
                 <div style="margin-top:1rem;display:flex;flex-wrap:wrap;gap:0.65rem;">
                   <a href="products.html" class="btn btn-primary">Back to catalog</a>
@@ -1103,7 +1167,7 @@
             " if you do not see an email. ACTION: pay, then reply with proof of payment.";
         }
         if (method === "crypto" && invoiceUrl) {
-          lead += " Complete crypto only on the official NOWPayments link.";
+          lead += " Use the NOWPayments button below to pay with crypto.";
         }
         document.getElementById("confirmLead").textContent = lead;
         document.getElementById("payInstructions").textContent =
@@ -1115,6 +1179,28 @@
           ") and proof of payment.\n\n" +
           payText;
         document.getElementById("cartSnapshot").textContent = cartText;
+
+        // NOWPayments button (only for crypto checkout)
+        const cryptoBox = document.getElementById("cryptoPayBox");
+        const cryptoBtn = document.getElementById("cryptoPayBtn");
+        const cryptoImg = document.getElementById("cryptoPayImg");
+        const cryptoText = document.getElementById("cryptoPayTextLink");
+        const cryptoCfgUi = (window.BW_PAYMENT && window.BW_PAYMENT.crypto) || {};
+        if (method === "crypto" && invoiceUrl && cryptoBox && cryptoBtn) {
+          cryptoBtn.href = invoiceUrl;
+          if (cryptoImg) {
+            cryptoImg.src =
+              cryptoCfgUi.buttonImageUrl ||
+              "https://nowpayments.io/images/embeds/payments-button-black.svg";
+          }
+          if (cryptoText) {
+            cryptoText.href = invoiceUrl;
+            cryptoText.textContent = "Open NOWPayments (if button does not load)";
+          }
+          cryptoBox.classList.add("show");
+        } else if (cryptoBox) {
+          cryptoBox.classList.remove("show");
+        }
 
         // Hide checkout controls — stay on this URL with confirmation only
         if (checkoutControls) {
