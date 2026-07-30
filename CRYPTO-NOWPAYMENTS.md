@@ -15,6 +15,16 @@ Your site is **static** (GitHub Pages). That shapes how crypto must work.
 
 ---
 
+## Why the API is not in the website JS
+
+GitHub Pages is **static**. Any key in `payment-config.js` is public.  
+**Correct pattern:** cart → Cloudflare Worker (secret key) → NOWPayments Create Invoice.  
+Step-by-step: **`SETUP-NOWPAYMENTS-API.md`**.
+
+Do **not** use a fixed embed button (`iid=…`) for checkout — that amount is not your live cart total.
+
+---
+
 ## Three ways to go live (pick one)
 
 ### A — Manual invoice (fastest, no code server)

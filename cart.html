@@ -546,7 +546,7 @@
               <label class="pay-option">
                 <input type="radio" name="payMethod" value="crypto" />
                 <div class="po-title">Cryptocurrency</div>
-                <div class="po-desc">Pay via NOWPayments after you request the invoice · BTC, ETH, USDT &amp; more</div>
+                <div class="po-desc">Per-order NOWPayments invoice for your cart total · BTC, ETH, USDT &amp; more</div>
               </label>
             </div>
             <p class="pay-hint">
@@ -1167,7 +1167,10 @@
             " if you do not see an email. ACTION: pay, then reply with proof of payment.";
         }
         if (method === "crypto" && invoiceUrl) {
-          lead += " Use the NOWPayments button below to pay with crypto.";
+          lead += " Use the NOWPayments button below to pay this order’s amount with crypto.";
+        } else if (method === "crypto") {
+          lead +=
+            " A unique NOWPayments link for this cart total will be emailed by customer service if it is not shown below. Do not use unrelated payment links.";
         }
         document.getElementById("confirmLead").textContent = lead;
         document.getElementById("payInstructions").textContent =

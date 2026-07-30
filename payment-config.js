@@ -24,18 +24,17 @@ window.BW_PAYMENT = {
   crypto: {
     label: "Cryptocurrency (NOWPayments)",
     /**
-     * Fixed NOWPayments hosted payment link (button embed).
-     * Shown after checkout when buyer selects Cryptocurrency.
-     * Note: this invoice id is created in NOWPayments — amount may be fixed on their side.
-     * For per-cart amounts, use createInvoiceUrl worker later.
+     * Leave empty — do NOT use a fixed NOWPayments button (those are fixed amount).
+     * Dynamic cart totals require createInvoiceUrl (Cloudflare Worker + API key).
      */
-    staticInvoiceUrl: "https://nowpayments.io/payment/?iid=4790895775&source=button",
-    /** Official NOWPayments button image for checkout confirmation */
+    staticInvoiceUrl: "",
+    /** Button image shown when a real invoice_url is returned for this order */
     buttonImageUrl: "https://nowpayments.io/images/embeds/payments-button-black.svg",
     /**
-     * Optional Cloudflare Worker (or other backend) that holds the NOWPayments API key
-     * and returns { invoice_url }. See nowpayments-worker.js
-     * Example: "https://bw-nowpayments.YOUR_SUBDOMAIN.workers.dev/create-invoice"
+     * REQUIRED for auto crypto linked to cart total + BW- reference.
+     * Deploy nowpayments-worker.js, then paste:
+     * "https://YOUR_WORKER.workers.dev/create-invoice"
+     * See SETUP-NOWPAYMENTS-API.md
      */
     createInvoiceUrl: "",
     priceCurrency: "usd",
