@@ -271,8 +271,8 @@ window.BW_PRODUCTS = [
       {
         src: "images/products/coas/motsc-40-endo-p1.png",
         kind: "coa",
-        label: "COA",
-        alt: "Endotoxin / analysis — MOTS-c 40 mg lot 42526 (view only)",
+        label: "Endo",
+        alt: "Endotoxin analysis — MOTS-c 40 mg lot 42526 (view only)",
       },
     ],
     shortDescription:

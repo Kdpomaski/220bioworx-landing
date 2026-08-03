@@ -830,9 +830,9 @@
               ${gallery
                 .map(
                   (g, i) =>
-                    `<button type="button" class="${i === 0 ? "active" : ""}${g.kind === "coa" ? " is-coa" : ""}" data-src="${escapeHtml(g.src)}" data-kind="${escapeHtml(g.kind)}" data-alt="${escapeHtml(g.alt || p.name)}" aria-label="${g.kind === "coa" ? "View certificate of analysis" : "View product image " + (i + 1)}">
+                    `<button type="button" class="${i === 0 ? "active" : ""}${g.kind === "coa" ? " is-coa" : ""}" data-src="${escapeHtml(g.src)}" data-kind="${escapeHtml(g.kind)}" data-label="${escapeHtml(g.label || "COA")}" data-alt="${escapeHtml(g.alt || p.name)}" aria-label="${g.kind === "coa" ? "View " + escapeHtml(g.label || "COA") : "View product image " + (i + 1)}">
                       <img src="${escapeHtml(g.src)}" alt="" draggable="false" onerror="this.onerror=null;this.src='images/products/klow-light.jpeg';" />
-                      ${g.kind === "coa" ? '<span class="thumb-tag">COA</span>' : ""}
+                      ${g.kind === "coa" ? '<span class="thumb-tag">' + escapeHtml(g.label || "COA") + "</span>" : ""}
                     </button>`
                 )
                 .join("")}
@@ -909,13 +909,17 @@
           const kind = btn.getAttribute("data-kind") || "image";
           const src = btn.getAttribute("data-src");
           const alt = btn.getAttribute("data-alt") || p.name;
+          const label = btn.getAttribute("data-label") || "COA";
           if (main) {
             main.src = src;
             main.alt = alt;
             main.draggable = false;
           }
           if (wrap) wrap.classList.toggle("is-coa", kind === "coa");
-          if (badge) badge.classList.toggle("show", kind === "coa");
+          if (badge) {
+            badge.classList.toggle("show", kind === "coa");
+            badge.textContent = label + " · view only";
+          }
           if (note) note.classList.toggle("show", kind === "coa");
         }
 
