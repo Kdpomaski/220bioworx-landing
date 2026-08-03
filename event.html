@@ -285,49 +285,13 @@
     }
     .sticky-inner .actions { display: flex; flex-wrap: wrap; gap: 0.45rem; }
 
-    .qr-panel {
-      margin: 1.25rem 0 0;
-      padding: 1.1rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255, 90, 0, 0.35);
-      background: linear-gradient(160deg, rgba(28, 31, 34, 0.98), rgba(8, 11, 13, 0.98));
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 1rem;
-      align-items: center;
-      text-align: center;
-    }
-    @media (min-width: 560px) {
-      .qr-panel {
-        grid-template-columns: 140px 1fr;
-        text-align: left;
-      }
-    }
-    .qr-panel canvas, .qr-panel img.qr {
-      width: 140px; height: 140px;
-      margin: 0 auto;
-      border-radius: 8px;
-      background: #fff;
-      padding: 6px;
-    }
-    .qr-panel h2 {
-      font-family: var(--font-head); font-size: 0.85rem; color: var(--orange);
-      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.35rem;
-    }
-    .qr-panel p { font-size: 0.85rem; color: var(--muted); }
-    .qr-panel .big-url {
-      display: block; margin-top: 0.45rem;
-      font-family: var(--font-head); font-weight: 700; font-size: 1rem;
-      color: var(--white); word-break: break-all;
-    }
-
     footer.simple {
       text-align: center; padding: 1rem; font-size: 0.72rem; color: var(--steel);
       border-top: 1px solid var(--border); margin-bottom: 4.5rem;
     }
 
     @media print {
-      #age-gate, .sticky-cta, .toolbar, .qr-panel, .view-toggle { display: none !important; }
+      #age-gate, .sticky-cta, .toolbar, .view-toggle { display: none !important; }
       .site-wrap { visibility: visible !important; }
       body { background: #fff; color: #111; }
       .card, .list-row, .discounts { border-color: #ccc; background: #fff; break-inside: avoid; }
@@ -396,7 +360,7 @@
 
     <div class="wrap">
       <p class="poster-note">
-        <strong>Poster view</strong> — larger prices for table / booth screens. Print this page or use the QR on your sign.
+        <strong>Poster view</strong> — larger prices for table / booth screens.
       </p>
 
       <div class="grid" id="grid"></div>
@@ -414,21 +378,6 @@
           free over <strong style="color:var(--text)">$250</strong> merchandise ·
           aim to ship within <strong style="color:var(--text)">72h</strong> of confirmed payment.
         </p>
-      </div>
-
-      <div class="qr-panel">
-        <canvas id="qrCanvas" width="140" height="140" aria-label="QR code to this price list"></canvas>
-        <div>
-          <h2>QR for your sign</h2>
-          <p>
-            Print this code (or any QR generator) pointing to the URL below.
-            Guests scan → open this price list on their phone.
-          </p>
-          <span class="big-url" id="eventUrl">https://www.220bioworx.com/event.html</span>
-          <p style="margin-top:0.65rem;font-size:0.78rem;">
-            Sign tip: “Scan for research pricing · 220 BioWorX · RUO only”
-          </p>
-        </div>
       </div>
 
       <p class="legal">
@@ -519,9 +468,6 @@
 
       document.getElementById("year").textContent = new Date().getFullYear();
 
-      const EVENT_URL = "https://www.220bioworx.com/event.html";
-      document.getElementById("eventUrl").textContent = EVENT_URL;
-
       function money(n) {
         return "$" + Number(n).toFixed(0);
       }
@@ -609,38 +555,6 @@
           if (v === "poster") document.body.classList.add("view-poster");
         });
       });
-
-      // Minimal QR (no external dependency) — QR Code via API image fallback + canvas pattern
-      // Use free QR image service for reliability on sign; canvas placeholder if offline
-      function drawQr(url) {
-        const canvas = document.getElementById("qrCanvas");
-        if (!canvas) return;
-        // Prefer crisp QR image from a public generator (no API key)
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.onload = function () {
-          const ctx = canvas.getContext("2d");
-          ctx.fillStyle = "#fff";
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        };
-        img.onerror = function () {
-          const ctx = canvas.getContext("2d");
-          ctx.fillStyle = "#fff";
-          ctx.fillRect(0, 0, 140, 140);
-          ctx.fillStyle = "#111";
-          ctx.font = "10px sans-serif";
-          ctx.fillText("Scan URL:", 12, 60);
-          ctx.font = "8px monospace";
-          const lines = url.match(/.{1,22}/g) || [url];
-          lines.forEach((line, i) => ctx.fillText(line, 8, 78 + i * 12));
-        };
-        // Google Chart QR (widely used for simple embeds)
-        img.src =
-          "https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data=" +
-          encodeURIComponent(url);
-      }
-      drawQr(EVENT_URL);
     })();
   </script>
 </body>
