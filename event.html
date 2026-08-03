@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Research Price List | 220 BioWorX</title>
+  <meta name="description" content="220 BioWorX research catalog price list. Scan for pricing. Research Use Only. Not for human use." />
+  <meta name="theme-color" content="#080B0D" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <script src="products-data.js"></script>
+  <style>
+    :root {
+      --carbon: #080B0D;
+      --graphite: #1C1F22;
+      --steel: #70777D;
+      --orange: #FF5A00;
+      --orange-hover: #ff6f1f;
+      --orange-soft: rgba(255, 90, 0, 0.12);
+      --white: #ffffff;
+      --text: #e8eaec;
+      --muted: #9aa1a6;
+      --border: rgba(112, 119, 125, 0.28);
+      --font-head: "Poppins", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      background: var(--carbon);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+    body.gate-locked { overflow: hidden; }
+    a { color: var(--orange); }
+    a:hover { color: var(--orange-hover); }
+
+    /* Age gate (compact for event scan) */
+    #age-gate {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+      background: rgba(8, 11, 13, 0.97);
+    }
+    #age-gate[hidden] { display: none !important; }
+    .gate-card {
+      width: min(100%, 420px);
+      background: var(--graphite);
+      border: 1px solid rgba(255, 90, 0, 0.4);
+      border-radius: 14px;
+      padding: 1.35rem;
+    }
+    .gate-card h1 {
+      font-family: var(--font-head); font-size: 1.1rem; color: var(--white);
+      text-align: center; margin: 0.5rem 0;
+    }
+    .gate-card .lead { color: var(--muted); font-size: 0.85rem; text-align: center; margin-bottom: 0.75rem; }
+    .gate-ruo {
+      background: rgba(255, 90, 0, 0.08); border: 1px solid rgba(255, 90, 0, 0.35);
+      border-radius: 8px; padding: 0.6rem; font-size: 0.8rem; color: #ffd4bf;
+      text-align: center; margin-bottom: 0.75rem;
+    }
+    .gate-check { display: flex; gap: 0.55rem; margin-bottom: 0.55rem; font-size: 0.82rem; }
+    .gate-check input { accent-color: var(--orange); margin-top: 0.15rem; flex-shrink: 0; }
+    .gate-actions { display: grid; grid-template-columns: 1fr 1.3fr; gap: 0.5rem; margin-top: 0.85rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+      padding: 0.7rem 1rem; border-radius: 8px; font-family: var(--font-head);
+      font-weight: 600; font-size: 0.85rem; border: none; cursor: pointer;
+      text-decoration: none !important;
+    }
+    .btn-primary { background: var(--orange); color: var(--white); }
+    .btn-primary:hover { background: var(--orange-hover); color: var(--white); }
+    .btn-secondary { background: transparent; color: var(--steel); border: 1px solid var(--border); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .gate-error { display: none; color: #ff8a5c; font-size: 0.8rem; text-align: center; margin-top: 0.6rem; }
+    .gate-error.show { display: block; }
+
+    .site-wrap[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
+
+    .ruo-banner {
+      background: #140c08; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
+      text-align: center; padding: 0.45rem 0.75rem;
+      font-family: var(--font-head); font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase; color: #ffc9a8;
+    }
+
+    .hero {
+      padding: 1.25rem 1rem 0.75rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255, 90, 0, 0.08), transparent);
+    }
+    .hero img.logo {
+      height: 52px; width: auto; max-width: min(280px, 80vw);
+      object-fit: contain; margin-bottom: 0.65rem;
+    }
+    .hero h1 {
+      font-family: var(--font-head); font-weight: 800;
+      font-size: clamp(1.35rem, 4.5vw, 1.85rem);
+      text-transform: uppercase; color: var(--white); letter-spacing: 0.02em;
+    }
+    .hero h1 span { color: var(--orange); }
+    .hero .sub {
+      color: var(--muted); font-size: 0.88rem; margin-top: 0.35rem; max-width: 28rem; margin-inline: auto;
+    }
+    .badge-row {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem;
+      margin-top: 0.85rem;
+    }
+    .badge {
+      font-size: 0.68rem; font-weight: 700; font-family: var(--font-head);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.28rem 0.55rem; border-radius: 999px;
+      border: 1px solid var(--border); color: var(--muted);
+    }
+    .badge.hot {
+      border-color: rgba(255, 90, 0, 0.45);
+      background: var(--orange-soft); color: var(--orange);
+    }
+
+    .toolbar {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 0.65rem; padding: 0.75rem 1rem;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .toolbar .count { font-size: 0.8rem; color: var(--steel); }
+    .view-toggle {
+      display: inline-flex; border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+    }
+    .view-toggle button {
+      background: transparent; border: none; color: var(--muted);
+      font-family: var(--font-head); font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      padding: 0.45rem 0.7rem; cursor: pointer;
+    }
+    .view-toggle button.active {
+      background: var(--orange); color: var(--white);
+    }
+
+    .wrap { width: min(100% - 1.5rem, 1100px); margin: 0 auto 5.5rem; }
+
+    /* Layout A — visual grid (default) */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+    @media (min-width: 560px) {
+      .grid { grid-template-columns: repeat(3, 1fr); gap: 0.9rem; }
+    }
+    @media (min-width: 900px) {
+      .grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .card {
+      background: var(--graphite);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.15s;
+    }
+    .card:hover { border-color: rgba(255, 90, 0, 0.45); }
+    .card-img {
+      aspect-ratio: 1;
+      background: #0e1114;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .card-body {
+      padding: 0.7rem 0.75rem 0.85rem;
+      display: flex; flex-direction: column; gap: 0.2rem; flex: 1;
+    }
+    .card-name {
+      font-family: var(--font-head); font-weight: 700;
+      font-size: 0.88rem; color: var(--white); line-height: 1.25;
+    }
+    .card-meta {
+      font-size: 0.72rem; color: var(--steel);
+    }
+    .card-price {
+      margin-top: auto; padding-top: 0.45rem;
+      font-family: var(--font-head); font-weight: 800;
+      font-size: 1.25rem; color: var(--orange);
+      letter-spacing: -0.02em;
+    }
+    .card-price small {
+      font-size: 0.65rem; font-weight: 600; color: var(--steel);
+      letter-spacing: 0.04em; text-transform: uppercase; margin-left: 0.2rem;
+    }
+
+    /* Layout B — compact list */
+    .list { display: none; flex-direction: column; gap: 0.45rem; }
+    body.view-list .grid { display: none; }
+    body.view-list .list { display: flex; }
+    .list-row {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 0.75rem;
+      align-items: center;
+      background: var(--graphite);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.5rem 0.75rem 0.5rem 0.5rem;
+    }
+    .list-row img {
+      width: 56px; height: 56px; object-fit: cover; border-radius: 8px;
+      background: #0e1114;
+    }
+    .list-row .nm {
+      font-family: var(--font-head); font-weight: 700; font-size: 0.9rem; color: var(--white);
+    }
+    .list-row .mt { font-size: 0.75rem; color: var(--steel); }
+    .list-row .pr {
+      font-family: var(--font-head); font-weight: 800; font-size: 1.15rem; color: var(--orange);
+      white-space: nowrap;
+    }
+
+    /* Layout C — poster / sign strip */
+    .poster-note {
+      display: none;
+      margin: 0.5rem 0 1rem;
+      padding: 0.75rem;
+      border-radius: 10px;
+      border: 1px dashed rgba(255, 90, 0, 0.35);
+      font-size: 0.8rem; color: var(--muted); text-align: center;
+    }
+    body.view-poster .poster-note { display: block; }
+    body.view-poster .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    @media (min-width: 700px) {
+      body.view-poster .grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    body.view-poster .card-img { aspect-ratio: 4/3; }
+    body.view-poster .card-price { font-size: 1.45rem; }
+
+    .discounts {
+      margin: 1.25rem 0 0;
+      padding: 1rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: rgba(28, 31, 34, 0.8);
+      font-size: 0.82rem; color: var(--muted);
+    }
+    .discounts h2 {
+      font-family: var(--font-head); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange);
+      margin-bottom: 0.5rem;
+    }
+    .discounts ul { margin-left: 1.1rem; }
+    .discounts li { margin: 0.2rem 0; }
+
+    .legal {
+      margin-top: 1rem; font-size: 0.72rem; color: var(--steel); text-align: center;
+      max-width: 36rem; margin-inline: auto;
+    }
+
+    .sticky-cta {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+      padding: 0.65rem 0.85rem calc(0.65rem + env(safe-area-inset-bottom));
+      background: rgba(8, 11, 13, 0.94);
+      border-top: 1px solid rgba(255, 90, 0, 0.35);
+      backdrop-filter: blur(8px);
+    }
+    .sticky-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; justify-content: space-between;
+    }
+    .sticky-inner .url {
+      font-size: 0.78rem; color: var(--muted);
+      font-family: ui-monospace, monospace;
+    }
+    .sticky-inner .actions { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+
+    .qr-panel {
+      margin: 1.25rem 0 0;
+      padding: 1.1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 90, 0, 0.35);
+      background: linear-gradient(160deg, rgba(28, 31, 34, 0.98), rgba(8, 11, 13, 0.98));
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      align-items: center;
+      text-align: center;
+    }
+    @media (min-width: 560px) {
+      .qr-panel {
+        grid-template-columns: 140px 1fr;
+        text-align: left;
+      }
+    }
+    .qr-panel canvas, .qr-panel img.qr {
+      width: 140px; height: 140px;
+      margin: 0 auto;
+      border-radius: 8px;
+      background: #fff;
+      padding: 6px;
+    }
+    .qr-panel h2 {
+      font-family: var(--font-head); font-size: 0.85rem; color: var(--orange);
+      letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.35rem;
+    }
+    .qr-panel p { font-size: 0.85rem; color: var(--muted); }
+    .qr-panel .big-url {
+      display: block; margin-top: 0.45rem;
+      font-family: var(--font-head); font-weight: 700; font-size: 1rem;
+      color: var(--white); word-break: break-all;
+    }
+
+    footer.simple {
+      text-align: center; padding: 1rem; font-size: 0.72rem; color: var(--steel);
+      border-top: 1px solid var(--border); margin-bottom: 4.5rem;
+    }
+
+    @media print {
+      #age-gate, .sticky-cta, .toolbar, .qr-panel, .view-toggle { display: none !important; }
+      .site-wrap { visibility: visible !important; }
+      body { background: #fff; color: #111; }
+      .card, .list-row, .discounts { border-color: #ccc; background: #fff; break-inside: avoid; }
+      .card-name, .list-row .nm { color: #000; }
+      .card-price, .list-row .pr { color: #c44a00; }
+      .ruo-banner { color: #000; border-color: #000; }
+      footer.simple { margin-bottom: 0; }
+    }
+  </style>
+</head>
+<body class="gate-locked">
+  <div id="age-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <div class="gate-card">
+      <div style="text-align:center;line-height:0;margin-bottom:0.5rem;">
+        <img src="logo-header.png" alt="220 BioWorX" width="260" height="72" style="max-width:100%;height:auto;" />
+      </div>
+      <h1 id="gate-title">Age &amp; research verification</h1>
+      <p class="lead">Event price list for qualified research purchasers.</p>
+      <div class="gate-ruo"><strong>RESEARCH USE ONLY.</strong> Not for human use.</div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-age" />
+        <label for="cert-age">I am <strong>21+</strong>.</label>
+      </div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-ruo" />
+        <label for="cert-ruo">Products are <strong>RUO / not for human use</strong>.</label>
+      </div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-lawful" />
+        <label for="cert-lawful">Lawful research use only.</label>
+      </div>
+      <div class="gate-actions">
+        <button type="button" class="btn btn-secondary" id="gate-exit">Exit</button>
+        <button type="button" class="btn btn-primary" id="gate-enter" disabled>View prices</button>
+      </div>
+      <p class="gate-error" id="gate-error">Please complete all certifications.</p>
+    </div>
+  </div>
+
+  <div class="site-wrap" id="site-wrap" aria-hidden="true">
+    <div class="ruo-banner">Research Use Only · Not for human use · Not FDA approved · Not 503A/503B</div>
+
+    <header class="hero">
+      <img class="logo" src="logo-header.png" alt="220 BioWorX" width="280" height="80" />
+      <h1>Research <span>price list</span></h1>
+      <p class="sub">
+        Quick visual catalog for the event. Prices per vial / unit.
+        Full store &amp; checkout at www.220bioworx.com
+      </p>
+      <div class="badge-row">
+        <span class="badge hot">RUO only</span>
+        <span class="badge">USD pricing</span>
+        <span class="badge">Volume discounts</span>
+        <span class="badge">Scan · shop · pay</span>
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <span class="count" id="itemCount">Loading…</span>
+      <div class="view-toggle" role="group" aria-label="Layout">
+        <button type="button" class="active" data-view="grid" title="Photo grid">Grid</button>
+        <button type="button" data-view="list" title="Compact list">List</button>
+        <button type="button" data-view="poster" title="Larger for table sign">Poster</button>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <p class="poster-note">
+        <strong>Poster view</strong> — larger prices for table / booth screens. Print this page or use the QR on your sign.
+      </p>
+
+      <div class="grid" id="grid"></div>
+      <div class="list" id="list"></div>
+
+      <div class="discounts">
+        <h2>Volume discounts (total vials in cart)</h2>
+        <ul>
+          <li><strong>3+</strong> vials → 10% off</li>
+          <li><strong>5+</strong> vials → 20% off</li>
+          <li><strong>10+</strong> vials → 30% off</li>
+        </ul>
+        <p style="margin-top:0.55rem;">
+          Shipping: flat <strong style="color:var(--text)">$18</strong> (2–3 Day) ·
+          free over <strong style="color:var(--text)">$250</strong> merchandise ·
+          aim to ship within <strong style="color:var(--text)">72h</strong> of confirmed payment.
+        </p>
+      </div>
+
+      <div class="qr-panel">
+        <canvas id="qrCanvas" width="140" height="140" aria-label="QR code to this price list"></canvas>
+        <div>
+          <h2>QR for your sign</h2>
+          <p>
+            Print this code (or any QR generator) pointing to the URL below.
+            Guests scan → open this price list on their phone.
+          </p>
+          <span class="big-url" id="eventUrl">https://www.220bioworx.com/event.html</span>
+          <p style="margin-top:0.65rem;font-size:0.78rem;">
+            Sign tip: “Scan for research pricing · 220 BioWorX · RUO only”
+          </p>
+        </div>
+      </div>
+
+      <p class="legal">
+        All materials are Research Use Only. Not for human or veterinary use, diagnosis, treatment, or consumption.
+        Not FDA approved. 220 BioWorX is not a 503A or 503B compounding pharmacy.
+        Prices in USD; subject to change. Order via the full catalog when ready.
+      </p>
+    </div>
+
+    <footer class="simple">
+      © <span id="year"></span> 220 BioWorX ·
+      <a href="products.html">Full catalog</a> ·
+      <a href="cart.html">Cart</a> ·
+      <a href="index.html">Home</a>
+    </footer>
+
+    <div class="sticky-cta">
+      <div class="sticky-inner">
+        <span class="url">220bioworx.com/event</span>
+        <div class="actions">
+          <a class="btn btn-secondary" href="products.html">Full catalog</a>
+          <a class="btn btn-primary" href="cart.html">Order / cart</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const GATE_KEY = "bw220_age_gate_v2";
+      const gate = document.getElementById("age-gate");
+      const site = document.getElementById("site-wrap");
+      const btnEnter = document.getElementById("gate-enter");
+      const btnExit = document.getElementById("gate-exit");
+      const err = document.getElementById("gate-error");
+      const checks = [
+        document.getElementById("cert-age"),
+        document.getElementById("cert-ruo"),
+        document.getElementById("cert-lawful"),
+      ];
+
+      function allChecked() {
+        return checks.every((c) => c.checked);
+      }
+      function syncEnter() {
+        btnEnter.disabled = !allChecked();
+        if (allChecked()) err.classList.remove("show");
+      }
+      function unlockSite() {
+        gate.hidden = true;
+        site.removeAttribute("aria-hidden");
+        document.body.classList.remove("gate-locked");
+      }
+      function lockSite() {
+        gate.hidden = false;
+        site.setAttribute("aria-hidden", "true");
+        document.body.classList.add("gate-locked");
+        checks.forEach((c) => (c.checked = false));
+        syncEnter();
+      }
+      checks.forEach((c) => c.addEventListener("change", syncEnter));
+      btnEnter.addEventListener("click", () => {
+        if (!allChecked()) {
+          err.classList.add("show");
+          return;
+        }
+        try {
+          sessionStorage.setItem(
+            GATE_KEY,
+            JSON.stringify({ ts: Date.now(), age21: true, ruo: true, lawful: true })
+          );
+        } catch (_) {}
+        unlockSite();
+      });
+      btnExit.addEventListener("click", () => {
+        window.location.href = "https://www.google.com";
+      });
+      let admitted = false;
+      try {
+        const raw = sessionStorage.getItem(GATE_KEY);
+        if (raw) {
+          const d = JSON.parse(raw);
+          if (d && d.age21 && d.ruo && d.lawful) admitted = true;
+        }
+      } catch (_) {}
+      if (admitted) unlockSite();
+      else lockSite();
+
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      const EVENT_URL = "https://www.220bioworx.com/event.html";
+      document.getElementById("eventUrl").textContent = EVENT_URL;
+
+      function money(n) {
+        return "$" + Number(n).toFixed(0);
+      }
+
+      function renderCatalog() {
+        const products =
+          typeof window.BW_listedProducts === "function"
+            ? window.BW_listedProducts()
+            : (window.BW_PRODUCTS || []).filter((p) => p.listed !== false);
+
+        document.getElementById("itemCount").textContent =
+          products.length + " research items · USD";
+
+        const grid = document.getElementById("grid");
+        const list = document.getElementById("list");
+        const fb = window.BW_IMG_FALLBACK || "images/products/klow-light.jpeg";
+
+        grid.innerHTML = products
+          .map((p) => {
+            const img = p.image || fb;
+            const strength = p.strength || p.form || "";
+            return (
+              '<article class="card">' +
+              '<div class="card-img"><img src="' +
+              img +
+              '" alt="" loading="lazy" onerror="this.src=\'' +
+              fb +
+              "'\" /></div>" +
+              '<div class="card-body">' +
+              '<div class="card-name"></div>' +
+              '<div class="card-meta"></div>' +
+              '<div class="card-price">' +
+              money(p.unitPrice) +
+              "<small>/ " +
+              (p.unit || "vial") +
+              "</small></div>" +
+              "</div></article>"
+            );
+          })
+          .join("");
+
+        Array.from(grid.querySelectorAll(".card")).forEach((el, i) => {
+          const p = products[i];
+          el.querySelector(".card-name").textContent = p.name;
+          el.querySelector(".card-meta").textContent =
+            (p.strength ? p.strength + " · " : "") + (p.sku || "");
+        });
+
+        list.innerHTML = products
+          .map((p) => {
+            const img = p.image || fb;
+            return (
+              '<div class="list-row">' +
+              '<img src="' +
+              img +
+              '" alt="" loading="lazy" onerror="this.src=\'' +
+              fb +
+              "'\" />" +
+              "<div><div class=\"nm\"></div><div class=\"mt\"></div></div>" +
+              '<div class="pr">' +
+              money(p.unitPrice) +
+              "</div></div>"
+            );
+          })
+          .join("");
+
+        Array.from(list.querySelectorAll(".list-row")).forEach((el, i) => {
+          const p = products[i];
+          el.querySelector(".nm").textContent = p.name;
+          el.querySelector(".mt").textContent =
+            (p.strength || "") + (p.sku ? " · " + p.sku : "");
+        });
+      }
+
+      renderCatalog();
+
+      // View toggles — Grid / List / Poster examples
+      document.querySelectorAll(".view-toggle button").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".view-toggle button").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const v = btn.getAttribute("data-view");
+          document.body.classList.remove("view-list", "view-poster");
+          if (v === "list") document.body.classList.add("view-list");
+          if (v === "poster") document.body.classList.add("view-poster");
+        });
+      });
+
+      // Minimal QR (no external dependency) — QR Code via API image fallback + canvas pattern
+      // Use free QR image service for reliability on sign; canvas placeholder if offline
+      function drawQr(url) {
+        const canvas = document.getElementById("qrCanvas");
+        if (!canvas) return;
+        // Prefer crisp QR image from a public generator (no API key)
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = function () {
+          const ctx = canvas.getContext("2d");
+          ctx.fillStyle = "#fff";
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        };
+        img.onerror = function () {
+          const ctx = canvas.getContext("2d");
+          ctx.fillStyle = "#fff";
+          ctx.fillRect(0, 0, 140, 140);
+          ctx.fillStyle = "#111";
+          ctx.font = "10px sans-serif";
+          ctx.fillText("Scan URL:", 12, 60);
+          ctx.font = "8px monospace";
+          const lines = url.match(/.{1,22}/g) || [url];
+          lines.forEach((line, i) => ctx.fillText(line, 8, 78 + i * 12));
+        };
+        // Google Chart QR (widely used for simple embeds)
+        img.src =
+          "https://api.qrserver.com/v1/create-qr-code/?size=280x280&margin=8&data=" +
+          encodeURIComponent(url);
+      }
+      drawQr(EVENT_URL);
+    })();
+  </script>
+</body>
+</html>
