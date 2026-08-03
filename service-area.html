@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SW Florida Research Supplier | Fort Myers &amp; Lee County | 220 BioWorX</title>
+  <meta name="description" content="220 BioWorX supplies Research Use Only lab materials to qualified research buyers in Fort Myers, Lee County, Southwest Florida, and ships nationwide. No retail storefront. RUO only — not for human use." />
+  <meta name="keywords" content="research peptides Fort Myers, RUO lab materials Lee County, research supplier Southwest Florida, research use only Florida, laboratory compounds Fort Myers" />
+  <meta name="theme-color" content="#080B0D" />
+  <meta name="referrer" content="origin" />
+  <link rel="canonical" href="https://www.220bioworx.com/service-area.html" />
+  <meta property="og:title" content="SW Florida Research Supplier | 220 BioWorX" />
+  <meta property="og:description" content="Research Use Only materials for qualified laboratories. Serving Fort Myers, Lee County, and SW Florida — ships nationwide." />
+  <meta property="og:url" content="https://www.220bioworx.com/service-area.html" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --carbon: #080B0D; --graphite: #1C1F22; --steel: #70777D;
+      --orange: #FF5A00; --orange-hover: #ff6f1f; --orange-soft: rgba(255, 90, 0, 0.12);
+      --white: #ffffff; --text: #e8eaec; --muted: #9aa1a6;
+      --border: rgba(112, 119, 125, 0.28);
+      --font-head: "Poppins", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+      --max: 760px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-body); background: var(--carbon); color: var(--text); line-height: 1.65; min-height: 100vh; }
+    body.gate-locked { overflow: hidden; }
+    a { color: var(--orange); }
+    a:hover { color: var(--orange-hover); }
+    .container { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
+
+    #age-gate {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem; background: rgba(8, 11, 13, 0.97);
+    }
+    #age-gate[hidden] { display: none !important; }
+    .gate-card {
+      width: min(100%, 440px); background: var(--graphite);
+      border: 1px solid rgba(255, 90, 0, 0.4); border-radius: 14px; padding: 1.35rem;
+    }
+    .gate-card h1 { font-family: var(--font-head); font-size: 1.1rem; color: var(--white); text-align: center; margin: 0.5rem 0; }
+    .gate-card .lead { color: var(--muted); font-size: 0.85rem; text-align: center; margin-bottom: 0.75rem; }
+    .gate-ruo {
+      background: rgba(255, 90, 0, 0.08); border: 1px solid rgba(255, 90, 0, 0.35);
+      border-radius: 8px; padding: 0.6rem; font-size: 0.8rem; color: #ffd4bf; text-align: center; margin-bottom: 0.75rem;
+    }
+    .gate-check { display: flex; gap: 0.55rem; margin-bottom: 0.55rem; font-size: 0.82rem; }
+    .gate-check input { accent-color: var(--orange); margin-top: 0.15rem; flex-shrink: 0; }
+    .gate-actions { display: grid; grid-template-columns: 1fr 1.3fr; gap: 0.5rem; margin-top: 0.85rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.7rem 1rem; border-radius: 8px; font-family: var(--font-head);
+      font-weight: 600; font-size: 0.85rem; border: none; cursor: pointer; text-decoration: none !important;
+    }
+    .btn-primary { background: var(--orange); color: var(--white); }
+    .btn-primary:hover { background: var(--orange-hover); color: var(--white); }
+    .btn-secondary { background: transparent; color: var(--steel); border: 1px solid var(--border); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .gate-error { display: none; color: #ff8a5c; font-size: 0.8rem; text-align: center; margin-top: 0.6rem; }
+    .gate-error.show { display: block; }
+    .site-wrap[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
+
+    .ruo-banner {
+      background: #140c08; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
+      text-align: center; padding: 0.45rem 0.75rem;
+      font-family: var(--font-head); font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase; color: #ffc9a8;
+    }
+    header { border-bottom: 1px solid var(--border); }
+    .nav {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; padding: 0.85rem 0; width: min(100% - 2rem, 960px); margin-inline: auto;
+    }
+    .brand-link img { height: 48px; width: auto; max-width: min(280px, 55vw); object-fit: contain; }
+    .nav-links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.88rem; }
+    .nav-links a { color: var(--muted); text-decoration: none; }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+
+    main { padding: 2.25rem 0 3.5rem; }
+    h1 {
+      font-family: var(--font-head); font-weight: 800;
+      font-size: clamp(1.45rem, 3.5vw, 1.95rem);
+      text-transform: uppercase; color: var(--white); margin-bottom: 0.5rem;
+    }
+    h1 .accent { color: var(--orange); }
+    .lead { color: var(--muted); margin-bottom: 1.5rem; font-size: 1rem; }
+    h2 {
+      font-family: var(--font-head); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange);
+      margin: 1.75rem 0 0.65rem;
+    }
+    p, li { color: var(--muted); font-size: 0.95rem; margin-bottom: 0.65rem; }
+    strong { color: var(--text); }
+    ul { margin: 0.5rem 0 1rem 1.2rem; }
+    .card {
+      background: var(--graphite); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1.1rem 1.2rem; margin: 1rem 0;
+    }
+    .towns {
+      display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0.75rem 0 1rem;
+    }
+    .towns span {
+      font-size: 0.78rem; padding: 0.3rem 0.55rem; border-radius: 999px;
+      border: 1px solid var(--border); color: var(--steel);
+    }
+    .callout {
+      border-left: 3px solid var(--orange);
+      padding: 0.75rem 1rem; background: rgba(255, 90, 0, 0.06);
+      border-radius: 0 8px 8px 0; margin: 1rem 0;
+    }
+    .ctas { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 1.5rem; }
+    footer {
+      border-top: 1px solid var(--border); padding: 1.25rem 0 2rem;
+      font-size: 0.76rem; color: var(--steel);
+    }
+    .footer-inner {
+      width: min(100% - 2rem, 960px); margin-inline: auto;
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem;
+    }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+    .footer-links a { color: var(--steel); text-decoration: none; }
+    .footer-links a:hover { color: var(--orange); }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "220 BioWorX",
+    "url": "https://www.220bioworx.com",
+    "logo": "https://www.220bioworx.com/logo-header.png",
+    "email": "Customerservice@220bioworx.com",
+    "description": "Research Use Only biomolecular research materials for qualified laboratory purchasers. Not for human or veterinary use.",
+    "areaServed": [
+      { "@type": "City", "name": "Fort Myers" },
+      { "@type": "AdministrativeArea", "name": "Lee County" },
+      { "@type": "State", "name": "Florida" },
+      { "@type": "Country", "name": "United States" }
+    ],
+    "knowsAbout": [
+      "Research Use Only materials",
+      "Laboratory research peptides",
+      "Biomolecular research compounds"
+    ]
+  }
+  </script>
+</head>
+<body class="gate-locked">
+  <div id="age-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <div class="gate-card">
+      <div style="text-align:center;line-height:0;margin-bottom:0.5rem;">
+        <img src="logo-header.png" alt="220 BioWorX" width="240" height="68" style="max-width:100%;height:auto;" />
+      </div>
+      <h1 id="gate-title">Age &amp; research verification</h1>
+      <p class="lead">Qualified research purchasers only.</p>
+      <div class="gate-ruo"><strong>RESEARCH USE ONLY.</strong> Not for human use.</div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-age" />
+        <label for="cert-age">I am <strong>21+</strong>.</label>
+      </div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-ruo" />
+        <label for="cert-ruo">Products are <strong>RUO / not for human use</strong>.</label>
+      </div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-lawful" />
+        <label for="cert-lawful">Lawful research use only.</label>
+      </div>
+      <div class="gate-actions">
+        <button type="button" class="btn btn-secondary" id="gate-exit">Exit</button>
+        <button type="button" class="btn btn-primary" id="gate-enter" disabled>Enter</button>
+      </div>
+      <p class="gate-error" id="gate-error">Please complete all certifications.</p>
+    </div>
+  </div>
+
+  <div class="site-wrap" id="site-wrap" aria-hidden="true">
+    <div class="ruo-banner">Research Use Only · Not for human use · Not FDA approved · Not 503A/503B</div>
+    <header>
+      <div class="nav">
+        <a href="index.html" class="brand-link">
+          <img src="logo-header.png" alt="220 BioWorX" width="240" height="68" />
+        </a>
+        <nav class="nav-links">
+          <a href="products.html">Catalog</a>
+          <a href="cart.html">Cart</a>
+          <a href="service-area.html" class="active">Service area</a>
+          <a href="index.html#contact">Inquiry</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <h1>Southwest Florida <span class="accent">research supply</span></h1>
+        <p class="lead">
+          220 BioWorX is a <strong>Research Use Only</strong> supplier based in the
+          <strong>Fort Myers / Lee County, Florida</strong> region.
+          We serve qualified research laboratories and institutional buyers across
+          <strong>Southwest Florida</strong> and <strong>ship nationwide</strong> within the United States.
+        </p>
+
+        <div class="callout">
+          <p style="margin:0;">
+            <strong>No public retail storefront.</strong>
+            This is not a walk-in shop, clinic, or pharmacy.
+            Orders are placed online after age and RUO verification.
+            Materials are for lawful laboratory research only — not for human or veterinary use.
+          </p>
+        </div>
+
+        <h2>Who we serve</h2>
+        <p>
+          Qualified research purchasers such as academic and institutional laboratories,
+          independent research labs, biotech and pharmaceutical research groups,
+          contract research organizations (CROs), and other buyers who attest to lawful Research Use Only intent.
+        </p>
+        <p>
+          We do <strong>not</strong> sell products for human consumption, clinical administration,
+          wellness, or compounding into patient medications. We are
+          <strong>not</strong> a 503A or 503B compounding pharmacy.
+        </p>
+
+        <h2>Local region (Southwest Florida)</h2>
+        <p>
+          Buyers and institutions in and around the following communities often work with us for RUO catalog items
+          and research documentation (including on-site COA viewing where available):
+        </p>
+        <div class="towns" aria-label="Southwest Florida communities">
+          <span>Fort Myers</span>
+          <span>Cape Coral</span>
+          <span>Estero</span>
+          <span>Bonita Springs</span>
+          <span>Lehigh Acres</span>
+          <span>North Fort Myers</span>
+          <span>Sanibel / Fort Myers Beach area</span>
+          <span>Naples / Collier County</span>
+          <span>Punta Gorda / Charlotte County</span>
+          <span>Lee County</span>
+        </div>
+        <p>
+          Listing these communities describes our <strong>service region</strong> and shipping focus.
+          It does <strong>not</strong> mean we operate a public storefront or retail location in each town.
+        </p>
+
+        <h2>Ships nationwide</h2>
+        <div class="card">
+          <p>
+            Research orders ship across the <strong>United States</strong> after payment is confirmed.
+            Typical terms (see cart and policy pages for current details):
+          </p>
+          <ul>
+            <li>Flat <strong>2–3 Day</strong> shipping option with free shipping over the published merchandise threshold</li>
+            <li>We aim to ship within <strong>72 hours of confirmed payment</strong></li>
+            <li>Volume discounts for multi-vial research carts</li>
+            <li>Payment options include Zelle, ACH, and cryptocurrency (where offered at checkout)</li>
+          </ul>
+        </div>
+
+        <h2>How to order</h2>
+        <ol style="margin-left:1.2rem;color:var(--muted);font-size:0.95rem;">
+          <li style="margin-bottom:0.4rem;">Complete age and Research Use Only verification on the site</li>
+          <li style="margin-bottom:0.4rem;">Browse the research catalog and add materials to your cart</li>
+          <li style="margin-bottom:0.4rem;">Request an invoice and follow payment instructions</li>
+          <li style="margin-bottom:0.4rem;">Reply with proof of payment when required — shipping follows confirmation</li>
+        </ol>
+
+        <h2>Contact</h2>
+        <p>
+          Research inquiries and order support:
+          <a href="mailto:Customerservice@220bioworx.com">Customerservice@220bioworx.com</a>
+        </p>
+        <p>
+          Website: <a href="https://www.220bioworx.com">www.220bioworx.com</a>
+        </p>
+
+        <div class="ctas">
+          <a class="btn btn-primary" href="products.html">Review research catalog</a>
+          <a class="btn btn-secondary" href="index.html#contact">Research inquiry</a>
+          <a class="btn btn-secondary" href="returns.html">Return / refund policy</a>
+        </div>
+
+        <p style="margin-top:2rem;font-size:0.8rem;color:var(--steel);">
+          All products are Research Use Only. Not for human or veterinary use. Not FDA approved for any indication.
+          Not intended to diagnose, treat, cure, or prevent any disease.
+          Purchaser is responsible for lawful laboratory use under applicable law.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <p>© <span id="year"></span> 220 BioWorX. Research Use Only. Not for Human Use. Fort Myers / Lee County, FL · Ships nationwide.</p>
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="products.html">Catalog</a>
+          <a href="service-area.html">Service area</a>
+          <a href="cart.html">Cart</a>
+          <a href="returns.html">Returns</a>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const GATE_KEY = "bw220_age_gate_v2";
+      const gate = document.getElementById("age-gate");
+      const site = document.getElementById("site-wrap");
+      const btnEnter = document.getElementById("gate-enter");
+      const btnExit = document.getElementById("gate-exit");
+      const err = document.getElementById("gate-error");
+      const checks = [
+        document.getElementById("cert-age"),
+        document.getElementById("cert-ruo"),
+        document.getElementById("cert-lawful"),
+      ];
+      function allChecked() { return checks.every((c) => c.checked); }
+      function syncEnter() {
+        btnEnter.disabled = !allChecked();
+        if (allChecked()) err.classList.remove("show");
+      }
+      function unlockSite() {
+        gate.hidden = true;
+        site.removeAttribute("aria-hidden");
+        document.body.classList.remove("gate-locked");
+      }
+      function lockSite() {
+        gate.hidden = false;
+        site.setAttribute("aria-hidden", "true");
+        document.body.classList.add("gate-locked");
+        checks.forEach((c) => (c.checked = false));
+        syncEnter();
+      }
+      checks.forEach((c) => c.addEventListener("change", syncEnter));
+      btnEnter.addEventListener("click", () => {
+        if (!allChecked()) { err.classList.add("show"); return; }
+        try {
+          sessionStorage.setItem(GATE_KEY, JSON.stringify({ ts: Date.now(), age21: true, ruo: true, lawful: true }));
+        } catch (_) {}
+        unlockSite();
+      });
+      btnExit.addEventListener("click", () => { window.location.href = "https://www.google.com"; });
+      let admitted = false;
+      try {
+        const raw = sessionStorage.getItem(GATE_KEY);
+        if (raw) {
+          const d = JSON.parse(raw);
+          if (d && d.age21 && d.ruo && d.lawful) admitted = true;
+        }
+      } catch (_) {}
+      if (admitted) unlockSite(); else lockSite();
+      document.getElementById("year").textContent = new Date().getFullYear();
+    })();
+  </script>
+</body>
+</html>

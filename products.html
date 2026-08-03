@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Research Catalog | 220 BioWorX</title>
-  <meta name="description" content="220 BioWorX research peptides and compounds. Research Use Only. Not for human use. Scientific specifications for laboratory research." />
+  <title>Research Catalog | RUO Peptides &amp; Compounds | 220 BioWorX — FL &amp; Nationwide</title>
+  <meta name="description" content="Research Use Only catalog: peptides and biomolecular compounds with specs and COA viewing where available. Fort Myers / Lee County area supplier; ships nationwide. Not for human use." />
   <meta name="theme-color" content="#080B0D" />
   <meta name="referrer" content="origin" />
+  <link rel="canonical" href="https://www.220bioworx.com/products.html" />
+  <script src="seo-org.jsonld.js" defer></script>
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
@@ -514,6 +516,7 @@
         <nav class="nav-links" id="navLinks">
           <a href="products.html" class="active">Products</a>
           <a href="cart.html">Cart <span class="cart-pill" id="cartCount">0</span></a>
+          <a href="service-area.html">Service area</a>
           <a href="#payment-details">Payments</a>
           <a href="index.html#disclosures">Disclosures</a>
           <a href="cart.html" class="btn btn-primary btn-nav">Checkout</a>
@@ -532,6 +535,9 @@
               scientific context (identity, typical molecular weight, sequence where applicable).
               All products are <strong>research grade</strong>, <strong>not FDA approved</strong>, and
               <strong>Research Use Only</strong> — not for human or veterinary use.
+              Supplier based in the <strong>Fort Myers / Lee County, Florida</strong> region;
+              <strong>ships nationwide</strong>. No public retail storefront.
+              <a href="service-area.html">Service area details</a>.
             </p>
           </div>
           <div class="toolbar">
@@ -569,10 +575,11 @@
 
     <footer>
       <div class="container footer-inner">
-        <p>© <span id="year"></span> 220 BioWorX. Research Use Only. Not for Human Use.</p>
+        <p>© <span id="year"></span> 220 BioWorX. Research Use Only. Not for Human Use. Fort Myers / Lee County, FL · Ships nationwide.</p>
         <div class="footer-links">
           <a href="index.html">Home</a>
           <a href="products.html">Products</a>
+          <a href="service-area.html">Service area</a>
           <a href="cart.html">Cart</a>
           <a href="returns.html">Returns</a>
           <a href="index.html#contact">Contact</a>
@@ -696,6 +703,48 @@
 
       document.getElementById("productCount").textContent =
         products.length + " research materials · RUO";
+
+      // Product catalog JSON-LD (RUO research materials — not for human use)
+      try {
+        const itemList = {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "220 BioWorX Research Use Only Catalog",
+          description:
+            "Research grade biomolecular materials for laboratory research only. Not for human or veterinary use. Not FDA approved.",
+          numberOfItems: products.length,
+          itemListElement: products.map((p, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            item: {
+              "@type": "Product",
+              name: p.name + (p.strength ? " " + p.strength : ""),
+              sku: p.sku,
+              description: (p.shortDescription || p.description || "") + " Research Use Only. Not for human use.",
+              image: p.image
+                ? "https://www.220bioworx.com/" + String(p.image).replace(/^\//, "")
+                : undefined,
+              brand: { "@type": "Brand", name: "220 BioWorX" },
+              offers: {
+                "@type": "Offer",
+                url: "https://www.220bioworx.com/products.html?id=" + encodeURIComponent(p.id),
+                priceCurrency: "USD",
+                price: String(Number(p.unitPrice) || 0),
+                availability: "https://schema.org/InStock",
+                seller: { "@type": "Organization", name: "220 BioWorX" },
+              },
+              additionalProperty: [
+                { "@type": "PropertyValue", name: "Intended use", value: "Research Use Only" },
+                { "@type": "PropertyValue", name: "Regulatory", value: "Not FDA approved; not for human use" },
+              ],
+            },
+          })),
+        };
+        const ps = document.createElement("script");
+        ps.type = "application/ld+json";
+        ps.textContent = JSON.stringify(itemList);
+        document.head.appendChild(ps);
+      } catch (_) {}
 
       function renderGrid() {
         grid.innerHTML = products

@@ -1,0 +1,5 @@
+# 220 BioWorX — Research Use Only
+User-agent: *
+Allow: /
+
+Sitemap: https://www.220bioworx.com/sitemap.xml

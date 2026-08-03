@@ -2,6 +2,13 @@
 
 Static site for **www.220bioworx.com** hosted on **GitHub Pages**.
 
+## SEO (local + nationwide)
+
+- **Service area page:** [`service-area.html`](https://www.220bioworx.com/service-area.html) — Fort Myers / Lee County / SW Florida · ships nationwide · no retail storefront  
+- **Sitemap:** `sitemap.xml` · **Robots:** `robots.txt`  
+- **Schema:** Organization (`seo-org.jsonld.js`) + Product ItemList on catalog  
+- After deploy: submit sitemap in [Google Search Console](https://search.google.com/search-console)
+
 ## Moving to Wix
 
 Full migration kit (catalog CSV, assets, checklists, DNS cutover):
