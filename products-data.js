@@ -44,6 +44,12 @@ window.BW_PRODUCTS = [
     images: [
       "images/products/tirz-light.jpeg",
       "images/products/tirz-dark.jpeg",
+      {
+        src: "images/products/coas/glp2-tr-40-coa-p1.png",
+        kind: "coa",
+        label: "COA",
+        alt: "Certificate of Analysis — GLP-2 TR 40 mg (view only)",
+      },
     ],
     shortDescription:
       "Research-grade dual GIP / GLP-1 receptor agonist peptide, 40 mg per vial, for laboratory research only.",

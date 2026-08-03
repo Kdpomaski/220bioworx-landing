@@ -228,14 +228,54 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       overflow: hidden;
+      position: relative;
     }
     .detail-gallery .main-img {
       aspect-ratio: 1;
       background: #0d1014;
+      position: relative;
+    }
+    .detail-gallery .main-img.is-coa {
+      aspect-ratio: 3 / 4;
+      max-height: min(72vh, 640px);
     }
     .detail-gallery .main-img img {
       width: 100%; height: 100%; object-fit: cover;
+      -webkit-user-drag: none;
+      user-select: none;
     }
+    .detail-gallery .main-img.is-coa img {
+      object-fit: contain;
+      background: #f4f4f4;
+    }
+    .gallery-badge {
+      display: none;
+      position: absolute;
+      top: 0.65rem;
+      left: 0.65rem;
+      z-index: 2;
+      font-family: var(--font-head);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(8, 11, 13, 0.88);
+      border: 1px solid rgba(255, 90, 0, 0.5);
+      color: var(--orange);
+      pointer-events: none;
+    }
+    .gallery-badge.show { display: inline-block; }
+    .gallery-coa-note {
+      display: none;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.75rem;
+      color: var(--steel);
+      border-top: 1px solid var(--border);
+      background: rgba(8, 11, 13, 0.55);
+    }
+    .gallery-coa-note.show { display: block; }
     .thumbs {
       display: flex; gap: 0.5rem; padding: 0.75rem;
       border-top: 1px solid var(--border); flex-wrap: wrap;
@@ -243,9 +283,23 @@
     .thumbs button {
       width: 64px; height: 64px; padding: 0; border: 1px solid var(--border);
       border-radius: 8px; overflow: hidden; cursor: pointer; background: #0d1014;
+      position: relative;
     }
     .thumbs button.active { border-color: var(--orange); }
-    .thumbs img { width: 100%; height: 100%; object-fit: cover; }
+    .thumbs button.is-coa { border-color: rgba(255, 90, 0, 0.45); }
+    .thumbs button .thumb-tag {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      background: rgba(8, 11, 13, 0.88);
+      color: var(--orange);
+      font-family: var(--font-head);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-align: center;
+      padding: 0.15rem 0;
+    }
+    .thumbs img { width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-select: none; }
+    .thumbs button.is-coa img { object-fit: contain; background: #eee; }
 
     .detail-info h1 {
       font-family: var(--font-head); font-size: clamp(1.4rem, 2.5vw, 1.85rem);
@@ -728,7 +782,19 @@
         catalogView.classList.add("hide");
         detailView.classList.add("show");
 
-        const imgs = p.images && p.images.length ? p.images : [p.image];
+        // Gallery: string path or { src, kind: "coa", label, alt }
+        const gallery = (p.images && p.images.length ? p.images : [p.image]).map((item) => {
+          if (item && typeof item === "object") {
+            return {
+              src: item.src || item.url || "",
+              kind: item.kind || (item.coa ? "coa" : "image"),
+              label: item.label || (item.kind === "coa" || item.coa ? "COA" : ""),
+              alt: item.alt || p.name,
+            };
+          }
+          return { src: String(item || ""), kind: "image", label: "", alt: p.name };
+        }).filter((g) => g.src);
+
         let blendHtml = "";
         if (p.blendComponents && p.blendComponents.length) {
           blendHtml =
@@ -749,15 +815,24 @@
             "</tbody></table>";
         }
 
+        const g0 = gallery[0] || { src: p.image, kind: "image", label: "", alt: p.name };
+
         detailRoot.innerHTML = `
-          <div class="detail-gallery">
-            <div class="main-img"><img id="mainProductImg" src="${escapeHtml(imgs[0])}" alt="${escapeHtml(p.name)}" onerror="this.onerror=null;this.src='images/products/klow-light.jpeg';" /></div>
+          <div class="detail-gallery" id="detailGallery">
+            <div class="main-img${g0.kind === "coa" ? " is-coa" : ""}" id="mainImgWrap">
+              <span class="gallery-badge${g0.kind === "coa" ? " show" : ""}" id="galleryBadge">COA · view only</span>
+              <img id="mainProductImg" src="${escapeHtml(g0.src)}" alt="${escapeHtml(g0.alt || p.name)}" draggable="false" onerror="this.onerror=null;this.src='images/products/klow-light.jpeg';" />
+            </div>
+            <p class="gallery-coa-note${g0.kind === "coa" ? " show" : ""}" id="galleryCoaNote">
+              Certificate of Analysis — on-screen view only. Downloading, saving, or redistributing is not permitted.
+            </p>
             <div class="thumbs" id="thumbRow">
-              ${imgs
+              ${gallery
                 .map(
-                  (src, i) =>
-                    `<button type="button" class="${i === 0 ? "active" : ""}" data-src="${escapeHtml(src)}">
-                      <img src="${escapeHtml(src)}" alt="" onerror="this.onerror=null;this.src='images/products/klow-light.jpeg';" />
+                  (g, i) =>
+                    `<button type="button" class="${i === 0 ? "active" : ""}${g.kind === "coa" ? " is-coa" : ""}" data-src="${escapeHtml(g.src)}" data-kind="${escapeHtml(g.kind)}" data-alt="${escapeHtml(g.alt || p.name)}" aria-label="${g.kind === "coa" ? "View certificate of analysis" : "View product image " + (i + 1)}">
+                      <img src="${escapeHtml(g.src)}" alt="" draggable="false" onerror="this.onerror=null;this.src='images/products/klow-light.jpeg';" />
+                      ${g.kind === "coa" ? '<span class="thumb-tag">COA</span>' : ""}
                     </button>`
                 )
                 .join("")}
@@ -824,14 +899,36 @@
             </div>
           </div>`;
 
+        function setGallerySlide(btn) {
+          detailRoot.querySelectorAll("#thumbRow button").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const main = document.getElementById("mainProductImg");
+          const wrap = document.getElementById("mainImgWrap");
+          const badge = document.getElementById("galleryBadge");
+          const note = document.getElementById("galleryCoaNote");
+          const kind = btn.getAttribute("data-kind") || "image";
+          const src = btn.getAttribute("data-src");
+          const alt = btn.getAttribute("data-alt") || p.name;
+          if (main) {
+            main.src = src;
+            main.alt = alt;
+            main.draggable = false;
+          }
+          if (wrap) wrap.classList.toggle("is-coa", kind === "coa");
+          if (badge) badge.classList.toggle("show", kind === "coa");
+          if (note) note.classList.toggle("show", kind === "coa");
+        }
+
         detailRoot.querySelectorAll("#thumbRow button").forEach((btn) => {
-          btn.addEventListener("click", () => {
-            detailRoot.querySelectorAll("#thumbRow button").forEach((b) => b.classList.remove("active"));
-            btn.classList.add("active");
-            const main = document.getElementById("mainProductImg");
-            main.src = btn.getAttribute("data-src");
-          });
+          btn.addEventListener("click", () => setGallerySlide(btn));
         });
+
+        // View-only protections for gallery (especially COA) — deters casual save; not absolute DRM
+        const galleryEl = document.getElementById("detailGallery");
+        if (galleryEl) {
+          galleryEl.addEventListener("contextmenu", (e) => e.preventDefault());
+          galleryEl.addEventListener("dragstart", (e) => e.preventDefault());
+        }
         bindImgFallback(detailRoot);
 
         const qtyInput = document.getElementById("qtyInput");
