@@ -17,6 +17,12 @@ window.BW_PRODUCTS = [
     images: [
       "images/products/glp3-rt-light.jpeg",
       "images/products/glp3-rt-dark.jpeg",
+      {
+        src: "images/products/coas/glp3-rt-30-coa-p1.png",
+        kind: "coa",
+        label: "COA",
+        alt: "Certificate of Analysis — Reta (GLP-3 RT) 30 mg (view only)",
+      },
     ],
     shortDescription:
       "Research-grade Reta / GLP-3 RT, 30 mg, for laboratory investigation of multi-agonist incretin pathway models.",
@@ -133,6 +139,12 @@ window.BW_PRODUCTS = [
     images: [
       "images/products/klow-light.jpeg",
       "images/products/klow-dark.jpeg",
+      {
+        src: "images/products/coas/klow-80-coa-p1.png",
+        kind: "coa",
+        label: "COA",
+        alt: "Certificate of Analysis — KLOW Blend 80 mg (view only)",
+      },
     ],
     shortDescription:
       "Research-grade 80 mg blend: 50 mg GHK-Cu, 10 mg TB-500, 10 mg BPC-157, 10 mg KPV.",
@@ -250,6 +262,18 @@ window.BW_PRODUCTS = [
     images: [
       "images/products/motsc-light.jpeg",
       "images/products/motsc-dark.jpeg",
+      {
+        src: "images/products/coas/motsc-40-coa-p1.png",
+        kind: "coa",
+        label: "COA",
+        alt: "Certificate of Analysis — MOTS-c 40 mg lot 42526 (view only)",
+      },
+      {
+        src: "images/products/coas/motsc-40-endo-p1.png",
+        kind: "coa",
+        label: "COA",
+        alt: "Endotoxin / analysis — MOTS-c 40 mg lot 42526 (view only)",
+      },
     ],
     shortDescription:
       "Research-grade MOTS-c mitochondrial peptide, 40 mg.",
@@ -277,6 +301,12 @@ window.BW_PRODUCTS = [
     images: [
       "images/products/nad-light.jpeg",
       "images/products/nad-dark.jpeg",
+      {
+        src: "images/products/coas/nad-1000-coa-p1.png",
+        kind: "coa",
+        label: "COA",
+        alt: "Certificate of Analysis — NAD+ 1000 mg (view only)",
+      },
     ],
     shortDescription: "Research-grade NAD+, 1000 mg, laboratory biochemical only.",
     description:
