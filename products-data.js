@@ -23,6 +23,12 @@ window.BW_PRODUCTS = [
         label: "COA",
         alt: "Certificate of Analysis — Reta (GLP-3 RT) 30 mg (view only)",
       },
+      {
+        src: "images/products/coas/glp3-rt-30-janoshik-p1.png",
+        kind: "coa",
+        label: "COA 2",
+        alt: "Test report — Reta (GLP-3 RT) 30 mg (view only)",
+      },
     ],
     shortDescription:
       "Research-grade Reta / GLP-3 RT, 30 mg, for laboratory investigation of multi-agonist incretin pathway models.",
@@ -85,6 +91,12 @@ window.BW_PRODUCTS = [
     images: [
       "images/products/bpc-157-light.jpeg",
       "images/products/bpc-157-dark.jpeg",
+      {
+        src: "images/products/coas/bpc-157-10-coa-p1.png",
+        kind: "coa",
+        label: "COA",
+        alt: "Certificate of Analysis — BPC-157 10 mg (view only)",
+      },
     ],
     shortDescription:
       "Research-grade synthetic pentadecapeptide (BPC-157), 10 mg.",
