@@ -121,16 +121,4 @@ window.BW_COA_LIBRARY = [
       },
     ],
   },
-  {
-    id: "epitalon-50",
-    name: "Epitalon",
-    strength: "50 mg",
-    docs: [
-      {
-        src: "images/products/coas/epitalon-50-packing-p1.png",
-        label: "Lab intake",
-        title: "Lab packing / intake record — Epitalon 50 mg",
-      },
-    ],
-  },
 ];
