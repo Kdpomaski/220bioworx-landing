@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>COA Library | 220 BioWorX</title>
+  <meta name="description" content="Research Use Only certificates of analysis — view only. Not for public indexing." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#080B0D" />
+  <link rel="canonical" href="https://www.220bioworx.com/coa.html" />
+  <script src="analytics.js"></script>
+  <script src="coa-data.js"></script>
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --carbon: #080B0D;
+      --graphite: #1C1F22;
+      --steel: #70777D;
+      --orange: #FF5A00;
+      --orange-hover: #ff6f1f;
+      --orange-soft: rgba(255, 90, 0, 0.12);
+      --white: #ffffff;
+      --text: #e8eaec;
+      --muted: #9aa1a6;
+      --border: rgba(112, 119, 125, 0.28);
+      --font-head: "Poppins", system-ui, sans-serif;
+      --font-body: "Inter", system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-body);
+      background: var(--carbon);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+    body.gate-locked { overflow: hidden; }
+    a { color: var(--orange); }
+
+    #age-gate {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem; background: rgba(8, 11, 13, 0.97);
+    }
+    #age-gate[hidden] { display: none !important; }
+    .gate-card {
+      width: min(100%, 420px); background: var(--graphite);
+      border: 1px solid rgba(255, 90, 0, 0.4); border-radius: 14px; padding: 1.35rem;
+    }
+    .gate-card h1 {
+      font-family: var(--font-head); font-size: 1.1rem; color: var(--white);
+      text-align: center; margin: 0.5rem 0;
+    }
+    .gate-card .lead { color: var(--muted); font-size: 0.85rem; text-align: center; margin-bottom: 0.75rem; }
+    .gate-ruo {
+      background: rgba(255, 90, 0, 0.08); border: 1px solid rgba(255, 90, 0, 0.35);
+      border-radius: 8px; padding: 0.6rem; font-size: 0.8rem; color: #ffd4bf;
+      text-align: center; margin-bottom: 0.75rem;
+    }
+    .gate-check { display: flex; gap: 0.55rem; margin-bottom: 0.55rem; font-size: 0.82rem; }
+    .gate-check input { accent-color: var(--orange); margin-top: 0.15rem; flex-shrink: 0; }
+    .gate-actions { display: grid; grid-template-columns: 1fr 1.3fr; gap: 0.5rem; margin-top: 0.85rem; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 0.7rem 1rem; border-radius: 8px; font-family: var(--font-head);
+      font-weight: 600; font-size: 0.85rem; border: none; cursor: pointer;
+      text-decoration: none !important;
+    }
+    .btn-primary { background: var(--orange); color: var(--white); }
+    .btn-primary:hover { background: var(--orange-hover); color: var(--white); }
+    .btn-secondary { background: transparent; color: var(--steel); border: 1px solid var(--border); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .gate-error { display: none; color: #ff8a5c; font-size: 0.8rem; text-align: center; margin-top: 0.6rem; }
+    .gate-error.show { display: block; }
+    .site-wrap[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
+
+    .ruo-banner {
+      background: #140c08; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
+      text-align: center; padding: 0.45rem 0.75rem;
+      font-family: var(--font-head); font-size: 0.65rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase; color: #ffc9a8;
+    }
+    header {
+      padding: 1rem 1rem 0.75rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    header img { height: 48px; width: auto; max-width: min(260px, 70vw); object-fit: contain; }
+    header h1 {
+      font-family: var(--font-head); font-weight: 800;
+      font-size: clamp(1.2rem, 4vw, 1.55rem);
+      text-transform: uppercase; color: var(--white); margin-top: 0.55rem;
+    }
+    header h1 span { color: var(--orange); }
+    header p { color: var(--muted); font-size: 0.85rem; margin-top: 0.35rem; max-width: 26rem; margin-inline: auto; }
+
+    .wrap { width: min(100% - 1.5rem, 560px); margin: 1rem auto 2rem; }
+
+    .search {
+      width: 100%; padding: 0.7rem 0.9rem; border-radius: 10px;
+      border: 1px solid var(--border); background: rgba(8, 11, 13, 0.6);
+      color: var(--white); font-family: inherit; font-size: 0.95rem;
+      margin-bottom: 0.85rem;
+    }
+    .search:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-soft); }
+
+    .list { display: flex; flex-direction: column; gap: 0.55rem; }
+    .item {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.75rem;
+      width: 100%; text-align: left;
+      padding: 0.95rem 1rem;
+      background: var(--graphite);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .item:hover, .item:focus {
+      border-color: rgba(255, 90, 0, 0.5);
+      background: rgba(255, 90, 0, 0.06);
+      outline: none;
+    }
+    .item .name {
+      font-family: var(--font-head); font-weight: 700; font-size: 1rem; color: var(--white);
+    }
+    .item .meta { font-size: 0.78rem; color: var(--steel); margin-top: 0.15rem; }
+    .item .badge {
+      flex-shrink: 0;
+      font-family: var(--font-head); font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 0.3rem 0.5rem; border-radius: 999px;
+      border: 1px solid rgba(255, 90, 0, 0.4); color: var(--orange);
+      background: var(--orange-soft);
+    }
+    .item .chev { color: var(--steel); font-size: 1.2rem; }
+
+    .note {
+      margin-top: 1.25rem; font-size: 0.75rem; color: var(--steel); text-align: center;
+    }
+
+    /* Viewer overlay */
+    #viewer {
+      display: none;
+      position: fixed; inset: 0; z-index: 100;
+      background: rgba(8, 11, 13, 0.97);
+      flex-direction: column;
+    }
+    #viewer.open { display: flex; }
+    .viewer-top {
+      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--graphite);
+    }
+    .viewer-top h2 {
+      font-family: var(--font-head); font-size: 0.9rem; color: var(--white);
+      flex: 1; min-width: 0;
+    }
+    .viewer-top .sub { font-size: 0.75rem; color: var(--steel); font-weight: 500; }
+    .viewer-close {
+      background: transparent; border: 1px solid var(--border); color: var(--white);
+      border-radius: 8px; padding: 0.45rem 0.7rem; cursor: pointer;
+      font-family: var(--font-head); font-weight: 600; font-size: 0.8rem;
+    }
+
+    .viewer-tabs {
+      display: flex; gap: 0.4rem; padding: 0.55rem 0.85rem;
+      overflow-x: auto; border-bottom: 1px solid var(--border);
+      background: rgba(28, 31, 34, 0.9);
+    }
+    .viewer-tabs button {
+      flex-shrink: 0;
+      border: 1px solid var(--border); background: transparent;
+      color: var(--muted); border-radius: 999px;
+      padding: 0.4rem 0.75rem; font-family: var(--font-head);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
+      text-transform: uppercase; cursor: pointer;
+    }
+    .viewer-tabs button.active {
+      border-color: var(--orange); background: var(--orange-soft); color: var(--orange);
+    }
+    .viewer-tabs[hidden] { display: none !important; }
+
+    .viewer-stage {
+      flex: 1; min-height: 0;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+      touch-action: pan-y;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .viewer-stage img {
+      max-width: 100%; max-height: 100%;
+      object-fit: contain;
+      background: #f4f4f4;
+      -webkit-user-drag: none;
+      user-select: none;
+    }
+    .viewer-nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: 2.5rem; height: 2.5rem; border-radius: 50%;
+      border: 1px solid var(--border); background: rgba(8, 11, 13, 0.75);
+      color: var(--white); font-size: 1.25rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .viewer-nav:disabled { opacity: 0.25; cursor: default; }
+    .viewer-nav.prev { left: 0.5rem; }
+    .viewer-nav.next { right: 0.5rem; }
+    .viewer-footer {
+      padding: 0.55rem 0.85rem calc(0.55rem + env(safe-area-inset-bottom));
+      border-top: 1px solid var(--border);
+      text-align: center; font-size: 0.75rem; color: var(--steel);
+      background: var(--graphite);
+    }
+    .viewer-dots {
+      display: flex; justify-content: center; gap: 0.35rem; margin-bottom: 0.35rem;
+    }
+    .viewer-dots span {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--border);
+    }
+    .viewer-dots span.on { background: var(--orange); }
+
+    footer.mini {
+      text-align: center; padding: 1rem; font-size: 0.72rem; color: var(--steel);
+    }
+  </style>
+</head>
+<body class="gate-locked">
+  <div id="age-gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <div class="gate-card">
+      <div style="text-align:center;line-height:0;margin-bottom:0.5rem;">
+        <img src="logo-header.png" alt="220 BioWorX" width="240" height="68" style="max-width:100%;height:auto;" />
+      </div>
+      <h1 id="gate-title">Age &amp; research verification</h1>
+      <p class="lead">COA library for qualified research purchasers.</p>
+      <div class="gate-ruo"><strong>RESEARCH USE ONLY.</strong> Not for human use. View only.</div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-age" />
+        <label for="cert-age">I am <strong>21+</strong>.</label>
+      </div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-ruo" />
+        <label for="cert-ruo">Documents are for <strong>RUO / not human use</strong>.</label>
+      </div>
+      <div class="gate-check">
+        <input type="checkbox" id="cert-lawful" />
+        <label for="cert-lawful">Lawful research use only.</label>
+      </div>
+      <div class="gate-actions">
+        <button type="button" class="btn btn-secondary" id="gate-exit">Exit</button>
+        <button type="button" class="btn btn-primary" id="gate-enter" disabled>View COAs</button>
+      </div>
+      <p class="gate-error" id="gate-error">Please complete all certifications.</p>
+    </div>
+  </div>
+
+  <div class="site-wrap" id="site-wrap" aria-hidden="true">
+    <div class="ruo-banner">Research Use Only · View only · Not for download · Not for human use</div>
+    <header>
+      <img src="logo-header.png" alt="220 BioWorX" width="240" height="68" />
+      <h1>COA <span>library</span></h1>
+      <p>Select a compound to view its certificate(s). On-screen view only.</p>
+    </header>
+
+    <div class="wrap">
+      <input type="search" class="search" id="search" placeholder="Search compounds…" autocomplete="off" />
+      <div class="list" id="list"></div>
+      <p class="note">
+        Documents are for research reference only. Downloading or redistributing is not permitted.
+        Not FDA approved. Not for human or veterinary use.
+      </p>
+    </div>
+
+    <footer class="mini">© <span id="year"></span> 220 BioWorX · RUO</footer>
+  </div>
+
+  <div id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewerTitle">
+    <div class="viewer-top">
+      <div>
+        <h2 id="viewerTitle">COA</h2>
+        <div class="sub" id="viewerSub"></div>
+      </div>
+      <button type="button" class="viewer-close" id="viewerClose">Close</button>
+    </div>
+    <div class="viewer-tabs" id="viewerTabs" hidden></div>
+    <div class="viewer-stage" id="viewerStage">
+      <button type="button" class="viewer-nav prev" id="navPrev" aria-label="Previous">‹</button>
+      <img id="viewerImg" src="" alt="Certificate of analysis" draggable="false" />
+      <button type="button" class="viewer-nav next" id="navNext" aria-label="Next">›</button>
+    </div>
+    <div class="viewer-footer">
+      <div class="viewer-dots" id="viewerDots"></div>
+      <span id="viewerHint">Swipe or use arrows when multiple documents</span>
+      <div>View only · COA · Research Use Only</div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const GATE_KEY = "bw220_age_gate_v2";
+      const gate = document.getElementById("age-gate");
+      const site = document.getElementById("site-wrap");
+      const btnEnter = document.getElementById("gate-enter");
+      const btnExit = document.getElementById("gate-exit");
+      const err = document.getElementById("gate-error");
+      const checks = [
+        document.getElementById("cert-age"),
+        document.getElementById("cert-ruo"),
+        document.getElementById("cert-lawful"),
+      ];
+      function allChecked() { return checks.every((c) => c.checked); }
+      function syncEnter() {
+        btnEnter.disabled = !allChecked();
+        if (allChecked()) err.classList.remove("show");
+      }
+      function unlockSite() {
+        gate.hidden = true;
+        site.removeAttribute("aria-hidden");
+        document.body.classList.remove("gate-locked");
+      }
+      function lockSite() {
+        gate.hidden = false;
+        site.setAttribute("aria-hidden", "true");
+        document.body.classList.add("gate-locked");
+        checks.forEach((c) => (c.checked = false));
+        syncEnter();
+      }
+      checks.forEach((c) => c.addEventListener("change", syncEnter));
+      btnEnter.addEventListener("click", () => {
+        if (!allChecked()) { err.classList.add("show"); return; }
+        try {
+          sessionStorage.setItem(GATE_KEY, JSON.stringify({ ts: Date.now(), age21: true, ruo: true, lawful: true }));
+        } catch (_) {}
+        unlockSite();
+      });
+      btnExit.addEventListener("click", () => { window.location.href = "https://www.google.com"; });
+      let admitted = false;
+      try {
+        const raw = sessionStorage.getItem(GATE_KEY);
+        if (raw) {
+          const d = JSON.parse(raw);
+          if (d && d.age21 && d.ruo && d.lawful) admitted = true;
+        }
+      } catch (_) {}
+      if (admitted) unlockSite(); else lockSite();
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      const library = window.BW_COA_LIBRARY || [];
+      const listEl = document.getElementById("list");
+      const searchEl = document.getElementById("search");
+      const viewer = document.getElementById("viewer");
+      const viewerImg = document.getElementById("viewerImg");
+      const viewerTitle = document.getElementById("viewerTitle");
+      const viewerSub = document.getElementById("viewerSub");
+      const viewerTabs = document.getElementById("viewerTabs");
+      const viewerDots = document.getElementById("viewerDots");
+      const viewerHint = document.getElementById("viewerHint");
+      const navPrev = document.getElementById("navPrev");
+      const navNext = document.getElementById("navNext");
+      const stage = document.getElementById("viewerStage");
+
+      let current = null;
+      let docIndex = 0;
+
+      function renderList(filter) {
+        const q = (filter || "").trim().toLowerCase();
+        const items = library.filter((c) => {
+          if (!q) return true;
+          return (
+            c.name.toLowerCase().includes(q) ||
+            (c.strength || "").toLowerCase().includes(q) ||
+            c.id.toLowerCase().includes(q)
+          );
+        });
+        listEl.innerHTML = items
+          .map((c) => {
+            const n = (c.docs && c.docs.length) || 0;
+            const badge = n > 1 ? n + " docs" : (c.docs[0] && c.docs[0].label) || "COA";
+            return (
+              '<button type="button" class="item" data-id="' +
+              c.id +
+              '">' +
+              "<div><div class=\"name\"></div><div class=\"meta\"></div></div>" +
+              '<span class="badge">' +
+              badge +
+              '</span><span class="chev" aria-hidden="true">›</span></button>'
+            );
+          })
+          .join("");
+        Array.from(listEl.querySelectorAll(".item")).forEach((btn, i) => {
+          const c = items[i];
+          btn.querySelector(".name").textContent = c.name;
+          btn.querySelector(".meta").textContent =
+            (c.strength || "") + (nDocs(c) > 1 ? " · swipe between documents" : "");
+          btn.addEventListener("click", () => openViewer(c));
+        });
+        if (!items.length) {
+          listEl.innerHTML =
+            '<p style="color:var(--steel);text-align:center;padding:1.5rem;">No compounds match.</p>';
+        }
+      }
+
+      function nDocs(c) {
+        return (c.docs && c.docs.length) || 0;
+      }
+
+      function openViewer(compound) {
+        current = compound;
+        docIndex = 0;
+        viewer.classList.add("open");
+        document.body.style.overflow = "hidden";
+        renderViewer();
+      }
+
+      function closeViewer() {
+        viewer.classList.remove("open");
+        document.body.style.overflow = "";
+        current = null;
+        viewerImg.removeAttribute("src");
+      }
+
+      function renderViewer() {
+        if (!current) return;
+        const docs = current.docs || [];
+        const doc = docs[docIndex] || docs[0];
+        viewerTitle.textContent = current.name + (current.strength ? " · " + current.strength : "");
+        viewerSub.textContent = doc ? doc.title || doc.label || "COA" : "";
+        if (doc) {
+          viewerImg.src = doc.src;
+          viewerImg.alt = doc.title || "Certificate of analysis";
+        }
+        const multi = docs.length > 1;
+        viewerHint.textContent = multi
+          ? "Document " + (docIndex + 1) + " of " + docs.length + " — swipe or use arrows"
+          : "Single document — view only";
+        navPrev.disabled = !multi || docIndex <= 0;
+        navNext.disabled = !multi || docIndex >= docs.length - 1;
+        navPrev.style.display = multi ? "flex" : "none";
+        navNext.style.display = multi ? "flex" : "none";
+
+        if (multi) {
+          viewerTabs.hidden = false;
+          viewerTabs.innerHTML = docs
+            .map(
+              (d, i) =>
+                '<button type="button" class="' +
+                (i === docIndex ? "active" : "") +
+                '" data-i="' +
+                i +
+                '">' +
+                (d.label || "Doc " + (i + 1)) +
+                "</button>"
+            )
+            .join("");
+          viewerTabs.querySelectorAll("button").forEach((b) => {
+            b.addEventListener("click", () => {
+              docIndex = parseInt(b.getAttribute("data-i"), 10) || 0;
+              renderViewer();
+            });
+          });
+          viewerDots.innerHTML = docs
+            .map((_, i) => '<span class="' + (i === docIndex ? "on" : "") + '"></span>')
+            .join("");
+        } else {
+          viewerTabs.hidden = true;
+          viewerTabs.innerHTML = "";
+          viewerDots.innerHTML = "";
+        }
+      }
+
+      function step(delta) {
+        if (!current) return;
+        const n = nDocs(current);
+        if (n < 2) return;
+        docIndex = Math.max(0, Math.min(n - 1, docIndex + delta));
+        renderViewer();
+      }
+
+      document.getElementById("viewerClose").addEventListener("click", closeViewer);
+      navPrev.addEventListener("click", () => step(-1));
+      navNext.addEventListener("click", () => step(1));
+      document.addEventListener("keydown", (e) => {
+        if (!viewer.classList.contains("open")) return;
+        if (e.key === "Escape") closeViewer();
+        if (e.key === "ArrowLeft") step(-1);
+        if (e.key === "ArrowRight") step(1);
+      });
+
+      // Swipe
+      let touchX = null;
+      stage.addEventListener(
+        "touchstart",
+        (e) => {
+          touchX = e.changedTouches[0].clientX;
+        },
+        { passive: true }
+      );
+      stage.addEventListener(
+        "touchend",
+        (e) => {
+          if (touchX == null) return;
+          const dx = e.changedTouches[0].clientX - touchX;
+          touchX = null;
+          if (Math.abs(dx) < 40) return;
+          if (dx < 0) step(1);
+          else step(-1);
+        },
+        { passive: true }
+      );
+
+      // View-only: block context menu / drag on viewer
+      viewer.addEventListener("contextmenu", (e) => e.preventDefault());
+      viewer.addEventListener("dragstart", (e) => e.preventDefault());
+
+      searchEl.addEventListener("input", () => renderList(searchEl.value));
+      renderList("");
+
+      // Deep link: coa.html?id=bpc-157-10
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+        if (id) {
+          const c = library.find((x) => x.id === id);
+          if (c && admitted) openViewer(c);
+          else if (c) {
+            // open after gate
+            const orig = btnEnter.onclick;
+            btnEnter.addEventListener(
+              "click",
+              function once() {
+                setTimeout(() => openViewer(c), 50);
+              },
+              { once: true }
+            );
+          }
+        }
+      } catch (_) {}
+    })();
+  </script>
+</body>
+</html>
