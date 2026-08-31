@@ -194,7 +194,7 @@ window.BW_PRODUCTS = [
     images: [
       "images/products/ipamorelin-10-photo.png",
       {
-        src: "images/products/coas/ipamorelin-10-coa-p1.png",
+        src: "images/products/coas/ipamorelin-10-coa-p1.png?v=20260831d",
         kind: "coa",
         label: "COA",
         alt: "Certificate of Analysis — Ipamorelin 10 mg lot 220-990027 (view only)",

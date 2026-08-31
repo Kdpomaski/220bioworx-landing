@@ -127,7 +127,7 @@ window.BW_COA_LIBRARY = [
     strength: "10 mg",
     docs: [
       {
-        src: "images/products/coas/ipamorelin-10-coa-p1.png",
+        src: "images/products/coas/ipamorelin-10-coa-p1.png?v=20260831d",
         label: "COA",
         title: "Certificate of Analysis — Ipamorelin 10 mg lot 220-990027",
       },
