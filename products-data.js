@@ -190,8 +190,13 @@ window.BW_PRODUCTS = [
     image: "images/products/ipamorelin-10-light.jpeg",
     images: [
       "images/products/ipamorelin-10-light.jpeg",
-      "images/products/ipamorelin-10-dark.jpeg",
-      "images/products/ipamorelin-10-label.jpg",
+      "images/products/ipamorelin-10-photo.png",
+      {
+        src: "images/products/coas/ipamorelin-10-coa-p1.png",
+        kind: "coa",
+        label: "COA",
+        alt: "Certificate of Analysis — Ipamorelin 10 mg lot 220-990027 (view only)",
+      },
     ],
     shortDescription:
       "Research-grade Ipamorelin, 10 mg lyophilized, for laboratory research only.",
@@ -203,7 +208,7 @@ window.BW_PRODUCTS = [
     sequence: "Aib-His-D-2-Nal-D-Phe-Lys-NH₂ (typical)",
     appearance: "White to off-white lyophilized solid (typical)",
     storage: "Store frozen, protected from light and moisture. Laboratory handling only.",
-    researchNotes: "Research grade only. Not FDA approved for any indication or use.",
+    researchNotes: "Research grade only. Not FDA approved for any indication or use. Lot 220-990027 per COA.",
     tags: ["Ipamorelin", "IPA", "10mg", "GHS"],
   },
   {
