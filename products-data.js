@@ -190,9 +190,8 @@ window.BW_PRODUCTS = [
     category: "GHS pathway research",
     unitPrice: 50,
     unit: "vial",
-    image: "images/products/ipamorelin-10-light.jpeg",
+    image: "images/products/ipamorelin-10-photo.png",
     images: [
-      "images/products/ipamorelin-10-light.jpeg",
       "images/products/ipamorelin-10-photo.png",
       {
         src: "images/products/coas/ipamorelin-10-coa-p1.png",
