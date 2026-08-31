@@ -11,6 +11,7 @@ URL-safe image names used by the storefront (light + dark where available):
   reta-klow.jpeg
   wolverine-light.jpeg
 
+  dusk-70-light.jpeg / dusk-70-dark.jpeg
   kpv-10-light.jpeg / kpv-10-dark.jpeg
   ss-31-10-light.jpeg / ss-31-10-dark.jpeg
 

@@ -5,6 +5,44 @@
  */
 window.BW_PRODUCTS = [
   {
+    id: "dusk-70",
+    sku: "DUSK-70",
+    name: "DUSK",
+    strength: "70 mg total",
+    form: "Lyophilized multi-peptide research blend",
+    category: "Research blends",
+    unitPrice: 125,
+    unit: "vial",
+    presale: true,
+    presaleUntil: "2026-09-30",
+    image: "images/products/dusk-70-light.jpeg",
+    images: [
+      "images/products/dusk-70-light.jpeg",
+      "images/products/dusk-70-dark.jpeg",
+      "images/products/dusk-70-photo-front.jpg",
+      "images/products/dusk-70-photo-side.jpg",
+      "images/products/dusk-70-label.jpg",
+    ],
+    shortDescription:
+      "September pre-sale. Research-grade DUSK blend: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total).",
+    description:
+      "DUSK is a research-grade lyophilized blend for qualified laboratory use only. Label composition: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total). Pre-sale is open through September 30, 2026. Not FDA approved. Not a drug or compounded medication. Not for human or veterinary use, diagnosis, treatment, cure, or prevention of any disease.",
+    scientificName: "DUSK multi-peptide research blend (Epithalon + Pinealon + Selank)",
+    molecularWeight: "Component-specific (see blend breakdown)",
+    formula: "Multi-component blend",
+    sequence: "See individual components",
+    appearance: "Lyophilized solid (typical)",
+    storage: "Frozen, dry, protected from light.",
+    blendComponents: [
+      { name: "Epithalon", amount: "50 mg", mw: "Batch-defined" },
+      { name: "Pinealon", amount: "10 mg", mw: "Batch-defined" },
+      { name: "Selank", amount: "10 mg", mw: "Batch-defined" },
+    ],
+    researchNotes:
+      "Research grade blend only. Not FDA approved. Pre-sale through September 2026. Batch 2200826D01 per label.",
+    tags: ["DUSK", "presale", "Epithalon", "Pinealon", "Selank", "70mg"],
+  },
+  {
     id: "glp3-rt-30",
     sku: "RETA-30",
     name: "Reta (GLP-3 RT)",
