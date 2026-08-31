@@ -5,6 +5,7 @@ URL-safe image names used by the storefront (light + dark where available):
   tb500-light.jpeg / tb500-dark.jpeg
   klow-light.jpeg / klow-dark.jpeg
   cjc-ipa-light.jpeg / cjc-ipa-dark.jpeg
+  ipamorelin-10-light.jpeg / ipamorelin-10-dark.jpeg
   motsc-light.jpeg / motsc-dark.jpeg
   nad-light.jpeg / nad-dark.jpeg
   reta-klow.jpeg

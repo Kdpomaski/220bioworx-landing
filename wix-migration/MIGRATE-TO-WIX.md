@@ -146,6 +146,7 @@ Import from `catalog-export.csv`. Listed products (as of export):
 | TB-500-10 | TB-500 10 mg | $60 |
 | KLOW-80 | KLOW Blend | $80 |
 | GHK-CU-100 | GHK-Cu | $50 |
+| IPA-10 | Ipamorelin 10 mg | $50 |
 | CJC-IPA-20 | CJC-1295 (No DAC) + Ipamorelin | $100 |
 | MOTSC-40 | MOTS-c 40 mg | $75 |
 | NAD-1000 | NAD+ | $80 |
