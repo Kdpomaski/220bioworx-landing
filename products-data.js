@@ -13,6 +13,7 @@ window.BW_PRODUCTS = [
     category: "Incretin-pathway research",
     unitPrice: 120,
     unit: "vial",
+    listed: false,
     image: "images/products/glp3-rt-light.jpeg",
     images: [
       "images/products/glp3-rt-light.jpeg",
@@ -52,6 +53,7 @@ window.BW_PRODUCTS = [
     category: "Incretin-pathway research",
     unitPrice: 100,
     unit: "vial",
+    listed: false,
     image: "images/products/glp3-rt-light.jpeg",
     images: [
       "images/products/glp3-rt-light.jpeg",
@@ -85,6 +87,7 @@ window.BW_PRODUCTS = [
     category: "Incretin-pathway research",
     unitPrice: 100,
     unit: "vial",
+    listed: false,
     image: "images/products/tirz-light.jpeg",
     images: [
       "images/products/tirz-light.jpeg",
@@ -464,6 +467,7 @@ window.BW_PRODUCTS = [
     category: "Stacks",
     unitPrice: 100,
     unit: "stack",
+    listed: false,
     image: "images/products/wolverine-light.jpeg",
     images: [
       "images/products/wolverine-light.jpeg",
@@ -529,6 +533,7 @@ window.BW_PRODUCTS = [
     category: "Bundles",
     unitPrice: 200,
     unit: "bundle",
+    listed: false,
     image: "images/products/reta-klow.jpeg",
     images: [
       "images/products/reta-klow.jpeg",
