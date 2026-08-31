@@ -288,8 +288,11 @@ window.BW_PRODUCTS = [
     category: "Synthetic peptide research",
     unitPrice: 50,
     unit: "vial",
-    image: "images/products/kpv-10.svg",
-    images: ["images/products/kpv-10.svg"],
+    image: "images/products/kpv-10-light.jpeg",
+    images: [
+      "images/products/kpv-10-light.jpeg",
+      "images/products/kpv-10-dark.jpeg",
+    ],
     shortDescription: "Research-grade KPV tripeptide, 10 mg.",
     description:
       "KPV (Lys-Pro-Val) is a research-grade synthetic tripeptide for laboratory use only. Not FDA approved. Not for human or veterinary administration or consumption.",
@@ -338,8 +341,11 @@ window.BW_PRODUCTS = [
     category: "Mitochondrial peptide research",
     unitPrice: 40,
     unit: "vial",
-    image: "images/products/ss-31-10.svg",
-    images: ["images/products/ss-31-10.svg"],
+    image: "images/products/ss-31-10-light.jpeg",
+    images: [
+      "images/products/ss-31-10-light.jpeg",
+      "images/products/ss-31-10-dark.jpeg",
+    ],
     shortDescription:
       "Research-grade SS-31 (elamipretide-class) peptide, 10 mg, laboratory use only.",
     description:
@@ -499,6 +505,7 @@ window.BW_PRODUCTS = [
     category: "Bundles",
     unitPrice: 120,
     unit: "bundle",
+    listed: false,
     image: "images/products/nad-light.jpeg",
     images: [
       "images/products/nad-light.jpeg",
