@@ -6,7 +6,7 @@
   <title>COA Library | 220 BioWorX</title>
   <meta name="description" content="Research Use Only certificates of analysis — view only. Not for public indexing." />
   <meta name="robots" content="noindex, nofollow" />
-  <meta name="theme-color" content="#080B0D" />
+  <meta name="theme-color" content="#ffffff" />
   <link rel="canonical" href="https://www.220bioworx.com/coa.html" />
   <script src="analytics.js?v=20260831g"></script>
   <script src="coa-data.js?v=20260831g"></script>
@@ -18,16 +18,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --carbon: #080B0D;
-      --graphite: #1C1F22;
-      --steel: #70777D;
+      --carbon: #ffffff;
+      --graphite: #f7f8fa;
+      --steel: #5c6570;
       --orange: #FF5A00;
       --orange-hover: #ff6f1f;
-      --orange-soft: rgba(255, 90, 0, 0.12);
+      --orange-soft: rgba(255, 90, 0, 0.10);
       --white: #ffffff;
-      --text: #e8eaec;
-      --muted: #9aa1a6;
-      --border: rgba(112, 119, 125, 0.28);
+      --text: #1a1a1a;
+      --muted: #5c6570;
+      --border: rgba(247, 248, 250, 0.85);
       --font-head: "Poppins", system-ui, sans-serif;
       --font-body: "Inter", system-ui, sans-serif;
     }
@@ -39,6 +39,7 @@
       line-height: 1.5;
       min-height: 100vh;
       padding-bottom: env(safe-area-inset-bottom);
+      font-size: 18px;
     }
     body.gate-locked { overflow: hidden; }
     a { color: var(--orange); }
@@ -46,7 +47,7 @@
     #age-gate {
       position: fixed; inset: 0; z-index: 9999;
       display: flex; align-items: center; justify-content: center;
-      padding: 1rem; background: rgba(8, 11, 13, 0.97);
+      padding: 1rem; background: rgba(255, 255, 255, 0.97);
     }
     #age-gate[hidden] { display: none !important; }
     .gate-card {
@@ -81,7 +82,7 @@
     .site-wrap[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
 
     .ruo-banner {
-      background: #140c08; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
+      background: #fff5ef; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
       text-align: center; padding: 0.45rem 0.75rem;
       font-family: var(--font-head); font-size: 0.65rem; font-weight: 600;
       letter-spacing: 0.06em; text-transform: uppercase; color: #ffc9a8;
@@ -104,7 +105,7 @@
 
     .search {
       width: 100%; padding: 0.7rem 0.9rem; border-radius: 10px;
-      border: 1px solid var(--border); background: rgba(8, 11, 13, 0.6);
+      border: 1px solid var(--border); background: rgba(255, 255, 255, 0.72);
       color: var(--white); font-family: inherit; font-size: 0.95rem;
       margin-bottom: 0.85rem;
     }
@@ -150,7 +151,7 @@
     #viewer {
       display: none;
       position: fixed; inset: 0; z-index: 100;
-      background: rgba(8, 11, 13, 0.97);
+      background: rgba(255, 255, 255, 0.97);
       flex-direction: column;
     }
     #viewer.open { display: flex; }
@@ -174,7 +175,7 @@
     .viewer-tabs {
       display: flex; gap: 0.4rem; padding: 0.55rem 0.85rem;
       overflow-x: auto; border-bottom: 1px solid var(--border);
-      background: rgba(28, 31, 34, 0.9);
+      background: rgba(247, 248, 250, 0.95);
     }
     .viewer-tabs button {
       flex-shrink: 0;
@@ -208,7 +209,7 @@
     .viewer-nav {
       position: absolute; top: 50%; transform: translateY(-50%);
       width: 2.5rem; height: 2.5rem; border-radius: 50%;
-      border: 1px solid var(--border); background: rgba(8, 11, 13, 0.75);
+      border: 1px solid var(--border); background: rgba(255, 255, 255, 0.75);
       color: var(--white); font-size: 1.25rem; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
     }
