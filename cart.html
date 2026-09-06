@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Research Cart &amp; Checkout | 220 BioWorX</title>
   <meta name="description" content="Request a research invoice and payment instructions (Zelle, ACH, or crypto). Research Use Only. Fort Myers / Lee County area supplier; ships nationwide." />
-  <meta name="theme-color" content="#080B0D" />
+  <meta name="theme-color" content="#ffffff" />
   <meta name="referrer" content="origin" />
   <meta name="robots" content="noindex, follow" />
   <link rel="canonical" href="https://www.220bioworx.com/cart.html" />
@@ -22,18 +22,18 @@
   <script src="cart.js?v=20260831g"></script>
   <style>
     :root {
-      --carbon: #080B0D;
-      --graphite: #1C1F22;
-      --steel: #70777D;
+      --carbon: #ffffff;
+      --graphite: #f7f8fa;
+      --steel: #5c6570;
       --od-green: #4C5A3A;
       --orange: #FF5A00;
       --orange-hover: #ff6f1f;
-      --orange-soft: rgba(255, 90, 0, 0.12);
+      --orange-soft: rgba(255, 90, 0, 0.10);
       --orange-glow: rgba(255, 90, 0, 0.28);
       --white: #ffffff;
-      --text: #e8eaec;
-      --muted: #9aa1a6;
-      --border: rgba(112, 119, 125, 0.28);
+      --text: #1a1a1a;
+      --muted: #5c6570;
+      --border: rgba(247, 248, 250, 0.85);
       --max: 960px;
       --font-head: "Poppins", system-ui, sans-serif;
       --font-body: "Inter", system-ui, sans-serif;
@@ -45,6 +45,7 @@
       color: var(--text);
       line-height: 1.6;
       min-height: 100vh;
+      font-size: 18px;
     }
     body.gate-locked { overflow: hidden; }
     a { color: var(--orange); text-decoration: none; }
@@ -55,7 +56,7 @@
       position: fixed; inset: 0; z-index: 9999;
       display: flex; align-items: center; justify-content: center;
       padding: 1.25rem;
-      background: rgba(8, 11, 13, 0.97);
+      background: rgba(255, 255, 255, 0.97);
     }
     #age-gate[hidden] { display: none !important; }
     .gate-card {
@@ -110,14 +111,14 @@
 
     .site-wrap[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
     .ruo-banner {
-      background: #140c08; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
+      background: #fff5ef; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
       text-align: center; padding: 0.5rem 1rem; font-family: var(--font-head);
       font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
       color: #ffc9a8;
     }
     header {
       border-bottom: 1px solid var(--border);
-      background: rgba(8, 11, 13, 0.94);
+      background: rgba(255, 255, 255, 0.94);
     }
     .nav {
       display: flex; align-items: center; justify-content: space-between;
@@ -179,7 +180,7 @@
     .line-meta { font-size: 0.8rem; color: var(--steel); }
     .qty {
       width: 4rem; padding: 0.4rem 0.45rem; border-radius: 6px;
-      border: 1px solid var(--border); background: rgba(8, 11, 13, 0.6);
+      border: 1px solid var(--border); background: rgba(255, 255, 255, 0.72);
       color: var(--white); font-family: inherit; text-align: center;
     }
     .line-price { font-weight: 600; color: var(--text); min-width: 4.5rem; text-align: right; }
@@ -205,7 +206,7 @@
 
     .ref-box {
       margin-top: 0.85rem; padding: 0.75rem 0.9rem;
-      border-radius: 8px; background: rgba(8, 11, 13, 0.55);
+      border-radius: 8px; background: rgba(255, 255, 255, 0.70);
       border: 1px solid var(--border); font-size: 0.85rem;
     }
     .ref-box strong { color: var(--orange); font-family: var(--font-head); }
@@ -222,7 +223,7 @@
       border-radius: 12px;
       padding: 0.95rem 1rem 0.95rem 2.75rem;
       cursor: pointer;
-      background: rgba(8, 11, 13, 0.45);
+      background: rgba(255, 255, 255, 0.70);
       transition: border-color 0.15s, background 0.15s;
     }
     .pay-option:hover { border-color: rgba(255, 90, 0, 0.45); }
@@ -254,7 +255,7 @@
     }
     input[type="text"], input[type="email"], textarea {
       width: 100%; padding: 0.65rem 0.8rem; border-radius: 8px;
-      border: 1px solid var(--border); background: rgba(8, 11, 13, 0.6);
+      border: 1px solid var(--border); background: rgba(255, 255, 255, 0.72);
       color: var(--white); font-family: inherit; font-size: 0.92rem;
     }
     input:focus, textarea:focus {
@@ -301,7 +302,7 @@
       padding: 0.55rem 0.7rem;
       border-radius: 8px;
       border: 1px solid var(--border);
-      background: rgba(8, 11, 13, 0.45);
+      background: rgba(255, 255, 255, 0.70);
       font-size: 0.88rem;
       color: var(--text);
       cursor: pointer;
@@ -331,7 +332,7 @@
       margin-top: 1.25rem;
       border: 1px solid rgba(255, 90, 0, 0.45);
       border-radius: 14px;
-      background: linear-gradient(160deg, rgba(28, 31, 34, 0.98), rgba(8, 11, 13, 0.98));
+      background: linear-gradient(160deg, rgba(247, 248, 250, 0.99), rgba(255, 255, 255, 0.98));
       padding: 0;
       overflow: hidden;
     }
@@ -368,7 +369,7 @@
       font-family: ui-monospace, "Cascadia Code", monospace;
       font-size: 0.78rem;
       line-height: 1.5;
-      background: rgba(8, 11, 13, 0.75);
+      background: rgba(255, 255, 255, 0.75);
       border: 1px solid var(--border);
       border-radius: 10px;
       padding: 1rem;
@@ -379,7 +380,7 @@
       white-space: pre-wrap;
       font-size: 0.8rem;
       color: var(--muted);
-      background: rgba(8, 11, 13, 0.5);
+      background: rgba(255, 255, 255, 0.70);
       border-radius: 10px;
       padding: 0.85rem;
       border: 1px solid var(--border);
