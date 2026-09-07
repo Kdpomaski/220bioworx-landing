@@ -23,17 +23,17 @@
   <style>
     :root {
       --carbon: #ffffff;
-      --graphite: #f7f8fa;
-      --steel: #5c6570;
+      --graphite: #f4f5f3;
+      --steel: #2f3438;
       --od-green: #4C5A3A;
       --orange: #FF5A00;
       --orange-hover: #ff6f1f;
       --orange-soft: rgba(255, 90, 0, 0.10);
       --orange-glow: rgba(255, 90, 0, 0.28);
       --white: #ffffff;
-      --text: #1a1a1a;
-      --muted: #5c6570;
-      --border: rgba(247, 248, 250, 0.85);
+      --text: #000000;
+      --muted: #2f3438;
+      --border: rgba(47, 52, 56, 0.28);
       --max: 960px;
       --font-head: "Poppins", system-ui, sans-serif;
       --font-body: "Inter", system-ui, sans-serif;
@@ -48,7 +48,7 @@
       font-size: 18px;
     }
     body.gate-locked { overflow: hidden; }
-    a { color: var(--orange); text-decoration: none; }
+    a { color: var(--od-green); text-decoration: none; }
     a:hover { color: var(--orange-hover); text-decoration: underline; }
     .container { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
 
@@ -83,13 +83,13 @@
       font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
     }
     .gate-card h1 {
-      font-family: var(--font-head); font-size: 1.25rem; color: var(--white);
+      font-family: var(--font-head); font-size: 1.25rem; color: var(--text);
       text-align: center; margin-bottom: 0.5rem;
     }
     .gate-card .lead { color: var(--muted); font-size: 0.9rem; text-align: center; margin-bottom: 1rem; }
     .gate-ruo {
       background: rgba(255, 90, 0, 0.08); border: 1px solid rgba(255, 90, 0, 0.35);
-      border-radius: 10px; padding: 0.75rem; font-size: 0.85rem; color: #ffd4bf;
+      border-radius: 10px; padding: 0.75rem; font-size: 0.85rem; color: var(--steel);
       text-align: center; margin-bottom: 1rem;
     }
     .gate-check { display: flex; gap: 0.65rem; margin-bottom: 0.75rem; font-size: 0.88rem; }
@@ -105,7 +105,7 @@
     .btn-primary:hover { background: var(--orange-hover); color: var(--white); }
     .btn-secondary { background: transparent; color: var(--steel); border: 1px solid var(--border); }
     .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .gate-error { display: none; color: #ff8a5c; font-size: 0.84rem; text-align: center; margin-top: 0.75rem; }
+    .gate-error { display: none; color: var(--od-green); font-size: 0.84rem; text-align: center; margin-top: 0.75rem; }
     .gate-error.show { display: block; }
     .gate-legal { font-size: 0.72rem; color: var(--steel); text-align: center; margin-top: 0.85rem; }
 
@@ -114,7 +114,7 @@
       background: #fff5ef; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
       text-align: center; padding: 0.5rem 1rem; font-family: var(--font-head);
       font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-      color: #ffc9a8;
+      color: var(--steel);
     }
     header {
       border-bottom: 1px solid var(--border);
@@ -128,17 +128,17 @@
     .brand-link img { height: 55px; width: auto; max-width: min(325px, 58vw); object-fit: contain; }
     .nav-links { display: flex; align-items: center; gap: 1.2rem; font-size: 0.88rem; }
     .nav-links a { color: var(--muted); text-decoration: none; }
-    .nav-links a:hover, .nav-links a.active { color: var(--white); }
-    .btn-nav { padding: 0.5rem 1rem; font-size: 0.8rem; color: var(--white) !important; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .btn-nav { padding: 0.5rem 1rem; font-size: 0.8rem; color: var(--text) !important; }
     .menu-toggle {
       display: none; background: transparent; border: 1px solid var(--border);
-      color: var(--white); border-radius: 8px; padding: 0.35rem 0.55rem; cursor: pointer;
+      color: var(--text); border-radius: 8px; padding: 0.35rem 0.55rem; cursor: pointer;
     }
 
     main { padding: 2.5rem 0 4rem; }
     h1 {
       font-family: var(--font-head); font-weight: 800; font-size: clamp(1.6rem, 3vw, 2.1rem);
-      text-transform: uppercase; color: var(--white); margin-bottom: 0.5rem;
+      text-transform: uppercase; color: var(--text); margin-bottom: 0.5rem;
     }
     h1 .accent { color: var(--orange); }
     .lead { color: var(--muted); margin-bottom: 1.75rem; max-width: 36rem; }
@@ -176,12 +176,12 @@
       border-bottom: 1px solid rgba(112, 119, 125, 0.2);
     }
     .line:last-child { border-bottom: none; }
-    .line-name { font-weight: 600; color: var(--white); font-size: 0.95rem; }
+    .line-name { font-weight: 600; color: var(--text); font-size: 0.95rem; }
     .line-meta { font-size: 0.8rem; color: var(--steel); }
     .qty {
       width: 4rem; padding: 0.4rem 0.45rem; border-radius: 6px;
       border: 1px solid var(--border); background: rgba(255, 255, 255, 0.72);
-      color: var(--white); font-family: inherit; text-align: center;
+      color: var(--text); font-family: inherit; text-align: center;
     }
     .line-price { font-weight: 600; color: var(--text); min-width: 4.5rem; text-align: right; }
     .line-remove {
@@ -200,9 +200,9 @@
       margin-top: 0.5rem; padding-top: 0.65rem;
       border-top: 1px solid var(--border);
       font-family: var(--font-head); font-weight: 700; font-size: 1.05rem;
-      color: var(--white);
+      color: var(--text);
     }
-    .totals-row .disc { color: #86efac; }
+    .totals-row .disc { color: var(--od-green); }
 
     .ref-box {
       margin-top: 0.85rem; padding: 0.75rem 0.9rem;
@@ -226,7 +226,7 @@
       background: rgba(255, 255, 255, 0.70);
       transition: border-color 0.15s, background 0.15s;
     }
-    .pay-option:hover { border-color: rgba(255, 90, 0, 0.45); }
+    .pay-option:hover { border-color: var(--steel); }
     .pay-option:has(input:checked) {
       border-color: var(--orange);
       background: var(--orange-soft);
@@ -240,7 +240,7 @@
       height: 1.05rem;
     }
     .pay-option .po-title {
-      font-family: var(--font-head); font-weight: 700; color: var(--white);
+      font-family: var(--font-head); font-weight: 700; color: var(--text);
       font-size: 0.95rem; margin-bottom: 0.2rem;
     }
     .pay-option .po-desc { font-size: 0.82rem; color: var(--muted); }
@@ -256,7 +256,7 @@
     input[type="text"], input[type="email"], textarea {
       width: 100%; padding: 0.65rem 0.8rem; border-radius: 8px;
       border: 1px solid var(--border); background: rgba(255, 255, 255, 0.72);
-      color: var(--white); font-family: inherit; font-size: 0.92rem;
+      color: var(--text); font-family: inherit; font-size: 0.92rem;
     }
     input:focus, textarea:focus {
       outline: none; border-color: var(--orange);
@@ -322,7 +322,7 @@
     .form-error {
       display: none; padding: 0.75rem; border-radius: 8px; margin-bottom: 0.75rem;
       background: rgba(255, 90, 0, 0.1); border: 1px solid rgba(255, 90, 0, 0.4);
-      color: #ffd4bf; font-size: 0.88rem;
+      color: var(--steel); font-size: 0.88rem;
     }
     .form-error.show { display: block; }
 
@@ -1263,7 +1263,7 @@
           note.className = "form-error show";
           note.style.background = "rgba(76,90,58,0.2)";
           note.style.borderColor = "rgba(76,90,58,0.5)";
-          note.style.color = "#c5d0b0";
+          note.style.color = "var(--od-green)";
           note.textContent =
             "Crypto payment return detected. Keep your NOWPayments receipt and cart reference. Customer service will confirm when funds clear.";
           const host = document.getElementById("checkoutSection") || confirmPanel.parentNode;
