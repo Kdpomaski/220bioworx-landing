@@ -19,15 +19,15 @@
   <style>
     :root {
       --carbon: #ffffff;
-      --graphite: #f7f8fa;
-      --steel: #5c6570;
+      --graphite: #f4f5f3;
+      --steel: #2f3438;
       --orange: #FF5A00;
       --orange-hover: #ff6f1f;
       --orange-soft: rgba(255, 90, 0, 0.10);
       --white: #ffffff;
-      --text: #1a1a1a;
-      --muted: #5c6570;
-      --border: rgba(247, 248, 250, 0.85);
+      --text: #000000;
+      --muted: #2f3438;
+      --border: rgba(47, 52, 56, 0.28);
       --font-head: "Poppins", system-ui, sans-serif;
       --font-body: "Inter", system-ui, sans-serif;
     }
@@ -41,7 +41,7 @@
       font-size: 18px;
     }
     body.gate-locked { overflow: hidden; }
-    a { color: var(--orange); }
+    a { color: var(--od-green); }
     a:hover { color: var(--orange-hover); }
 
     /* Age gate (compact for event scan) */
@@ -60,13 +60,13 @@
       padding: 1.35rem;
     }
     .gate-card h1 {
-      font-family: var(--font-head); font-size: 1.1rem; color: var(--white);
+      font-family: var(--font-head); font-size: 1.1rem; color: var(--text);
       text-align: center; margin: 0.5rem 0;
     }
     .gate-card .lead { color: var(--muted); font-size: 0.85rem; text-align: center; margin-bottom: 0.75rem; }
     .gate-ruo {
       background: rgba(255, 90, 0, 0.08); border: 1px solid rgba(255, 90, 0, 0.35);
-      border-radius: 8px; padding: 0.6rem; font-size: 0.8rem; color: #ffd4bf;
+      border-radius: 8px; padding: 0.6rem; font-size: 0.8rem; color: var(--steel);
       text-align: center; margin-bottom: 0.75rem;
     }
     .gate-check { display: flex; gap: 0.55rem; margin-bottom: 0.55rem; font-size: 0.82rem; }
@@ -82,7 +82,7 @@
     .btn-primary:hover { background: var(--orange-hover); color: var(--white); }
     .btn-secondary { background: transparent; color: var(--steel); border: 1px solid var(--border); }
     .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .gate-error { display: none; color: #ff8a5c; font-size: 0.8rem; text-align: center; margin-top: 0.6rem; }
+    .gate-error { display: none; color: var(--od-green); font-size: 0.8rem; text-align: center; margin-top: 0.6rem; }
     .gate-error.show { display: block; }
 
     .site-wrap[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
@@ -91,7 +91,7 @@
       background: #fff5ef; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
       text-align: center; padding: 0.45rem 0.75rem;
       font-family: var(--font-head); font-size: 0.65rem; font-weight: 600;
-      letter-spacing: 0.06em; text-transform: uppercase; color: #ffc9a8;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--steel);
     }
 
     .hero {
@@ -107,7 +107,7 @@
     .hero h1 {
       font-family: var(--font-head); font-weight: 800;
       font-size: clamp(1.35rem, 4.5vw, 1.85rem);
-      text-transform: uppercase; color: var(--white); letter-spacing: 0.02em;
+      text-transform: uppercase; color: var(--text); letter-spacing: 0.02em;
     }
     .hero h1 span { color: var(--orange); }
     .hero .sub {
@@ -124,7 +124,7 @@
       border: 1px solid var(--border); color: var(--muted);
     }
     .badge.hot {
-      border-color: rgba(255, 90, 0, 0.45);
+      border-color: var(--steel);
       background: var(--orange-soft); color: var(--orange);
     }
 
@@ -171,7 +171,7 @@
       flex-direction: column;
       transition: border-color 0.15s;
     }
-    .card:hover { border-color: rgba(255, 90, 0, 0.45); }
+    .card:hover { border-color: var(--steel); }
     .card-img {
       aspect-ratio: 1;
       background: #eef0f3;
@@ -188,7 +188,7 @@
     }
     .card-name {
       font-family: var(--font-head); font-weight: 700;
-      font-size: 0.88rem; color: var(--white); line-height: 1.25;
+      font-size: 0.88rem; color: var(--text); line-height: 1.25;
     }
     .card-meta {
       font-size: 0.72rem; color: var(--steel);
@@ -223,7 +223,7 @@
       background: #eef0f3;
     }
     .list-row .nm {
-      font-family: var(--font-head); font-weight: 700; font-size: 0.9rem; color: var(--white);
+      font-family: var(--font-head); font-weight: 700; font-size: 0.9rem; color: var(--text);
     }
     .list-row .mt { font-size: 0.75rem; color: var(--steel); }
     .list-row .pr {
