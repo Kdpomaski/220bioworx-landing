@@ -18,10 +18,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --carbon: #ffffff; --graphite: #f7f8fa; --steel: #5c6570;
+      --carbon: #ffffff; --graphite: #f4f5f3; --steel: #2f3438;
       --orange: #FF5A00; --orange-soft: rgba(255, 90, 0, 0.10);
-      --white: #ffffff; --text: #1a1a1a; --muted: #5c6570;
-      --border: rgba(247, 248, 250, 0.85);
+      --white: #ffffff; --text: #000000; --muted: #2f3438;
+      --border: rgba(47, 52, 56, 0.28);
       --max: 760px;
       --font-head: "Poppins", system-ui, sans-serif;
       --font-body: "Inter", system-ui, sans-serif;
@@ -32,14 +32,14 @@
       line-height: 1.65; min-height: 100vh;
       font-size: 18px;
     }
-    a { color: var(--orange); text-decoration: none; }
+    a { color: var(--od-green); text-decoration: none; }
     a:hover { text-decoration: underline; color: #ff6f1f; }
     .container { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
     .ruo-banner {
       background: #fff5ef; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
       text-align: center; padding: 0.5rem 1rem;
       font-family: var(--font-head); font-size: 0.7rem; font-weight: 600;
-      letter-spacing: 0.06em; text-transform: uppercase; color: #ffc9a8;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--steel);
     }
     header { border-bottom: 1px solid var(--border); background: rgba(255, 255, 255, 0.94); padding: 0.85rem 0; }
     .nav {
@@ -49,11 +49,11 @@
     .nav img { height: 55px; width: auto; max-width: min(325px, 58vw); object-fit: contain; }
     .nav-links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.88rem; }
     .nav-links a { color: var(--muted); text-decoration: none; }
-    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
     main { padding: 2.5rem 0 4rem; }
     h1 {
       font-family: var(--font-head); font-weight: 800;
-      font-size: clamp(1.6rem, 3vw, 2.1rem); color: var(--white);
+      font-size: clamp(1.6rem, 3vw, 2.1rem); color: var(--text);
       text-transform: uppercase; margin-bottom: 0.5rem;
     }
     .lead { color: var(--muted); margin-bottom: 1rem; font-size: 1rem; }
@@ -61,7 +61,7 @@
     .highlight {
       background: var(--orange-soft); border: 1px solid rgba(255, 90, 0, 0.35);
       border-radius: 12px; padding: 1rem 1.15rem; margin-bottom: 2rem;
-      color: #ffd4bf; font-size: 0.95rem;
+      color: var(--steel); font-size: 0.95rem;
     }
     .highlight strong { color: var(--orange); }
     section.policy {
@@ -70,7 +70,7 @@
     section.policy:last-of-type { border-bottom: none; }
     section.policy h2 {
       font-family: var(--font-head); font-size: 1.05rem; font-weight: 700;
-      color: var(--white); margin-bottom: 0.75rem;
+      color: var(--text); margin-bottom: 0.75rem;
     }
     section.policy p, section.policy li {
       color: var(--muted); font-size: 0.95rem; margin-bottom: 0.65rem;
