@@ -22,10 +22,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --carbon: #ffffff; --graphite: #f7f8fa; --steel: #5c6570;
+      --carbon: #ffffff; --graphite: #f4f5f3; --steel: #2f3438;
       --orange: #FF5A00; --orange-hover: #ff6f1f; --orange-soft: rgba(255, 90, 0, 0.10);
-      --white: #ffffff; --text: #1a1a1a; --muted: #5c6570;
-      --border: rgba(247, 248, 250, 0.85);
+      --white: #ffffff; --text: #000000; --muted: #2f3438;
+      --border: rgba(47, 52, 56, 0.28);
       --font-head: "Poppins", system-ui, sans-serif;
       --font-body: "Inter", system-ui, sans-serif;
       --max: 760px;
@@ -35,7 +35,7 @@
       font-size: 18px;
     }
     body.gate-locked { overflow: hidden; }
-    a { color: var(--orange); }
+    a { color: var(--od-green); }
     a:hover { color: var(--orange-hover); }
     .container { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
 
@@ -49,11 +49,11 @@
       width: min(100%, 440px); background: var(--graphite);
       border: 1px solid rgba(255, 90, 0, 0.4); border-radius: 14px; padding: 1.35rem;
     }
-    .gate-card h1 { font-family: var(--font-head); font-size: 1.1rem; color: var(--white); text-align: center; margin: 0.5rem 0; }
+    .gate-card h1 { font-family: var(--font-head); font-size: 1.1rem; color: var(--text); text-align: center; margin: 0.5rem 0; }
     .gate-card .lead { color: var(--muted); font-size: 0.85rem; text-align: center; margin-bottom: 0.75rem; }
     .gate-ruo {
       background: rgba(255, 90, 0, 0.08); border: 1px solid rgba(255, 90, 0, 0.35);
-      border-radius: 8px; padding: 0.6rem; font-size: 0.8rem; color: #ffd4bf; text-align: center; margin-bottom: 0.75rem;
+      border-radius: 8px; padding: 0.6rem; font-size: 0.8rem; color: var(--steel); text-align: center; margin-bottom: 0.75rem;
     }
     .gate-check { display: flex; gap: 0.55rem; margin-bottom: 0.55rem; font-size: 0.82rem; }
     .gate-check input { accent-color: var(--orange); margin-top: 0.15rem; flex-shrink: 0; }
@@ -67,7 +67,7 @@
     .btn-primary:hover { background: var(--orange-hover); color: var(--white); }
     .btn-secondary { background: transparent; color: var(--steel); border: 1px solid var(--border); }
     .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .gate-error { display: none; color: #ff8a5c; font-size: 0.8rem; text-align: center; margin-top: 0.6rem; }
+    .gate-error { display: none; color: var(--od-green); font-size: 0.8rem; text-align: center; margin-top: 0.6rem; }
     .gate-error.show { display: block; }
     .site-wrap[aria-hidden="true"] { visibility: hidden; pointer-events: none; }
 
@@ -75,7 +75,7 @@
       background: #fff5ef; border-bottom: 1px solid rgba(255, 90, 0, 0.45);
       text-align: center; padding: 0.45rem 0.75rem;
       font-family: var(--font-head); font-size: 0.65rem; font-weight: 600;
-      letter-spacing: 0.06em; text-transform: uppercase; color: #ffc9a8;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--steel);
     }
     header { border-bottom: 1px solid var(--border); }
     .nav {
@@ -85,13 +85,13 @@
     .brand-link img { height: 48px; width: auto; max-width: min(280px, 55vw); object-fit: contain; }
     .nav-links { display: flex; flex-wrap: wrap; gap: 1rem; font-size: 0.88rem; }
     .nav-links a { color: var(--muted); text-decoration: none; }
-    .nav-links a:hover, .nav-links a.active { color: var(--white); }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
 
     main { padding: 2.25rem 0 3.5rem; }
     h1 {
       font-family: var(--font-head); font-weight: 800;
       font-size: clamp(1.45rem, 3.5vw, 1.95rem);
-      text-transform: uppercase; color: var(--white); margin-bottom: 0.5rem;
+      text-transform: uppercase; color: var(--text); margin-bottom: 0.5rem;
     }
     h1 .accent { color: var(--orange); }
     .lead { color: var(--muted); margin-bottom: 1.5rem; font-size: 1rem; }
