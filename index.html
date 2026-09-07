@@ -23,22 +23,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    /* ─── 220 BioWorX Brand Palette — bright light mode ─── */
+    /* ─── 220 BioWorX Brand Palette — light mode, logo contrast (black / OD green / dark grey) ─── */
     :root {
       --carbon: #ffffff;
-      --graphite: #f7f8fa;
-      --steel: #5c6570;
+      --graphite: #f4f5f3;
+      --steel: #2f3438;
       --od-green: #4C5A3A;
-      --od-green-soft: rgba(76, 90, 58, 0.35);
+      --od-green-soft: rgba(76, 90, 58, 0.14);
       --orange: #FF5A00;
       --orange-hover: #ff6f1f;
       --orange-soft: rgba(255, 90, 0, 0.10);
       --orange-glow: rgba(255, 90, 0, 0.28);
       --white: #ffffff;
       --off-white: #f2f3f4;
-      --text: #1a1a1a;
-      --muted: #5c6570;
-      --border: rgba(247, 248, 250, 0.85);
+      --text: #000000;
+      --muted: #2f3438;
+      --border: rgba(47, 52, 56, 0.28);
       --border-strong: rgba(255, 90, 0, 0.55);
       --max: 1120px;
       --radius: 12px;
@@ -60,7 +60,7 @@
 
     body.gate-locked { overflow: hidden; }
 
-    a { color: var(--orange); text-decoration: none; }
+    a { color: var(--od-green); text-decoration: none; }
     a:hover { color: var(--orange-hover); text-decoration: underline; }
     ul { list-style: none; }
     img { max-width: 100%; display: block; }
@@ -142,7 +142,7 @@
       font-size: 1.55rem;
       letter-spacing: 0.04em;
       line-height: 1;
-      color: var(--white);
+      color: var(--text);
       text-transform: uppercase;
     }
 
@@ -195,7 +195,7 @@
       letter-spacing: -0.01em;
       line-height: 1.25;
       margin-bottom: 0.65rem;
-      color: var(--white);
+      color: var(--text);
       text-align: center;
       text-transform: none;
     }
@@ -224,7 +224,7 @@
       border-radius: 10px;
       padding: 0.85rem 1rem;
       font-size: 0.86rem;
-      color: #ffd4bf;
+      color: var(--steel);
       margin-bottom: 1.15rem;
       text-align: center;
     }
@@ -313,7 +313,7 @@
       display: none;
       margin-top: 0.85rem;
       font-size: 0.84rem;
-      color: #ff8a5c;
+      color: var(--od-green);
       text-align: center;
     }
 
@@ -353,7 +353,7 @@
     .ruo-banner span {
       display: inline-block;
       max-width: 58rem;
-      color: #ffc9a8;
+      color: var(--steel);
     }
 
     .ruo-banner strong { color: var(--orange); }
@@ -423,12 +423,12 @@
       font-family: var(--font-body);
     }
 
-    .nav-links a:hover { color: var(--white); }
+    .nav-links a:hover { color: var(--text); }
 
     .btn-nav {
       padding: 0.55rem 1.1rem;
       font-size: 0.8rem;
-      color: var(--white) !important;
+      color: var(--text) !important;
     }
 
     .nav-links a.nav-inquiry {
@@ -445,7 +445,7 @@
       display: none;
       background: transparent;
       border: 1px solid var(--border);
-      color: var(--white);
+      color: var(--text);
       border-radius: 8px;
       padding: 0.35rem 0.55rem;
       font-size: 1.1rem;
@@ -522,7 +522,7 @@
       line-height: 1.08;
       letter-spacing: -0.02em;
       text-transform: uppercase;
-      color: var(--white);
+      color: var(--text);
       margin-bottom: 1.15rem;
     }
 
@@ -651,7 +651,7 @@
       font-weight: 700;
       font-size: clamp(1.55rem, 3vw, 2.05rem);
       letter-spacing: -0.015em;
-      color: var(--white);
+      color: var(--text);
       margin-bottom: 0.75rem;
       line-height: 1.2;
       text-transform: uppercase;
@@ -686,7 +686,7 @@
     }
 
     .cat-card:hover {
-      border-color: rgba(255, 90, 0, 0.45);
+      border-color: var(--steel);
       transform: translateY(-3px);
       box-shadow: 0 14px 36px rgba(0, 0, 0, 0.35);
     }
@@ -710,7 +710,7 @@
       font-weight: 700;
       letter-spacing: 0.04em;
       text-transform: uppercase;
-      color: var(--white);
+      color: var(--text);
       margin-bottom: 0.45rem;
     }
 
@@ -739,7 +739,7 @@
       font-family: var(--font-head);
       font-size: 1rem;
       font-weight: 600;
-      color: var(--white);
+      color: var(--text);
       margin-bottom: 0.45rem;
     }
 
@@ -809,7 +809,7 @@
       font-family: var(--font-head);
       font-size: 0.95rem;
       font-weight: 600;
-      color: var(--white);
+      color: var(--text);
       margin-bottom: 0.4rem;
     }
 
@@ -882,7 +882,7 @@
       border-radius: 8px;
       border: 1px solid var(--border);
       background: rgba(255, 255, 255, 0.72);
-      color: var(--white);
+      color: var(--text);
       font-family: var(--font-body);
       font-size: 0.92rem;
     }
@@ -917,7 +917,7 @@
       border-radius: 8px;
       background: rgba(76, 90, 58, 0.2);
       border: 1px solid rgba(76, 90, 58, 0.5);
-      color: #c5d0b0;
+      color: var(--od-green);
       font-size: 0.9rem;
       margin-bottom: 0.85rem;
     }
@@ -931,7 +931,7 @@
       border-radius: 8px;
       background: rgba(255, 90, 0, 0.1);
       border: 1px solid rgba(255, 90, 0, 0.4);
-      color: #ffd4bf;
+      color: var(--steel);
       font-size: 0.9rem;
       margin-bottom: 0.85rem;
     }
@@ -945,7 +945,7 @@
     .form-activate {
       background: rgba(96, 165, 250, 0.1);
       border-color: rgba(96, 165, 250, 0.4);
-      color: #bfdbfe;
+      color: var(--steel);
     }
 
     /* Honeypot — hidden from users, bots fill it */
@@ -994,7 +994,7 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: #c8ccd0;
+      color: var(--steel);
       margin-bottom: 0.4rem;
     }
 
@@ -1013,7 +1013,7 @@
       gap: 0.35rem;
     }
 
-    .legal-block strong { color: #d8dce0; }
+    .legal-block strong { color: var(--text); }
 
     .legal-highlight {
       background: rgba(255, 90, 0, 0.07);
@@ -1025,7 +1025,7 @@
 
     .legal-highlight p {
       font-size: 0.85rem;
-      color: #ffd4bf;
+      color: var(--steel);
     }
 
     .legal-highlight strong { color: var(--orange); }
