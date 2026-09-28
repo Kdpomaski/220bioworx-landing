@@ -10,10 +10,26 @@
       const raw = sessionStorage.getItem(KEY);
       if (!raw) return [];
       const data = JSON.parse(raw);
-      return Array.isArray(data) ? data : [];
+      return reprice(Array.isArray(data) ? data : []);
     } catch (_) {
       return [];
     }
+  }
+
+  // Always use the current catalog price (and drop sold-out items) so saved carts never keep a stale price.
+  function reprice(items) {
+    const catalog = global.BW_PRODUCTS;
+    if (!Array.isArray(catalog) || !catalog.length) return items;
+    return items
+      .filter((i) => {
+        const p = catalog.find((x) => x.id === i.id);
+        return !(p && p.soldOut);
+      })
+      .map((i) => {
+        const p = catalog.find((x) => x.id === i.id);
+        if (p && Number(p.unitPrice) > 0) i.unitPrice = Number(p.unitPrice);
+        return i;
+      });
   }
 
   function write(items) {
