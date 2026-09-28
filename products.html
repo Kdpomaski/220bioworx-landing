@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="products-data.js?v=20260928a"></script>
+  <script src="products-data.js?v=20260928b"></script>
   <script src="cart.js?v=20260831g"></script>
   <script src="payment-config.js?v=20260831g"></script>
   <style>
@@ -789,7 +789,7 @@
             (p) => `
           <article class="product-card" data-id="${escapeHtml(p.id)}">
             <div class="img-wrap" data-open-detail="${escapeHtml(p.id)}" role="link" tabindex="0" aria-label="View ${escapeHtml(p.name)} details">
-              ${isSoldOut(p) ? '<span class="presale-tag" style="background:#b42318;">Sold out · restocking</span>' : (isPresaleActive(p) ? '<span class="presale-tag">Pre-sale · September</span>' : "")}
+              ${isSoldOut(p) ? '<span class="presale-tag" style="background:#b42318;">Sold out · restocking</span>' : (isPresaleActive(p) ? '<span class="presale-tag">Pre-sale · $85 through Oct 15</span>' : "")}
               <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)} research material" loading="lazy" onerror="this.onerror=null;this.src='images/products/klow-light.jpeg';" />
             </div>
             <div class="body">
@@ -928,7 +928,7 @@
           </div>
           <div class="detail-info">
             <div class="badge-row">
-              ${isPresaleActive(p) ? '<span class="badge presale">Pre-sale · through September 30</span>' : ""}
+              ${isPresaleActive(p) ? '<span class="badge presale">Pre-sale · $85 through October 15</span>' : ""}
               <span class="badge">Research grade</span>
               <span class="badge">Research Use Only</span>
               <span class="badge muted">Not FDA approved</span>
@@ -966,7 +966,7 @@
             </div>
             <div class="toast" id="addToast" role="status"></div>
 
-            ${isPresaleActive(p) ? '<p class="desc" style="color:var(--orange);font-weight:600;">Pre-sale open through September 30, 2026. Add to cart now to reserve a vial.</p>' : ""}
+            ${isPresaleActive(p) ? '<p class="desc" style="color:var(--orange);font-weight:600;">Pre-sale price of $85 through October 15, 2026. Add to cart now to reserve a vial.</p>' : ""}
             <p class="desc">${escapeHtml(p.description)}</p>
             ${blendHtml}
             <div class="specs">
