@@ -11,10 +11,10 @@ window.BW_PRODUCTS = [
     strength: "70 mg total",
     form: "Lyophilized multi-peptide research blend",
     category: "Research blends",
-    unitPrice: 125,
+    unitPrice: 85,
     unit: "vial",
     presale: true,
-    presaleUntil: "2026-09-30",
+    presaleUntil: "2026-10-15",
     image: "images/products/dusk-70-light.jpeg",
     images: [
       "images/products/dusk-70-light.jpeg",
@@ -24,9 +24,9 @@ window.BW_PRODUCTS = [
       "images/products/dusk-70-label.jpg",
     ],
     shortDescription:
-      "September pre-sale. Research-grade DUSK blend: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total).",
+      "Pre-sale $85 through October 15. Research-grade DUSK blend: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total).",
     description:
-      "DUSK is a research-grade lyophilized blend for qualified laboratory use only. Label composition: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total). Pre-sale is open through September 30, 2026. Not FDA approved. Not a drug or compounded medication. Not for human or veterinary use, diagnosis, treatment, cure, or prevention of any disease.",
+      "DUSK is a research-grade lyophilized blend for qualified laboratory use only. Label composition: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total). Pre-sale price of $85 is open through October 15, 2026. Not FDA approved. Not a drug or compounded medication. Not for human or veterinary use, diagnosis, treatment, cure, or prevention of any disease.",
     scientificName: "DUSK multi-peptide research blend (Epithalon + Pinealon + Selank)",
     molecularWeight: "Component-specific (see blend breakdown)",
     formula: "Multi-component blend",
@@ -39,7 +39,7 @@ window.BW_PRODUCTS = [
       { name: "Selank", amount: "10 mg", mw: "Batch-defined" },
     ],
     researchNotes:
-      "Research grade blend only. Not FDA approved. Pre-sale through September 2026. Batch 2200826D01 per label.",
+      "Research grade blend only. Not FDA approved. Pre-sale through October 15, 2026. Batch 2200826D01 per label.",
     tags: ["DUSK", "presale", "Epithalon", "Pinealon", "Selank", "70mg"],
   },
   {
