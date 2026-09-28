@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="products-data.js?v=20260831g"></script>
+  <script src="products-data.js?v=20260928a"></script>
   <script src="cart.js?v=20260831g"></script>
   <script src="payment-config.js?v=20260831g"></script>
   <style>
@@ -736,6 +736,8 @@
         return !Number.isNaN(until.getTime()) && Date.now() <= until.getTime();
       }
 
+      function isSoldOut(p) { return !!(p && p.soldOut); }
+
       document.getElementById("productCount").textContent =
         products.length + " research materials · RUO";
 
@@ -765,7 +767,7 @@
                 url: "https://www.220bioworx.com/products.html?id=" + encodeURIComponent(p.id),
                 priceCurrency: "USD",
                 price: String(Number(p.unitPrice) || 0),
-                availability: "https://schema.org/InStock",
+                availability: isSoldOut(p) ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
                 seller: { "@type": "Organization", name: "220 BioWorX" },
               },
               additionalProperty: [
@@ -787,7 +789,7 @@
             (p) => `
           <article class="product-card" data-id="${escapeHtml(p.id)}">
             <div class="img-wrap" data-open-detail="${escapeHtml(p.id)}" role="link" tabindex="0" aria-label="View ${escapeHtml(p.name)} details">
-              ${isPresaleActive(p) ? '<span class="presale-tag">Pre-sale · September</span>' : ""}
+              ${isSoldOut(p) ? '<span class="presale-tag" style="background:#b42318;">Sold out · restocking</span>' : (isPresaleActive(p) ? '<span class="presale-tag">Pre-sale · September</span>' : "")}
               <img src="${escapeHtml(p.image)}" alt="${escapeHtml(p.name)} research material" loading="lazy" onerror="this.onerror=null;this.src='images/products/klow-light.jpeg';" />
             </div>
             <div class="body">
@@ -798,7 +800,7 @@
               <div class="meta">Research grade · Not FDA approved · SKU ${escapeHtml(p.sku)}</div>
               <div class="actions">
                 <a class="btn btn-secondary btn-sm" href="products.html?id=${encodeURIComponent(p.id)}">Details</a>
-                <button type="button" class="btn btn-primary btn-sm btn-add" data-id="${escapeHtml(p.id)}">Add to cart</button>
+                ${isSoldOut(p) ? '<button type="button" class="btn btn-secondary btn-sm" disabled aria-disabled="true">Sold out</button>' : `<button type="button" class="btn btn-primary btn-sm btn-add" data-id="${escapeHtml(p.id)}">Add to cart</button>`}
               </div>
             </div>
           </article>`
@@ -827,6 +829,7 @@
       function addToCart(id, qty, btn) {
         const p = window.BW_getProduct(id);
         if (!p || !window.BWCart) return;
+        if (isSoldOut(p)) return;
         BWCart.add({
           id: p.id,
           sku: p.sku,
@@ -957,7 +960,7 @@
                 </p>
               </div>
               <div class="buy-actions">
-                <button type="button" class="btn btn-primary" id="detailAdd">Add to cart</button>
+                ${isSoldOut(p) ? `<p class="desc" style="color:#b42318;font-weight:600;">${escapeHtml(p.soldOutNote || "Sold out · restocking soon")}</p><button type="button" class="btn btn-secondary" id="detailAdd" disabled aria-disabled="true">Sold out</button>` : '<button type="button" class="btn btn-primary" id="detailAdd">Add to cart</button>'}
                 <a class="btn btn-secondary" href="cart.html">Go to cart</a>
               </div>
             </div>
