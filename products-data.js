@@ -221,8 +221,6 @@ window.BW_PRODUCTS = [
   },
   {
     id: "ipamorelin-10",
-    soldOut: true,
-    soldOutNote: "Sold out · restocking soon",
     sku: "IPA-10",
     name: "Ipamorelin",
     strength: "10 mg",
