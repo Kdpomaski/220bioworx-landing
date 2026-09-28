@@ -221,6 +221,8 @@ window.BW_PRODUCTS = [
   },
   {
     id: "ipamorelin-10",
+    soldOut: true,
+    soldOutNote: "Sold out · restocking soon",
     sku: "IPA-10",
     name: "Ipamorelin",
     strength: "10 mg",
@@ -400,6 +402,8 @@ window.BW_PRODUCTS = [
   },
   {
     id: "cjc-ipa-20",
+    soldOut: true,
+    soldOutNote: "Sold out · restocking soon",
     sku: "CJC-IPA-20",
     name: "CJC-1295 (No DAC) + Ipamorelin",
     strength: "10 mg + 10 mg (20 mg total)",
