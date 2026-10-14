@@ -298,6 +298,12 @@ window.BW_PRODUCTS = [
         label: "COA",
         alt: "Certificate of Analysis — KLOW Blend 80 mg (view only)",
       },
+      {
+        src: "images/products/coas/klow-80-vanguard-kl80.jpg",
+        kind: "coa",
+        label: "Vanguard Laboratory, Lot KL80 (9/9/2026)",
+        alt: "Certificate of Analysis — KLOW 80 mg, Vanguard Laboratory, Lot KL80, released 9/9/2026 (view only)",
+      },
     ],
     shortDescription:
       "Research-grade 80 mg blend: 50 mg GHK-Cu, 10 mg TB-500, 10 mg BPC-157, 10 mg KPV.",

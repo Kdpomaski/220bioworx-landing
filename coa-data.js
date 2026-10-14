@@ -66,6 +66,11 @@ window.BW_COA_LIBRARY = [
         label: "COA",
         title: "Certificate of Analysis — KLOW 80 mg",
       },
+      {
+        src: "images/products/coas/klow-80-vanguard-kl80.jpg",
+        label: "Vanguard Laboratory, Lot KL80 (9/9/2026)",
+        title: "Certificate of Analysis — KLOW 80 mg, Vanguard Laboratory, Lot KL80 (9/9/2026)",
+      },
     ],
   },
   {
