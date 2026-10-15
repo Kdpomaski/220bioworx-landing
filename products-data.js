@@ -15,8 +15,9 @@ window.BW_PRODUCTS = [
     unit: "vial",
     presale: true,
     presaleUntil: "2026-10-15",
-    image: "images/products/dusk-70-light.jpeg",
+    image: "images/products/dusk-70-green-front.jpg",
     images: [
+      "images/products/dusk-70-green-front.jpg",
       "images/products/dusk-70-light.jpeg",
       "images/products/dusk-70-dark.jpeg",
       "images/products/dusk-70-photo-front.jpg",
