@@ -18,7 +18,7 @@ window.BW_PRODUCTS = [
     image: "images/products/dusk-70-green-front.jpg",
     images: [
       "images/products/dusk-70-green-front.jpg",
-      "images/products/dusk-70-label-v2.jpg",
+      "images/products/dusk-70-label-sq.jpg",
     ],
     shortDescription:
       "Pre-sale $85 through October 15. Research-grade DUSK blend: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total).",
