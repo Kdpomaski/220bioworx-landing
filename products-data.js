@@ -11,19 +11,17 @@ window.BW_PRODUCTS = [
     strength: "70 mg total",
     form: "Lyophilized multi-peptide research blend",
     category: "Research blends",
-    unitPrice: 85,
+    unitPrice: 95,
     unit: "vial",
-    presale: true,
-    presaleUntil: "2026-10-15",
     image: "images/products/dusk-70-green-front.jpg",
     images: [
       "images/products/dusk-70-green-front.jpg",
       "images/products/dusk-70-label-sq.jpg",
     ],
     shortDescription:
-      "Pre-sale $85 through October 15. Research-grade DUSK blend: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total).",
+      "Research-grade DUSK blend: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total).",
     description:
-      "DUSK is a research-grade lyophilized blend for qualified laboratory use only. Label composition: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total). Pre-sale price of $85 is open through October 15, 2026. Not FDA approved. Not a drug or compounded medication. Not for human or veterinary use, diagnosis, treatment, cure, or prevention of any disease.",
+      "DUSK is a research-grade lyophilized blend for qualified laboratory use only. Label composition: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total). Not FDA approved. Not a drug or compounded medication. Not for human or veterinary use, diagnosis, treatment, cure, or prevention of any disease.",
     scientificName: "DUSK multi-peptide research blend (Epithalon + Pinealon + Selank)",
     molecularWeight: "Component-specific (see blend breakdown)",
     formula: "Multi-component blend",
@@ -36,8 +34,8 @@ window.BW_PRODUCTS = [
       { name: "Selank", amount: "10 mg", mw: "Batch-defined" },
     ],
     researchNotes:
-      "Research grade blend only. Not FDA approved. Pre-sale through October 15, 2026. Batch 2200826D01 per label.",
-    tags: ["DUSK", "presale", "Epithalon", "Pinealon", "Selank", "70mg"],
+      "Research grade blend only. Not FDA approved. Batch 2200826D01 per label.",
+    tags: ["DUSK", "Epithalon", "Pinealon", "Selank", "70mg"],
   },
   {
     id: "glp3-rt-30",
@@ -88,7 +86,6 @@ window.BW_PRODUCTS = [
     category: "Incretin-pathway research",
     unitPrice: 100,
     unit: "vial",
-    listed: false,
     image: "images/products/glp3-rt-light.jpeg",
     images: [
       "images/products/glp3-rt-light.jpeg",
@@ -122,7 +119,6 @@ window.BW_PRODUCTS = [
     category: "Incretin-pathway research",
     unitPrice: 100,
     unit: "vial",
-    listed: false,
     image: "images/products/tirz-light.jpeg",
     images: [
       "images/products/tirz-light.jpeg",
@@ -183,38 +179,31 @@ window.BW_PRODUCTS = [
     tags: ["BPC-157", "10mg"],
   },
   {
-    id: "tesamorelin-10",
-    sku: "TESA-10",
+    id: "tesamorelin-20",
+    sku: "TESA-20",
     name: "Tesamorelin",
-    strength: "10 mg",
+    strength: "20 mg",
     form: "Lyophilized research peptide",
     category: "GHRH-analogue research",
-    unitPrice: 70,
+    unitPrice: 110,
     unit: "vial",
     image: "images/products/tesamorelin-10-light.jpeg",
     images: [
       "images/products/tesamorelin-10-light.jpeg",
       "images/products/tesamorelin-10-dark.jpeg",
-      "images/products/tesamorelin-10-label.jpg",
-      {
-        src: "images/products/coas/tesamorelin-10-coa-p1.png",
-        kind: "coa",
-        label: "COA",
-        alt: "Certificate of Analysis — Tesamorelin 10 mg (view only)",
-      },
     ],
     shortDescription:
-      "Research-grade Tesamorelin, 10 mg lyophilized, for laboratory research only.",
+      "Research-grade Tesamorelin, 20 mg lyophilized, for laboratory research only.",
     description:
-      "Tesamorelin 10 mg is a research-grade lyophilized peptide for qualified laboratory use only. Not FDA approved. Not a drug or compounded medication. Not for human or veterinary use, diagnosis, treatment, cure, or prevention of any disease.",
+      "Tesamorelin 20 mg is a research-grade lyophilized peptide for qualified laboratory use only. Not FDA approved. Not a drug or compounded medication. Not for human or veterinary use, diagnosis, treatment, cure, or prevention of any disease.",
     scientificName: "Tesamorelin (GHRH analogue research peptide)",
     molecularWeight: "Batch-defined research material",
     formula: "See research documentation / product labeling",
     sequence: "Available to qualified research accounts on request",
     appearance: "White to off-white lyophilized solid (typical)",
     storage: "Store frozen, protected from light and moisture. Laboratory handling only.",
-    researchNotes: "Research grade only. Not FDA approved for any indication or use. Batch ERP71726 per COA.",
-    tags: ["Tesamorelin", "Tesa", "10mg", "GHRH"],
+    researchNotes: "Research grade only. Not FDA approved for any indication or use.",
+    tags: ["Tesamorelin", "Tesa", "20mg", "GHRH"],
   },
   {
     id: "ipamorelin-10",
@@ -330,10 +319,10 @@ window.BW_PRODUCTS = [
     category: "Synthetic peptide research",
     unitPrice: 50,
     unit: "vial",
-    image: "images/products/kpv-10-light.jpeg",
+    image: "images/products/kpv-10-black-light.jpg",
     images: [
-      "images/products/kpv-10-light.jpeg",
-      "images/products/kpv-10-dark.jpeg",
+      "images/products/kpv-10-black-light.jpg",
+      "images/products/kpv-10-black-dark.jpg",
     ],
     shortDescription: "Research-grade KPV tripeptide, 10 mg.",
     description:
@@ -383,10 +372,10 @@ window.BW_PRODUCTS = [
     category: "Mitochondrial peptide research",
     unitPrice: 40,
     unit: "vial",
-    image: "images/products/ss-31-10-light.jpeg",
+    image: "images/products/ss-31-10-black-light.jpg",
     images: [
-      "images/products/ss-31-10-light.jpeg",
-      "images/products/ss-31-10-dark.jpeg",
+      "images/products/ss-31-10-black-light.jpg",
+      "images/products/ss-31-10-black-dark.jpg",
     ],
     shortDescription:
       "Research-grade SS-31 (elamipretide-class) peptide, 10 mg, laboratory use only.",
@@ -403,8 +392,6 @@ window.BW_PRODUCTS = [
   },
   {
     id: "cjc-ipa-20",
-    soldOut: true,
-    soldOutNote: "Sold out · restocking soon",
     sku: "CJC-IPA-20",
     name: "CJC-1295 (No DAC) + Ipamorelin",
     strength: "10 mg + 10 mg (20 mg total)",
@@ -477,6 +464,8 @@ window.BW_PRODUCTS = [
   },
   {
     id: "nad-1000",
+    listed: false,
+    archived: true,
     sku: "NAD-1000",
     name: "NAD+",
     strength: "1000 mg",
