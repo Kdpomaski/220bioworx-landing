@@ -103,6 +103,18 @@ window.BW_COA_LIBRARY = [
     ],
   },
   {
+    id: "thymosin-alpha-1-10",
+    name: "Thymosin Alpha-1",
+    strength: "10 mg",
+    docs: [
+      {
+        src: "images/products/coas/thymosin-alpha-1-10-coa-p1.png",
+        label: "COA",
+        title: "Certificate of Analysis — Thymosin Alpha-1 10 mg, Freedom Diagnostics, Lot 220-TA1010 (10/24/2026)",
+      },
+    ],
+  },
+  {
     id: "tb-500-10",
     name: "TB-500",
     strength: "10 mg",
@@ -111,18 +123,6 @@ window.BW_COA_LIBRARY = [
         src: "images/products/coas/tb-500-10-coa-p1.png",
         label: "Test report",
         title: "Janoshik test report — TB-500 10 mg",
-      },
-    ],
-  },
-  {
-    id: "tesamorelin-10",
-    name: "Tesamorelin",
-    strength: "10 mg",
-    docs: [
-      {
-        src: "images/products/coas/tesamorelin-10-coa-p1.png",
-        label: "COA",
-        title: "Certificate of Analysis — Tesamorelin 10 mg",
       },
     ],
   },

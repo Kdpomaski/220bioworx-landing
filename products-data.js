@@ -187,11 +187,8 @@ window.BW_PRODUCTS = [
     category: "GHRH-analogue research",
     unitPrice: 110,
     unit: "vial",
-    image: "images/products/tesamorelin-10-light.jpeg",
-    images: [
-      "images/products/tesamorelin-10-light.jpeg",
-      "images/products/tesamorelin-10-dark.jpeg",
-    ],
+    image: "images/products/tesamorelin-20.svg",
+    images: ["images/products/tesamorelin-20.svg"],
     shortDescription:
       "Research-grade Tesamorelin, 20 mg lyophilized, for laboratory research only.",
     description:
@@ -237,6 +234,41 @@ window.BW_PRODUCTS = [
     storage: "Store frozen, protected from light and moisture. Laboratory handling only.",
     researchNotes: "Research grade only. Not FDA approved for any indication or use. Lot 220-990027 per COA.",
     tags: ["Ipamorelin", "IPA", "10mg", "GHS"],
+  },
+  {
+    id: "thymosin-alpha-1-10",
+    sku: "TA1-10",
+    name: "Thymosin Alpha-1",
+    strength: "10 mg",
+    form: "Lyophilized research peptide",
+    category: "Synthetic peptide research",
+    unitPrice: 55,
+    unit: "vial",
+    purity: "99.88% (HPLC-UV)",
+    netContent: "13.55 mg average net content (per COA)",
+    image: "images/products/thymosin-alpha-1-10-coa-photo.jpg",
+    images: [
+      "images/products/thymosin-alpha-1-10-coa-photo.jpg",
+      {
+        src: "images/products/coas/thymosin-alpha-1-10-coa-p1.png",
+        kind: "coa",
+        label: "COA",
+        alt: "Certificate of Analysis — Thymosin Alpha-1 10 mg, Freedom Diagnostics, Lot 220-TA1010 (view only)",
+      },
+    ],
+    shortDescription:
+      "Research-grade Thymosin Alpha-1, 10 mg vial. Purity 99.88%, average net content 13.55 mg per third-party COA.",
+    description:
+      "Thymosin Alpha-1 10 mg is a research-grade lyophilized peptide for qualified laboratory use only. Third-party tested by Freedom Diagnostics: identity confirmed by LC-MS, purity 99.88% (HPLC-UV), average net content 13.55 mg, endotoxin replicates pass (USP <85>). Not FDA approved. Not a drug or compounded medication. Not for human or veterinary use, diagnosis, treatment, cure, or prevention of any disease.",
+    scientificName: "Thymosin Alpha-1 (thymalfasin; 28-residue N-acetylated research peptide)",
+    molecularWeight: "~3108.3 g·mol⁻¹ (typical)",
+    formula: "C₁₂₉H₂₁₅N₃₃O₅₅ (typical)",
+    sequence: "Ac-SDAAVDTSSEITTKDLKEKKEVVEEAEN (typical)",
+    appearance: "White lyophilized powder (per COA)",
+    storage: "Store frozen, protected from light and moisture. Laboratory handling only.",
+    researchNotes:
+      "Research grade only. Not FDA approved for any indication or use. Lot 220-TA1010 per COA (Freedom Diagnostics, accession 2610230309, reported 10/24/2026). Net content is labeled on each vial from this lot.",
+    tags: ["Thymosin Alpha-1", "Thymosin", "TA1", "TA-1", "Thymalfasin", "10mg"],
   },
   {
     id: "tb-500-10",

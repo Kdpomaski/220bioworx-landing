@@ -19,7 +19,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="products-data.js?v=20261016a"></script>
+  <script src="products-data.js?v=20261025a"></script>
   <script src="cart.js?v=20260928c"></script>
   <script src="payment-config.js?v=20260831g"></script>
   <style>
@@ -975,6 +975,8 @@
               <div class="spec-row"><span class="lbl">Molecular weight</span><span class="val">${escapeHtml(p.molecularWeight)}</span></div>
               <div class="spec-row"><span class="lbl">Formula</span><span class="val">${escapeHtml(p.formula || "—")}</span></div>
               <div class="spec-row"><span class="lbl">Sequence / structure</span><span class="val">${escapeHtml(p.sequence || "—")}</span></div>
+              ${p.purity ? `<div class="spec-row"><span class="lbl">Purity</span><span class="val">${escapeHtml(p.purity)}</span></div>` : ""}
+              ${p.netContent ? `<div class="spec-row"><span class="lbl">Net content</span><span class="val">${escapeHtml(p.netContent)}</span></div>` : ""}
               <div class="spec-row"><span class="lbl">Form</span><span class="val">${escapeHtml(p.form || "—")}</span></div>
               <div class="spec-row"><span class="lbl">Appearance</span><span class="val">${escapeHtml(p.appearance || "—")}</span></div>
               <div class="spec-row"><span class="lbl">Storage</span><span class="val">${escapeHtml(p.storage || "—")}</span></div>
