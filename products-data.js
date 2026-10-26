@@ -187,8 +187,8 @@ window.BW_PRODUCTS = [
     category: "GHRH-analogue research",
     unitPrice: 110,
     unit: "vial",
-    image: "images/products/tesamorelin-20.svg",
-    images: ["images/products/tesamorelin-20.svg"],
+    image: "images/products/tesamorelin-20-label-sq.jpg",
+    images: ["images/products/tesamorelin-20-label-sq.jpg"],
     shortDescription:
       "Research-grade Tesamorelin, 20 mg lyophilized, for laboratory research only.",
     description:
