@@ -11,22 +11,30 @@ window.BW_PRODUCTS = [
     strength: "70 mg total",
     form: "Lyophilized multi-peptide research blend",
     category: "Research blends",
-    unitPrice: 95,
+    unitPrice: 90,
+    purity: "99.75% (HPLC-UV, per COA)",
+    netContent: "Pinealon/Epitalon 65.30 mg combined + Selank 10.07 mg (per COA)",
     unit: "vial",
     image: "images/products/dusk-70-green-front.jpg",
     images: [
       "images/products/dusk-70-green-front.jpg",
       "images/products/dusk-70-label-sq.jpg",
+      {
+        src: "images/products/coas/dusk-70-coa-p1.jpg",
+        kind: "coa",
+        label: "COA",
+        alt: "Certificate of Analysis — DUSK 70 mg, Freedom Diagnostics, Lot 220-KPNLVF2 (view only)",
+      },
     ],
     shortDescription:
-      "Research-grade DUSK blend: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total).",
+      "Research-grade DUSK blend: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total, declared). Purity 99.75% per third-party COA, lot 220-KPNLVF2.",
     description:
-      "DUSK is a research-grade lyophilized blend for qualified laboratory use only. Label composition: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total). Not FDA approved. Not a drug or compounded medication. Not for human or veterinary use, diagnosis, treatment, cure, or prevention of any disease.",
+      "DUSK is a research-grade lyophilized blend for qualified laboratory use only. Declared composition: Epithalon 50 mg, Pinealon 10 mg, Selank 10 mg (70 mg total). Third-party tested by Freedom Diagnostics (lot 220-KPNLVF2): identity of Pinealon, Epitalon and Selank confirmed by LC-MS; purity 99.75% (HPLC-UV); endotoxin replicates pass (USP <85>); microbial PCR: no detectable microbial DNA. Pinealon and Epitalon elute as one combined HPLC peak and are reported as a combined net content (65.30 mg); mass spectrometry confirms both. Selank is resolved and reported separately (10.07 mg). Not FDA approved. Not a drug or compounded medication. Not for human or veterinary use, diagnosis, treatment, cure, or prevention of any disease.",
     scientificName: "DUSK multi-peptide research blend (Epithalon + Pinealon + Selank)",
     molecularWeight: "Component-specific (see blend breakdown)",
     formula: "Multi-component blend",
     sequence: "See individual components",
-    appearance: "Lyophilized solid (typical)",
+    appearance: "White lyophilized powder (per COA)",
     storage: "Frozen, dry, protected from light.",
     blendComponents: [
       { name: "Epithalon", amount: "50 mg", mw: "Batch-defined" },
@@ -34,7 +42,7 @@ window.BW_PRODUCTS = [
       { name: "Selank", amount: "10 mg", mw: "Batch-defined" },
     ],
     researchNotes:
-      "Research grade blend only. Not FDA approved. Batch 2200826D01 per label.",
+      "Research grade blend only. Not FDA approved. Lot 220-KPNLVF2 per COA (Freedom Diagnostics, accession 2610290624, reported 10/31/2026). Lot is printed on each vial label.",
     tags: ["DUSK", "Epithalon", "Pinealon", "Selank", "70mg"],
   },
   {

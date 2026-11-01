@@ -4,6 +4,18 @@
  */
 window.BW_COA_LIBRARY = [
   {
+    id: "dusk-70",
+    name: "DUSK",
+    strength: "70 mg",
+    docs: [
+      {
+        src: "images/products/coas/dusk-70-coa-p1.jpg",
+        label: "COA",
+        title: "Certificate of Analysis — DUSK 70 mg, Freedom Diagnostics, Lot 220-KPNLVF2 (10/31/2026)",
+      },
+    ],
+  },
+  {
     id: "bpc-157-10",
     name: "BPC-157",
     strength: "10 mg",
