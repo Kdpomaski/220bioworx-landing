@@ -15,9 +15,9 @@ window.BW_PRODUCTS = [
     purity: "99.75% (HPLC-UV, per COA)",
     netContent: "Pinealon/Epitalon 65.30 mg combined + Selank 10.07 mg (per COA)",
     unit: "vial",
-    image: "images/products/dusk-70-green-front.jpg",
+    image: "images/products/dusk-70-purple-cap-front.jpg",
     images: [
-      "images/products/dusk-70-green-front.jpg",
+      "images/products/dusk-70-purple-cap-front.jpg",
       "images/products/dusk-70-label-sq.jpg",
       {
         src: "images/products/coas/dusk-70-coa-p1.jpg",
