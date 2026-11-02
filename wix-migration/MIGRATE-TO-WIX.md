@@ -114,7 +114,7 @@ On Wix: use **automatic discounts** (Buy X / cart quantity rules) or a pricing a
 | Method | Details (do not put banking on marketing pages only) |
 |--------|------------------------------------------------------|
 | **Zelle** | Recipient: 220 BioWorX · Send to: Customerservice@220bioworx.com · Memo = order # |
-| **ACH** | Account name: 220 Tech · Bank: Wells Fargo · Routing: 063107513 · Account: 2215689676 · Business checking |
+| **ACH** | Account name: 220 Tech · Bank: Wells Fargo · Routing/Account: provided privately (not published) · Business checking |
 | **Crypto** | NOWPayments hosted invoice (manual or Worker later) |
 
 On Wix: enable **manual / offline payments** (or “Bank transfer”) labeled Zelle & ACH; crypto as custom instructions or external link. Do **not** rely on Wix card checkout if policy forbids cards.

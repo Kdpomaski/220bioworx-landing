@@ -70,8 +70,8 @@ Send to: Customerservice@220bioworx.com · Recipient name: 220 BioWorX
 **ACH / bank transfer**  
 Account name: 220 Tech  
 Bank: Wells Fargo  
-Routing: 063107513  
-Account: 2215689676  
+Routing: (provided privately)  
+Account: (provided privately)  
 Account type: Business checking  
 Payment description: order number  
 

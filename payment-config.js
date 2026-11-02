@@ -17,8 +17,8 @@ window.BW_PAYMENT = {
     label: "ACH / bank transfer",
     accountName: "220 Tech",
     bankName: "Wells Fargo",
-    routing: "063107513",
-    account: "2215689676",
+    routing: "Provided privately — contact customer service",
+    account: "Provided privately — contact customer service",
     accountType: "Business checking",
   },
   crypto: {
