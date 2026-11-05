@@ -62,6 +62,11 @@ window.BW_COA_LIBRARY = [
     strength: "20 mg",
     docs: [
       {
+        src: "images/products/coas/reta-20-coa-p1.png",
+        label: "COA",
+        title: "Certificate of Analysis — Reta 20 mg (Freedom Diagnostics, lot 220-GLP320-7)",
+      },
+      {
         src: "images/products/coas/reta-20-janoshik-p1.png",
         label: "Test report",
         title: "Janoshik test report — Reta 20 mg",
